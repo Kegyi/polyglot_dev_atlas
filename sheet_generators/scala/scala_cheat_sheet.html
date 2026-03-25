@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Scala Polyglot Dev Atlas</title>
+  <style>
+    /* Common sheet styles (single source-of-truth for all sheets) */
+    body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.5; padding: 20px; background-color: #f8fafb; color: #102a43; }
+    h1, h2 { text-align: center; color: #0b3b66; margin: 0 0 8px 0; }
+
+    .legend-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; justify-content:flex-start; padding:10px 12px; background: white; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.04); position:sticky; top:12px; z-index:50; margin:12px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; }
+    .legend-row .legend-item { flex:0 0 auto; }
+    .legend-item { display:flex; align-items:center; gap:8px; font-size:0.9em; font-weight:700; }
+    .color-box { width:18px; height:18px; border-radius:3px; border:1px solid rgba(0,0,0,0.06); flex:0 0 18px; }
+
+    .content { margin-top:6px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 40px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); table-layout: fixed; }
+    th, td { padding: 10px 15px; text-align: left; border-bottom: 1px solid #eef2f7; vertical-align: middle; }
+    th { background-color: #1b3a57; color: white; text-transform: uppercase; font-size: 0.85em; }
+    code { background: #0f1720; color: #dbeafe; padding: 4px 8px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 0.85em; display: block; white-space: pre; }
+    .version-tag { font-size: 0.75em; color: #475569; font-style: italic; display: block; }
+    .header-note { font-family: 'Consolas', monospace; font-size: 0.8em; color: #b91c1c; font-weight: bold; }
+    .separator { text-align: center; margin: 50px 0 30px; border-top: 3px dashed #cbd5e1; position: relative; }
+    .separator span { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: inherit; padding: 0 20px; font-weight: bold; color: #64748b; }
+    .category-label { font-size: 0.7em; font-weight: 800; color: #64748b; background: #f8fafc; text-transform: uppercase; }
+    .version-note { text-align:center; font-size:0.95em; color:#334155; margin-bottom:8px; }
+
+    /* Broad set of color key classes used across languages */
+    .type { background-color: #e8f5e9; }
+    .logic { background-color: #e3f2fd; }
+    .storage { background-color: #fff3e0; }
+    .oop { background-color: #f3e5f5; }
+    .memory { background-color: #ffebee; }
+    .modern { background-color: #fce4ec; }
+    .template-key { background-color: #e0f2f1; }
+    .system { background-color: #eceff1; }
+    .preprocessor { background-color: #f7fafc; border-left: 5px solid #636e72; }
+    .function { background-color: #fff9e6; }
+    .iter { background-color: #fff3f0; }
+    .module { background-color: #f0f4ff; }
+    .concurrency { background-color: #e8f7ec; }
+    .syntax { background-color: #ecf4ff; }
+    .global { background-color: #f8fafc; }
+    .advanced { background-color: #fff7f0; }
+
+    /* Responsive adjustments: keep .legend-row sticky but allow wrapping at narrow widths */
+    @media (max-width:900px) {
+      .legend-row { gap:8px; white-space:normal; }
+      .content { margin-top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Scala Polyglot Dev Atlas</h1>
+  <div class="legend-row">
+        <div class="legend-item"><div class="color-box type"></div> Types</div>
+        <div class="legend-item"><div class="color-box logic"></div> Control Flow</div>
+        <div class="legend-item"><div class="color-box functional"></div> Functional</div>
+        <div class="legend-item"><div class="color-box oop"></div> OOP & Traits</div>
+        <div class="legend-item"><div class="color-box concurrency"></div> Concurrency</div>
+        <div class="legend-item"><div class="color-box module"></div> Stdlib</div>
+    </div>
+  <div class="content">
+    
+    <h2>1. Core Essentials</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Item</th>
+                <th style="width: 42%;">Description & Version</th>
+                <th style="width: 15%;">Context</th>
+                <th style="width: 25%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Fundamental Types</td></tr>
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html" target="_blank">Byte</a></td>
+                <td>8-bit signed integer <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val b: Byte = 1</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html" target="_blank">Short</a></td>
+                <td>16-bit signed integer <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val s: Short = 2</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html" target="_blank">Int</a></td>
+                <td>32-bit signed integer <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val i: Int = 42</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html" target="_blank">Long</a></td>
+                <td>64-bit signed integer <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val l: Long = 123456789L</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html" target="_blank">Float</a></td>
+                <td>32-bit floating point <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val f: Float = 3.14f</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html" target="_blank">Double</a></td>
+                <td>64-bit floating point <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val d: Double = 2.71828</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html" target="_blank">Char</a></td>
+                <td>16-bit Unicode code unit <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val c: Char = &#x27;A&#x27;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html" target="_blank">Boolean</a></td>
+                <td>true / false <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val ok: Boolean = true</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html" target="_blank">String</a></td>
+                <td>Immutable sequence of characters <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val s: String = &quot;hello&quot;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html" target="_blank">Unit</a></td>
+                <td>No meaningful value (like void) <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>def f(): Unit = println(&quot;hi&quot;)</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html" target="_blank">Any / AnyVal / AnyRef</a></td>
+                <td>Top types and value/reference hierarchy <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val x: Any = 1</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html" target="_blank">Null / Nothing</a></td>
+                <td>Null vs bottom type (Nothing) <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>def fail(): Nothing = throw new RuntimeException(&quot;boom&quot;)</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Control Flow</td></tr>
+            <tr class="logic">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html#if-expressions" target="_blank">if / else</a></td>
+                <td>Conditional expression (returns value) <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val r = if (x &gt; 0) &quot;pos&quot; else &quot;neg&quot;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://docs.scala-lang.org/tour/pattern-matching.html" target="_blank">match</a></td>
+                <td>Pattern matching expression <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>x match { case 0 =&gt; &quot;zero&quot;; case n =&gt; s&quot;$n&quot; }</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://docs.scala-lang.org/tour/for-comprehensions.html" target="_blank">for (comprehension)</a></td>
+                <td>Comprehensions with map/flatMap/filter <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>for (i &lt;- 0 until 3) yield i * 2</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://docs.scala-lang.org/overviews/scala-book/while-loops.html" target="_blank">while / do-while</a></td>
+                <td>Loop constructs (used less in idiomatic Scala) <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>while (cond) { doSomething() }</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html#methods" target="_blank">return</a></td>
+                <td>Return from method (rare in idiomatic code) <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>return value</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Definitions &amp; OOP</td></tr>
+            <tr class="decl">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html#values" target="_blank">val</a></td>
+                <td>Immutable binding <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val x = 10</code></td>
+            </tr>
+            
+            <tr class="decl">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html#values" target="_blank">var</a></td>
+                <td>Mutable variable <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>var i = 0; i += 1</code></td>
+            </tr>
+            
+            <tr class="decl">
+                <td><a href="https://docs.scala-lang.org/tour/basics.html#methods" target="_blank">def</a></td>
+                <td>Method or function definition <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>def add(a: Int, b: Int): Int = a + b</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://docs.scala-lang.org/tour/case-classes.html" target="_blank">class / case class</a></td>
+                <td>Class and pattern-friendly case class <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>case class Person(name: String, age: Int)</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://docs.scala-lang.org/tour/singleton-objects.html" target="_blank">object</a></td>
+                <td>Singleton object (module) <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>object Main { def main(args: Array[String]): Unit = println(&quot;hi&quot;) }</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://docs.scala-lang.org/tour/traits.html" target="_blank">trait</a></td>
+                <td>Interface-like behavior + defaults <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>trait Logger { def log(s: String): Unit }</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://docs.scala-lang.org/tour/traits.html" target="_blank">extends / with / override</a></td>
+                <td>Inheritance and mixins <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>class C extends Base with Trait { override def m() = {} }</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://docs.scala-lang.org/tour/classes.html" target="_blank">new</a></td>
+                <td>Instantiate classes <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val p = new Person(&quot;A&quot;, 30)</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Functional Tools</td></tr>
+            <tr class="functional">
+                <td><a href="https://docs.scala-lang.org/tour/anonymous-functions.html" target="_blank">=&gt; (lambda)</a></td>
+                <td>Anonymous function / lambda <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val f = (x: Int) =&gt; x + 1</code></td>
+            </tr>
+            
+            <tr class="functional">
+                <td><a href="https://www.scala-lang.org/api/current/" target="_blank">map / flatMap / filter / foreach</a></td>
+                <td>Common collection operations <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="header-note">scala.collection</span></td>
+                <td><code>List(1,2,3).map(_ * 2)</code></td>
+            </tr>
+            
+            <tr class="functional">
+                <td><a href="https://docs.scala-lang.org/overviews/scala-book/no-null-values.html" target="_blank">Option / Some / None / getOrElse</a></td>
+                <td>Handle optional values without nulls <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="header-note">scala</span></td>
+                <td><code>opt.getOrElse(default)</code></td>
+            </tr>
+            
+            <tr class="functional">
+                <td><a href="https://docs.scala-lang.org/overviews/scala-book/functional-error-handling.html" target="_blank">Either / Left / Right</a></td>
+                <td>Two-sided result type for errors <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="header-note">scala.util</span></td>
+                <td><code>Right(42)</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Concurrency &amp; Futures</td></tr>
+            <tr class="concurrency">
+                <td><a href="https://docs.scala-lang.org/overviews/core/futures.html" target="_blank">scala.concurrent.Future</a></td>
+                <td>Asynchronous computation with ExecutionContext <span class="version-tag">(since Scala 2.10+)</span></td>
+                <td><span class="header-note">scala.concurrent</span></td>
+                <td><code>import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+val f = Future { compute() }</code></td>
+            </tr>
+            
+            <tr class="concurrency">
+                <td><a href="https://docs.scala-lang.org/overviews/core/futures.html" target="_blank">Await / Promise</a></td>
+                <td>Wait for future or create Promise <span class="version-tag">(since Scala 2.10+)</span></td>
+                <td><span class="header-note">scala.concurrent</span></td>
+                <td><code>import scala.concurrent.Await
+Await.result(f, scala.concurrent.duration.Duration.Inf)</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <div class="separator"><span>Advanced & Ecosystem</span></div>
+    <h2>2. Advanced &amp; Ecosystem</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Item</th>
+                <th style="width: 42%;">Description & Version</th>
+                <th style="width: 15%;">Context</th>
+                <th style="width: 25%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Collections &amp; Immutability</td></tr>
+            <tr class="collection">
+                <td><a href="https://www.scala-lang.org/api/current/" target="_blank">Seq / List / Vector / Array</a></td>
+                <td>Common sequence types (immutable by default) <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="header-note">scala.collection</span></td>
+                <td><code>val v: Seq[Int] = List(1,2,3)</code></td>
+            </tr>
+            
+            <tr class="collection">
+                <td><a href="https://www.scala-lang.org/api/current/" target="_blank">Map / Set</a></td>
+                <td>Associative containers and sets <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="header-note">scala.collection</span></td>
+                <td><code>Map(&quot;a&quot; -&gt; 1)</code></td>
+            </tr>
+            
+            <tr class="collection">
+                <td><a href="https://www.scala-lang.org/api/current/" target="_blank">mutable vs immutable collections</a></td>
+                <td>Prefer immutable by default <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="header-note">scala.collection</span></td>
+                <td><code>import scala.collection.mutable.ArrayBuffer</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Type System &amp; Generics</td></tr>
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/generic-classes.html" target="_blank">Generics / [T]</a></td>
+                <td>Parametric polymorphism <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>class Box[T](val value: T)</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/scala3/book/ca-context-parameters.html" target="_blank">implicit (Scala 2) / given (Scala 3)</a></td>
+                <td>Contextual parameters / type class instances <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="header-note">language</span></td>
+                <td><code>given intOrd: Ordering[Int] with { def compare(a,b) = a - b }</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.scala-lang.org/tour/abstract-type-members.html" target="_blank">type alias / abstract type</a></td>
+                <td>Create synonyms or abstract members <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>type StrMap = Map[String, String]</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Interop &amp; Build</td></tr>
+            <tr class="tooling">
+                <td><a href="https://www.scala-sbt.org/" target="_blank">sbt / Mill / Scala CLI</a></td>
+                <td>Build tools for Scala projects <span class="version-tag">(since N/A)</span></td>
+                <td><span class="header-note">external</span></td>
+                <td><code>sbt run</code></td>
+            </tr>
+            
+            <tr class="interop">
+                <td><a href="https://docs.scala-lang.org/scala3/book/interacting-with-java.html" target="_blank">Java interop</a></td>
+                <td>Call Java libraries directly <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>val j = new java.util.ArrayList[String]()</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    <h2>3. Standard Library Highlights (Non-Keywords)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Item</th>
+                <th style="width: 42%;">Description & Version</th>
+                <th style="width: 15%;">Context</th>
+                <th style="width: 25%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Common Packages</td></tr>
+            <tr class="module">
+                <td><a href="https://www.scala-lang.org/api/current/" target="_blank">scala.collection</a></td>
+                <td>Collection interfaces and implementations <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="header-note">scala.collection</span></td>
+                <td><code>import scala.collection._</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://www.scala-lang.org/api/current/" target="_blank">scala.concurrent</a></td>
+                <td>Futures, Promise and utilities <span class="version-tag">(since Scala 2.10+)</span></td>
+                <td><span class="header-note">scala.concurrent</span></td>
+                <td><code>import scala.concurrent._</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://www.scala-lang.org/api/current/" target="_blank">scala.util.Try / Success / Failure</a></td>
+                <td>Error handling without exceptions <span class="version-tag">(since Scala 2.10+)</span></td>
+                <td><span class="header-note">scala.util</span></td>
+                <td><code>Try { risky() } match { case Success(v) =&gt; v }</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://www.scala-lang.org/api/current/" target="_blank">scala.io.Source</a></td>
+                <td>Read files and resources <span class="version-tag">(since Scala 2/3)</span></td>
+                <td><span class="header-note">scala.io</span></td>
+                <td><code>val s = scala.io.Source.fromFile(&quot;file.txt&quot;).mkString</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+  </div>
+</body>
+</html>

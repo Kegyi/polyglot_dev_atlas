@@ -1,0 +1,122 @@
+# Interview / Algo Code Examples
+
+This folder maps LCCI interview problems into the project code-example architecture.
+
+Current migrated set:
+
+- lcci_01_01_is_unique
+- lcci_01_02_check_permutation
+- lcci_01_03_string_to_url
+- lcci_01_04_palindrome_permutation
+- lcci_01_05_one_away
+- lcci_01_06_compress_string
+- lcci_01_07_rotate_matrix
+- lcci_01_08_zero_matrix
+- lcci_01_09_string_rotation
+- lcci_02_01_remove_duplicate_node
+- lcci_02_02_kth_node_from_end
+- lcci_02_03_delete_middle_node
+- lcci_02_04_partition_list
+- lcci_02_05_sum_lists
+- lcci_02_06_palindrome_linked_list
+- lcci_02_07_intersection_of_two_linked_lists
+- lcci_02_08_linked_list_cycle
+- lcci_03_01_three_in_one
+- lcci_03_02_min_stack
+- lcci_03_03_stack_of_plates
+- lcci_03_04_queue_via_stacks
+- lcci_03_05_sort_stack
+- lcci_03_06_animal_shelter
+- lcci_04_01_route_between_nodes
+- lcci_04_02_minimum_height_tree
+- lcci_04_03_list_of_depth
+- lcci_04_04_check_balance
+- lcci_04_05_legal_binary_search_tree
+- lcci_04_06_successor
+- lcci_04_08_first_common_ancestor
+- lcci_04_09_bst_sequences
+- lcci_04_10_check_subtree
+- lcci_04_12_paths_with_sum
+- lcci_05_01_insert
+- lcci_05_02_binary_number_to_string
+- lcci_05_03_flip_bit_to_win
+- lcci_05_04_closed_number
+- lcci_05_06_number_of_1
+- lcci_05_07_exchange
+- lcci_05_08_draw_line
+- lcci_08_01_three_steps
+- lcci_08_02_robot_in_a_grid
+- lcci_08_03_magic_index
+- lcci_08_04_power_set
+- lcci_08_06_hanota
+- lcci_08_07_permutation_i
+- lcci_08_08_permutation_ii
+- lcci_08_09_bracket
+- lcci_08_10_color_fill
+- lcci_08_11_coin
+- lcci_08_12_eight_queens
+- lcci_08_13_pile_box
+- lcci_08_14_boolean_evaluation
+- lcci_10_01_sorted_merge
+- lcci_10_02_group_anagrams
+- lcci_10_03_search_rotate_array
+- lcci_10_05_sparse_array_search
+- lcci_10_09_sorted_matrix_search
+- lcci_10_10_rank_from_stream
+- lcci_10_11_peaks_and_valleys
+- lcci_16_01_swap_numbers
+- lcci_16_02_words_frequency
+- lcci_16_03_intersection
+- lcci_16_04_tic_tac_toe
+- lcci_16_05_factorial_zeros
+- lcci_16_06_smallest_difference
+- lcci_16_07_maximum
+- lcci_16_08_english_int
+- lcci_16_09_operations
+- lcci_16_10_living_people
+- lcci_16_11_diving_board
+- lcci_16_13_bisect_squares
+- lcci_16_14_best_line
+- lcci_16_15_master_mind
+- lcci_16_16_sub_sort
+- lcci_16_17_contiguous_sequence
+- lcci_16_18_pattern_matching
+- lcci_16_19_pond_sizes
+- lcci_16_20_t9
+- lcci_16_21_sum_swap
+- lcci_16_22_langtons_ant
+- lcci_16_24_pairs_with_sum
+- lcci_16_25_lru_cache
+- lcci_16_26_calculator
+- lcci_17_01_add_without_plus
+- lcci_17_04_missing_number
+- lcci_17_05_find_longest_subarray
+- lcci_17_06_number_of_2s_in_range
+- lcci_17_07_baby_names
+- lcci_17_08_circus_tower
+- lcci_17_09_get_kth_magic_number
+- lcci_17_10_find_majority_element
+- lcci_17_11_find_closest
+- lcci_17_12_binode
+- lcci_17_13_re_space
+- lcci_17_14_smallest_k
+- lcci_17_15_longest_word
+- lcci_17_16_the_masseuse
+- lcci_17_17_multi_search
+- lcci_17_18_shortest_supersequence
+- lcci_17_19_missing_two
+- lcci_17_20_continuous_median
+- lcci_17_21_volume_of_histogram
+- lcci_17_22_word_transformer
+
+Reference root: https://leetcode.doocs.org/en/lcci/
+
+Each problem folder contains:
+
+- cpp.cpp
+- go.go
+- python.py
+- typescript.ts
+- scala.scala
+- package.json (TypeScript module mode)
+- README.md (detailed prompt-oriented description and expected output)

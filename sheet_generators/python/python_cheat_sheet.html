@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Python Polyglot Dev Atlas</title>
+  <style>
+    /* Common sheet styles (single source-of-truth for all sheets) */
+    body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.5; padding: 20px; background-color: #f8fafb; color: #102a43; }
+    h1, h2 { text-align: center; color: #0b3b66; margin: 0 0 8px 0; }
+
+    .legend-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; justify-content:flex-start; padding:10px 12px; background: white; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.04); position:sticky; top:12px; z-index:50; margin:12px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; }
+    .legend-row .legend-item { flex:0 0 auto; }
+    .legend-item { display:flex; align-items:center; gap:8px; font-size:0.9em; font-weight:700; }
+    .color-box { width:18px; height:18px; border-radius:3px; border:1px solid rgba(0,0,0,0.06); flex:0 0 18px; }
+
+    .content { margin-top:6px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 40px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); table-layout: fixed; }
+    th, td { padding: 10px 15px; text-align: left; border-bottom: 1px solid #eef2f7; vertical-align: middle; }
+    th { background-color: #1b3a57; color: white; text-transform: uppercase; font-size: 0.85em; }
+    code { background: #0f1720; color: #dbeafe; padding: 4px 8px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 0.85em; display: block; white-space: pre; }
+    .version-tag { font-size: 0.75em; color: #475569; font-style: italic; display: block; }
+    .header-note { font-family: 'Consolas', monospace; font-size: 0.8em; color: #b91c1c; font-weight: bold; }
+    .separator { text-align: center; margin: 50px 0 30px; border-top: 3px dashed #cbd5e1; position: relative; }
+    .separator span { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: inherit; padding: 0 20px; font-weight: bold; color: #64748b; }
+    .category-label { font-size: 0.7em; font-weight: 800; color: #64748b; background: #f8fafc; text-transform: uppercase; }
+    .version-note { text-align:center; font-size:0.95em; color:#334155; margin-bottom:8px; }
+
+    /* Broad set of color key classes used across languages */
+    .type { background-color: #e8f5e9; }
+    .logic { background-color: #e3f2fd; }
+    .storage { background-color: #fff3e0; }
+    .oop { background-color: #f3e5f5; }
+    .memory { background-color: #ffebee; }
+    .modern { background-color: #fce4ec; }
+    .template-key { background-color: #e0f2f1; }
+    .system { background-color: #eceff1; }
+    .preprocessor { background-color: #f7fafc; border-left: 5px solid #636e72; }
+    .function { background-color: #fff9e6; }
+    .iter { background-color: #fff3f0; }
+    .module { background-color: #f0f4ff; }
+    .concurrency { background-color: #e8f7ec; }
+    .syntax { background-color: #ecf4ff; }
+    .global { background-color: #f8fafc; }
+    .advanced { background-color: #fff7f0; }
+
+    /* Responsive adjustments: keep .legend-row sticky but allow wrapping at narrow widths */
+    @media (max-width:900px) {
+      .legend-row { gap:8px; white-space:normal; }
+      .content { margin-top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Python Polyglot Dev Atlas</h1>
+  <div class="legend-row">
+        <div class="legend-item"><div class="color-box type"></div> Types</div>
+        <div class="legend-item"><div class="color-box logic"></div> Control Flow</div>
+        <div class="legend-item"><div class="color-box function"></div> Functions</div>
+        <div class="legend-item"><div class="color-box oop"></div> OOP</div>
+        <div class="legend-item"><div class="color-box iter"></div> Iteration & Tools</div>
+        <div class="legend-item"><div class="color-box module"></div> Stdlib Modules</div>
+    </div>
+  <div class="content">
+    
+    <h2>1. Core Essentials</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Item</th>
+                <th style="width: 42%;">Description & Version</th>
+                <th style="width: 15%;">Context</th>
+                <th style="width: 25%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Fundamental Types</td></tr>
+            <tr class="type">
+                <td><a href="https://docs.python.org/3/search.html?q=None" target="_blank">None</a></td>
+                <td>Null / no value <span class="version-tag">(since Python 3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>x = None</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.python.org/3/search.html?q=bool" target="_blank">bool</a></td>
+                <td>True or False <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>flag = True</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.python.org/3/search.html?q=int" target="_blank">int</a></td>
+                <td>Arbitrary-precision integer <span class="version-tag">(since Python 3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>count = 42</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.python.org/3/search.html?q=float" target="_blank">float</a></td>
+                <td>Floating point number <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>pi = 3.14159</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.python.org/3/search.html?q=complex" target="_blank">complex</a></td>
+                <td>Complex numbers <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>z = 1+2j</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.python.org/3/search.html?q=str" target="_blank">str</a></td>
+                <td>Unicode text <span class="version-tag">(since Python 3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>s = &#x27;hello&#x27;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.python.org/3/search.html?q=bytes" target="_blank">bytes</a></td>
+                <td>Immutable byte sequence <span class="version-tag">(since Python 3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>b = b&#x27;\x00&#x27;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.python.org/3/search.html?q=list" target="_blank">list</a></td>
+                <td>Mutable sequence <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>lst = [1, 2, 3]</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.python.org/3/search.html?q=tuple" target="_blank">tuple</a></td>
+                <td>Immutable sequence <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>t = (1, 2)</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.python.org/3/search.html?q=set" target="_blank">set</a></td>
+                <td>Unordered unique items <span class="version-tag">(since Python 2.4)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>s = {1, 2, 3}</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://docs.python.org/3/search.html?q=dict" target="_blank">dict</a></td>
+                <td>Key-value mapping <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>d = {&#x27;a&#x27;: 1}</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Control Flow</td></tr>
+            <tr class="logic">
+                <td><a href="https://docs.python.org/3/search.html?q=if%20/%20elif%20/%20else" target="_blank">if / elif / else</a></td>
+                <td>Conditional branching <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if x &gt; 0:
+    ...
+elif x == 0:
+    ...
+else:
+    ...</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://docs.python.org/3/search.html?q=for" target="_blank">for</a></td>
+                <td>Iterator-based loop <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>for i in range(5):
+    print(i)</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://docs.python.org/3/search.html?q=while" target="_blank">while</a></td>
+                <td>Loop while condition holds <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>while cond:
+    do_something()</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://docs.python.org/3/search.html?q=break" target="_blank">break</a></td>
+                <td>Exit loop early <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if done:
+    break</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://docs.python.org/3/search.html?q=continue" target="_blank">continue</a></td>
+                <td>Skip to next iteration <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if skip:
+    continue</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://docs.python.org/3/search.html?q=pass" target="_blank">pass</a></td>
+                <td>No-op placeholder <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>def todo():
+    pass</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://docs.python.org/3/search.html?q=return" target="_blank">return</a></td>
+                <td>Return from function <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>return value</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Functions &amp; Callables</td></tr>
+            <tr class="function">
+                <td><a href="https://docs.python.org/3/search.html?q=def" target="_blank">def</a></td>
+                <td>Define a function <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>def f(x):
+    return x*2</code></td>
+            </tr>
+            
+            <tr class="function">
+                <td><a href="https://docs.python.org/3/search.html?q=lambda" target="_blank">lambda</a></td>
+                <td>Anonymous function expression <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>f = lambda x: x+1</code></td>
+            </tr>
+            
+            <tr class="function">
+                <td><a href="https://docs.python.org/3/search.html?q=yield" target="_blank">yield</a></td>
+                <td>Produce generator values <span class="version-tag">(since Python 2.3)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>def gen():
+    yield from range(3)</code></td>
+            </tr>
+            
+            <tr class="concurrency">
+                <td><a href="https://docs.python.org/3/search.html?q=async%20/%20await" target="_blank">async / await</a></td>
+                <td>Async functions and suspension <span class="version-tag">(since Python 3.5)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>async def coro():
+    await asyncio.sleep(0)</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">OOP &amp; Classes</td></tr>
+            <tr class="oop">
+                <td><a href="https://docs.python.org/3/search.html?q=class" target="_blank">class</a></td>
+                <td>Define a class <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>class C:
+    def __init__(self, x):
+        self.x = x</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://docs.python.org/3/search.html?q=self" target="_blank">self</a></td>
+                <td>Instance reference in methods <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="header-note">Convention</span></td>
+                <td><code>def method(self):
+    return self.x</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://docs.python.org/3/search.html?q=super" target="_blank">super</a></td>
+                <td>Call base class methods <span class="version-tag">(since Python 2.2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>super().method()</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://docs.python.org/3/search.html?q=%40staticmethod%20/%20%40classmethod%20/%20%40property" target="_blank">@staticmethod / @classmethod / @property</a></td>
+                <td>Common method decorators <span class="version-tag">(since Python 2.2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>@staticmethod
+def f():
+    pass</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <div class="separator"><span>Advanced & Ecosystem</span></div>
+    <h2>2. Advanced &amp; Ecosystem</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Item</th>
+                <th style="width: 42%;">Description & Version</th>
+                <th style="width: 15%;">Context</th>
+                <th style="width: 25%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Typing &amp; Annotations</td></tr>
+            <tr class="typing">
+                <td><a href="https://docs.python.org/3/library/typing.html" target="_blank">typing.Optional</a></td>
+                <td>Optional type hint <span class="version-tag">(since Python 3.5)</span></td>
+                <td><span class="header-note">typing</span></td>
+                <td><code>from typing import Optional
+val: Optional[int] = None</code></td>
+            </tr>
+            
+            <tr class="typing">
+                <td><a href="https://docs.python.org/3/library/typing.html" target="_blank">typing.List / Dict / Union / Any</a></td>
+                <td>Common typing utilities <span class="version-tag">(since Python 3.5)</span></td>
+                <td><span class="header-note">typing</span></td>
+                <td><code>from typing import List, Dict
+nums: List[int] = []</code></td>
+            </tr>
+            
+            <tr class="typing">
+                <td><a href="https://docs.python.org/3/search.html?q=from%20__future__%20import%20annotations" target="_blank">from __future__ import annotations</a></td>
+                <td>Postpone evaluation of annotations <span class="version-tag">(since Python 3.7)</span></td>
+                <td><span class="header-note">__future__</span></td>
+                <td><code>from __future__ import annotations</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Concurrency &amp; Async</td></tr>
+            <tr class="concurrency">
+                <td><a href="https://docs.python.org/3/library/threading.html" target="_blank">threading.Thread</a></td>
+                <td>Start a background thread <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="header-note">threading</span></td>
+                <td><code>from threading import Thread
+Thread(target=fn).start()</code></td>
+            </tr>
+            
+            <tr class="concurrency">
+                <td><a href="https://docs.python.org/3/library/concurrent.futures.html" target="_blank">concurrent.futures</a></td>
+                <td>Thread/Process pools <span class="version-tag">(since Python 3.2)</span></td>
+                <td><span class="header-note">concurrent.futures</span></td>
+                <td><code>from concurrent.futures import ThreadPoolExecutor</code></td>
+            </tr>
+            
+            <tr class="concurrency">
+                <td><a href="https://docs.python.org/3/library/asyncio.html" target="_blank">asyncio</a></td>
+                <td>Async event loop and coroutines <span class="version-tag">(since Python 3.4)</span></td>
+                <td><span class="header-note">asyncio</span></td>
+                <td><code>import asyncio
+asyncio.run(main())</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Itertools &amp; Functional</td></tr>
+            <tr class="iter">
+                <td><a href="https://docs.python.org/3/library/itertools.html" target="_blank">itertools.chain / islice / tee</a></td>
+                <td>Composable iterator helpers <span class="version-tag">(since Python 2.3)</span></td>
+                <td><span class="header-note">itertools</span></td>
+                <td><code>import itertools
+list(itertools.chain(a, b))</code></td>
+            </tr>
+            
+            <tr class="iter">
+                <td><a href="https://docs.python.org/3/library/functions.html#map" target="_blank">map / filter / zip / enumerate</a></td>
+                <td>Functional iteration helpers <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>for i, v in enumerate(seq):
+    ...</code></td>
+            </tr>
+            
+            <tr class="perf">
+                <td><a href="https://docs.python.org/3/library/functools.html" target="_blank">functools.lru_cache</a></td>
+                <td>Memoize function results <span class="version-tag">(since Python 3.2)</span></td>
+                <td><span class="header-note">functools</span></td>
+                <td><code>from functools import lru_cache
+@lru_cache()
+def f(x):
+    ...</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    <h2>3. Standard Library Highlights (Non-Keywords)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Item</th>
+                <th style="width: 42%;">Description & Version</th>
+                <th style="width: 15%;">Context</th>
+                <th style="width: 25%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Common Modules</td></tr>
+            <tr class="module">
+                <td><a href="https://docs.python.org/3/library/pathlib.html" target="_blank">pathlib</a></td>
+                <td>Object-oriented filesystem paths <span class="version-tag">(since Python 3.4)</span></td>
+                <td><span class="header-note">pathlib</span></td>
+                <td><code>from pathlib import Path
+p = Path(&#x27;.&#x27;)</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://docs.python.org/3/library/os.html" target="_blank">os / sys</a></td>
+                <td>OS and interpreter interfaces <span class="version-tag">(since Python 2)</span></td>
+                <td><span class="header-note">os, sys</span></td>
+                <td><code>import os
+import sys</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://docs.python.org/3/library/subprocess.html" target="_blank">subprocess</a></td>
+                <td>Spawn and manage subprocesses <span class="version-tag">(since Python 2.4)</span></td>
+                <td><span class="header-note">subprocess</span></td>
+                <td><code>import subprocess
+subprocess.run([&#x27;ls&#x27;])</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://docs.python.org/3/library/json.html" target="_blank">json / csv</a></td>
+                <td>Data interchange helpers <span class="version-tag">(since Python 2.6)</span></td>
+                <td><span class="header-note">json, csv</span></td>
+                <td><code>import json
+json.dumps(obj)</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://docs.python.org/3/library/logging.html" target="_blank">logging</a></td>
+                <td>Flexible logging infrastructure <span class="version-tag">(since Python 2.3)</span></td>
+                <td><span class="header-note">logging</span></td>
+                <td><code>import logging
+logging.basicConfig(level=logging.INFO)</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://docs.python.org/3/library/argparse.html" target="_blank">argparse</a></td>
+                <td>CLI argument parsing <span class="version-tag">(since Python 2.7)</span></td>
+                <td><span class="header-note">argparse</span></td>
+                <td><code>import argparse
+parser = argparse.ArgumentParser()</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+  </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>__TITLE__</title>
+  <style>
+    /* Common sheet styles (single source-of-truth for all sheets) */
+    body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.5; padding: 20px; background-color: #f8fafb; color: #102a43; }
+    h1, h2 { text-align: center; color: #0b3b66; margin: 0 0 8px 0; }
+
+    .legend-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; justify-content:flex-start; padding:10px 12px; background: white; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.04); position:sticky; top:12px; z-index:50; margin:12px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; }
+    .legend-row .legend-item { flex:0 0 auto; }
+    .legend-item { display:flex; align-items:center; gap:8px; font-size:0.9em; font-weight:700; }
+    .color-box { width:18px; height:18px; border-radius:3px; border:1px solid rgba(0,0,0,0.06); flex:0 0 18px; }
+
+    .content { margin-top:6px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 40px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); table-layout: fixed; }
+    th, td { padding: 10px 15px; text-align: left; border-bottom: 1px solid #eef2f7; vertical-align: middle; }
+    th { background-color: #1b3a57; color: white; text-transform: uppercase; font-size: 0.85em; }
+    code { background: #0f1720; color: #dbeafe; padding: 4px 8px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 0.85em; display: block; white-space: pre; }
+    .version-tag { font-size: 0.75em; color: #475569; font-style: italic; display: block; }
+    .header-note { font-family: 'Consolas', monospace; font-size: 0.8em; color: #b91c1c; font-weight: bold; }
+    .separator { text-align: center; margin: 50px 0 30px; border-top: 3px dashed #cbd5e1; position: relative; }
+    .separator span { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: inherit; padding: 0 20px; font-weight: bold; color: #64748b; }
+    .category-label { font-size: 0.7em; font-weight: 800; color: #64748b; background: #f8fafc; text-transform: uppercase; }
+    .version-note { text-align:center; font-size:0.95em; color:#334155; margin-bottom:8px; }
+
+    /* Broad set of color key classes used across languages */
+    .type { background-color: #e8f5e9; }
+    .logic { background-color: #e3f2fd; }
+    .storage { background-color: #fff3e0; }
+    .oop { background-color: #f3e5f5; }
+    .memory { background-color: #ffebee; }
+    .modern { background-color: #fce4ec; }
+    .template-key { background-color: #e0f2f1; }
+    .system { background-color: #eceff1; }
+    .preprocessor { background-color: #f7fafc; border-left: 5px solid #636e72; }
+    .function { background-color: #fff9e6; }
+    .iter { background-color: #fff3f0; }
+    .module { background-color: #f0f4ff; }
+    .concurrency { background-color: #e8f7ec; }
+    .syntax { background-color: #ecf4ff; }
+    .global { background-color: #f8fafc; }
+    .advanced { background-color: #fff7f0; }
+
+    /* Responsive adjustments: keep .legend-row sticky but allow wrapping at narrow widths */
+    @media (max-width:900px) {
+      .legend-row { gap:8px; white-space:normal; }
+      .content { margin-top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>__TITLE__</h1>
+  __LEGEND__
+  <div class="content">
+    __CONTENT__
+  </div>
+</body>
+</html>

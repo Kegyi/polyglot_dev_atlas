@@ -1,0 +1,10 @@
+﻿{
+    "total":  163,
+    "failed":  1,
+    "failures":  [
+                     {
+                         "file":  "C:\\Users\\Kegyi\\C++\\TestProject\\polyglot_dev_atlas\\code_examples\\language_basics\\loops\\scala.scala",
+                         "details":  "scala-cli.exe : \u001b[31m\u001b[31m-- Error: C:\\Users\\Kegyi\\C++\\TestProject\\polyglot_dev\r\n_atlas\\code_examples\\language_basics\\loops\\scala.scala:20:4 \u001b[0m\u001b[0m\r\nAt line:1 char:133\r\n+ ... s) { $out = \u0026 \"C:\\Program Files\\scala-cli-x86_64-pc-win32\\scala-cli.e ...\r\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (\u001b[31m\u001b[31m-- Er...a:20:4 \u001b[0m\u001b[0m \r\n   :String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\n\u001b[31m20 |\u001b[0m    \u001b[33mdo\u001b[0m {\r\n\u001b[31m\u001b[31m   |\u001b[0m    ^^\u001b[0m\r\n\u001b[31m   |\u001b[0m    end of statement expected but \u0027do\u0027 found\r\n1 error found\r\nCompilation failed\r\n"
+                     }
+                 ]
+}

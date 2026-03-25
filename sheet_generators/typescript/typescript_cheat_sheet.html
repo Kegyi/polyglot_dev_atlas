@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TypeScript Polyglot Dev Atlas</title>
+  <style>
+    /* Common sheet styles (single source-of-truth for all sheets) */
+    body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.5; padding: 20px; background-color: #f8fafb; color: #102a43; }
+    h1, h2 { text-align: center; color: #0b3b66; margin: 0 0 8px 0; }
+
+    .legend-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; justify-content:flex-start; padding:10px 12px; background: white; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.04); position:sticky; top:12px; z-index:50; margin:12px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; }
+    .legend-row .legend-item { flex:0 0 auto; }
+    .legend-item { display:flex; align-items:center; gap:8px; font-size:0.9em; font-weight:700; }
+    .color-box { width:18px; height:18px; border-radius:3px; border:1px solid rgba(0,0,0,0.06); flex:0 0 18px; }
+
+    .content { margin-top:6px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 40px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); table-layout: fixed; }
+    th, td { padding: 10px 15px; text-align: left; border-bottom: 1px solid #eef2f7; vertical-align: middle; }
+    th { background-color: #1b3a57; color: white; text-transform: uppercase; font-size: 0.85em; }
+    code { background: #0f1720; color: #dbeafe; padding: 4px 8px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 0.85em; display: block; white-space: pre; }
+    .version-tag { font-size: 0.75em; color: #475569; font-style: italic; display: block; }
+    .header-note { font-family: 'Consolas', monospace; font-size: 0.8em; color: #b91c1c; font-weight: bold; }
+    .separator { text-align: center; margin: 50px 0 30px; border-top: 3px dashed #cbd5e1; position: relative; }
+    .separator span { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: inherit; padding: 0 20px; font-weight: bold; color: #64748b; }
+    .category-label { font-size: 0.7em; font-weight: 800; color: #64748b; background: #f8fafc; text-transform: uppercase; }
+    .version-note { text-align:center; font-size:0.95em; color:#334155; margin-bottom:8px; }
+
+    /* Broad set of color key classes used across languages */
+    .type { background-color: #e8f5e9; }
+    .logic { background-color: #e3f2fd; }
+    .storage { background-color: #fff3e0; }
+    .oop { background-color: #f3e5f5; }
+    .memory { background-color: #ffebee; }
+    .modern { background-color: #fce4ec; }
+    .template-key { background-color: #e0f2f1; }
+    .system { background-color: #eceff1; }
+    .preprocessor { background-color: #f7fafc; border-left: 5px solid #636e72; }
+    .function { background-color: #fff9e6; }
+    .iter { background-color: #fff3f0; }
+    .module { background-color: #f0f4ff; }
+    .concurrency { background-color: #e8f7ec; }
+    .syntax { background-color: #ecf4ff; }
+    .global { background-color: #f8fafc; }
+    .advanced { background-color: #fff7f0; }
+
+    /* Responsive adjustments: keep .legend-row sticky but allow wrapping at narrow widths */
+    @media (max-width:900px) {
+      .legend-row { gap:8px; white-space:normal; }
+      .content { margin-top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>TypeScript Polyglot Dev Atlas</h1>
+  <div class="legend-row">
+        <div class="legend-item"><div class="color-box type"></div> Types & Interfaces</div>
+        <div class="legend-item"><div class="color-box logic"></div> Control Flow</div>
+        <div class="legend-item"><div class="color-box function"></div> Functions</div>
+        <div class="legend-item"><div class="color-box module"></div> Modules</div>
+        <div class="legend-item"><div class="color-box generic"></div> Generics</div>
+        <div class="legend-item"><div class="color-box modifier"></div> Modifiers</div>
+        <div class="legend-item"><div class="color-box advanced"></div> Advanced / Utility</div>
+        <div class="legend-item"><div class="color-box tooling"></div> Tooling / Config</div>
+        <div class="legend-item"><div class="color-box dom"></div> DOM & Global APIs</div>
+    </div>
+  <div class="content">
+    
+    <h2>1. Core Essentials</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Item</th>
+                <th style="width: 42%;">Description & Version</th>
+                <th style="width: 15%;">Context</th>
+                <th style="width: 25%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Fundamental Types</td></tr>
+            <tr class="type">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">number</a></td>
+                <td>Numeric values (integers &amp; floats) <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>let n: number = 42;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">string</a></td>
+                <td>Text strings <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>let s: string = &#x27;hello&#x27;;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">boolean</a></td>
+                <td>true / false <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>let ok: boolean = true;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">bigint</a></td>
+                <td>Arbitrary-size integers <span class="version-tag">(since ES2020 / TS 3.2)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>let bi: bigint = 123n;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">symbol</a></td>
+                <td>Unique opaque identifier <span class="version-tag">(since ES2015 / TS 2.7)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>let sym: symbol = Symbol(&#x27;id&#x27;);</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a></td>
+                <td>Opt-out of type checking <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>let v: any = JSON.parse(s);</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">unknown</a></td>
+                <td>Type-safe unknown value <span class="version-tag">(since TS 3.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>let u: unknown = fetchVal();</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">never</a></td>
+                <td>Impossible value (e.g., function always throws) <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>function fail(): never { throw new Error(&#x27;&#x27;); }</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">void</a></td>
+                <td>No usable return value <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>function log(): void { console.log(&#x27;hi&#x27;); }</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Control Flow</td></tr>
+            <tr class="logic">
+                <td><a href="https://www.typescriptlang.org/search?q=if%20/%20else" target="_blank">if / else</a></td>
+                <td>Conditional branching <span class="version-tag">(since JS)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if (x &gt; 0) { } else { }</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://www.typescriptlang.org/search?q=switch" target="_blank">switch</a></td>
+                <td>Multi-way branch <span class="version-tag">(since JS)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>switch (v) { case 1: break; }</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://www.typescriptlang.org/search?q=for%20/%20while%20/%20do" target="_blank">for / while / do</a></td>
+                <td>Loop constructs <span class="version-tag">(since JS)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>for (let i = 0; i &lt; 5; i++) { }</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://www.typescriptlang.org/search?q=break%20/%20continue%20/%20return" target="_blank">break / continue / return</a></td>
+                <td>Flow control statements <span class="version-tag">(since JS)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>return value;</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Functions &amp; Modules</td></tr>
+            <tr class="function">
+                <td><a href="https://www.typescriptlang.org/search?q=function" target="_blank">function</a></td>
+                <td>Named function declaration <span class="version-tag">(since JS)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>function add(a: number, b: number): number { return a + b; }</code></td>
+            </tr>
+            
+            <tr class="function">
+                <td><a href="https://www.typescriptlang.org/search?q=%3D%3E%20%28arrow%29" target="_blank">=&gt; (arrow)</a></td>
+                <td>Arrow function shorthand <span class="version-tag">(since ES2015)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>const f = (x: number) =&gt; x + 1;</code></td>
+            </tr>
+            
+            <tr class="concurrency">
+                <td><a href="https://www.typescriptlang.org/search?q=async%20/%20await" target="_blank">async / await</a></td>
+                <td>Async functions using Promises <span class="version-tag">(since ES2017)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>async function fetchData() { await fetch(url); }</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://www.typescriptlang.org/search?q=import%20/%20export" target="_blank">import / export</a></td>
+                <td>Module import/export syntax <span class="version-tag">(since ES2015)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>import { readFile } from &#x27;fs&#x27;; export function x() {}</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Type System &amp; Annotations</td></tr>
+            <tr class="type">
+                <td><a href="https://www.typescriptlang.org/search?q=type%20/%20interface" target="_blank">type / interface</a></td>
+                <td>Type aliases and interfaces <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>type Point = { x: number; y: number }; interface I { id: string }</code></td>
+            </tr>
+            
+            <tr class="modifier">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">readonly / public / private / protected / abstract / static</a></td>
+                <td>Class member modifiers <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>class C { public readonly x: number; private y: string; static z = 1; }</code></td>
+            </tr>
+            
+            <tr class="generic">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/2/generics.html" target="_blank">generics &lt;T&gt;</a></td>
+                <td>Parameterize types and functions <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>function id&lt;T&gt;(x: T): T { return x; }</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://www.typescriptlang.org/search?q=union%20%7C%20/%20intersection%20%26" target="_blank">union | / intersection &amp;</a></td>
+                <td>Combine or intersect types <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>type U = A | B; type I = A &amp; B;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://www.typescriptlang.org/search?q=type%20assertion%20%28as%29%20/%20%3C%3E" target="_blank">type assertion (as) / &lt;&gt;</a></td>
+                <td>Assert a more specific type <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>const len = (x as string).length;</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <div class="separator"><span>Advanced & Ecosystem</span></div>
+    <h2>2. Advanced &amp; Ecosystem</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Item</th>
+                <th style="width: 42%;">Description & Version</th>
+                <th style="width: 15%;">Context</th>
+                <th style="width: 25%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Advanced Types &amp; Utilities</td></tr>
+            <tr class="advanced">
+                <td><a href="https://www.typescriptlang.org/search?q=Mapped%20Types%20/%20Conditional%20Types%20/%20keyof%20/%20typeof%20/%20infer" target="_blank">Mapped Types / Conditional Types / keyof / typeof / infer</a></td>
+                <td>Type-level computation and transforms <span class="version-tag">(since TS 2.x)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>type ReadOnly&lt;T&gt; = { readonly [K in keyof T]: T[K] }</code></td>
+            </tr>
+            
+            <tr class="utility">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">Utility Types (Partial, Required, Readonly, Pick, Omit)</a></td>
+                <td>Common helper types provided by TS <span class="version-tag">(since TS 2.1)</span></td>
+                <td><span class="header-note">lib.d.ts</span></td>
+                <td><code>type P = Partial&lt;MyType&gt;;</code></td>
+            </tr>
+            
+            <tr class="guards">
+                <td><a href="https://www.typescriptlang.org/search?q=type%20guards%20/%20instanceof%20/%20typeof%20/%20user-defined%20is" target="_blank">type guards / instanceof / typeof / user-defined is</a></td>
+                <td>Narrow types at runtime <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if (typeof x === &#x27;string&#x27;) { x.toUpperCase(); }</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Decorators &amp; Metadata</td></tr>
+            <tr class="meta">
+                <td><a href="https://www.typescriptlang.org/search?q=%40decorator" target="_blank">@decorator</a></td>
+                <td>Decorators for classes and members (requires enable) <span class="version-tag">(since experimental)</span></td>
+                <td><span class="header-note">Experimental</span></td>
+                <td><code>@sealed
+class C {}</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Tooling &amp; Config</td></tr>
+            <tr class="tooling">
+                <td><a href="https://www.typescriptlang.org/tsconfig" target="_blank">tsconfig.json</a></td>
+                <td>Compiler and project configuration <span class="version-tag">(since N/A)</span></td>
+                <td><span class="header-note">config</span></td>
+                <td><code>{ &quot;compilerOptions&quot;: { &quot;strict&quot;: true } }</code></td>
+            </tr>
+            
+            <tr class="tooling">
+                <td><a href="https://www.typescriptlang.org/search?q=tsc%20/%20ts-node%20/%20tsc%20--build" target="_blank">tsc / ts-node / tsc --build</a></td>
+                <td>Compile/run TypeScript <span class="version-tag">(since N/A)</span></td>
+                <td><span class="header-note">tooling</span></td>
+                <td><code>npx tsc --build</code></td>
+            </tr>
+            
+            <tr class="interop">
+                <td><a href="https://www.typescriptlang.org/search?q=declaration%20.d.ts%20files" target="_blank">declaration .d.ts files</a></td>
+                <td>Provide typings for JS libs <span class="version-tag">(since N/A)</span></td>
+                <td><span class="header-note">typing</span></td>
+                <td><code>declare module &#x27;foo&#x27;;</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    <h2>3. Standard Library Highlights (Non-Keywords)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Item</th>
+                <th style="width: 42%;">Description & Version</th>
+                <th style="width: 15%;">Context</th>
+                <th style="width: 25%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Built-ins &amp; DOM / ES APIs</td></tr>
+            <tr class="global">
+                <td><a href="https://www.typescriptlang.org/search?q=Promise" target="_blank">Promise</a></td>
+                <td>Asynchronous value container <span class="version-tag">(since ES2015)</span></td>
+                <td><span class="header-note">Global</span></td>
+                <td><code>Promise.resolve(42)</code></td>
+            </tr>
+            
+            <tr class="global">
+                <td><a href="https://www.typescriptlang.org/search?q=Array%20/%20Map%20/%20Set%20/%20WeakMap%20/%20WeakSet" target="_blank">Array / Map / Set / WeakMap / WeakSet</a></td>
+                <td>Core JS collections <span class="version-tag">(since ES2015)</span></td>
+                <td><span class="header-note">Global</span></td>
+                <td><code>const m = new Map&lt;string, number&gt;();</code></td>
+            </tr>
+            
+            <tr class="global">
+                <td><a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">ReadonlyArray / Tuple</a></td>
+                <td>Immutable array types and tuple types <span class="version-tag">(since TS 1.0)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>const t: [string, number] = [&#x27;a&#x27;, 1];</code></td>
+            </tr>
+            
+            <tr class="dom">
+                <td><a href="https://www.typescriptlang.org/search?q=DOM%20types%20%28Document%2C%20Element%2C%20Event%29" target="_blank">DOM types (Document, Element, Event)</a></td>
+                <td>Browser DOM API typings <span class="version-tag">(since lib.dom)</span></td>
+                <td><span class="header-note">lib.dom.d.ts</span></td>
+                <td><code>document.querySelector(&#x27;div&#x27;)</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+  </div>
+</body>
+</html>

@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>C++ Polyglot Dev Atlas</title>
+  <style>
+    /* Common sheet styles (single source-of-truth for all sheets) */
+    body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.5; padding: 20px; background-color: #f8fafb; color: #102a43; }
+    h1, h2 { text-align: center; color: #0b3b66; margin: 0 0 8px 0; }
+
+    .legend-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; justify-content:flex-start; padding:10px 12px; background: white; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.04); position:sticky; top:12px; z-index:50; margin:12px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; }
+    .legend-row .legend-item { flex:0 0 auto; }
+    .legend-item { display:flex; align-items:center; gap:8px; font-size:0.9em; font-weight:700; }
+    .color-box { width:18px; height:18px; border-radius:3px; border:1px solid rgba(0,0,0,0.06); flex:0 0 18px; }
+
+    .content { margin-top:6px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 40px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); table-layout: fixed; }
+    th, td { padding: 10px 15px; text-align: left; border-bottom: 1px solid #eef2f7; vertical-align: middle; }
+    th { background-color: #1b3a57; color: white; text-transform: uppercase; font-size: 0.85em; }
+    code { background: #0f1720; color: #dbeafe; padding: 4px 8px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 0.85em; display: block; white-space: pre; }
+    .version-tag { font-size: 0.75em; color: #475569; font-style: italic; display: block; }
+    .header-note { font-family: 'Consolas', monospace; font-size: 0.8em; color: #b91c1c; font-weight: bold; }
+    .separator { text-align: center; margin: 50px 0 30px; border-top: 3px dashed #cbd5e1; position: relative; }
+    .separator span { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: inherit; padding: 0 20px; font-weight: bold; color: #64748b; }
+    .category-label { font-size: 0.7em; font-weight: 800; color: #64748b; background: #f8fafc; text-transform: uppercase; }
+    .version-note { text-align:center; font-size:0.95em; color:#334155; margin-bottom:8px; }
+
+    /* Broad set of color key classes used across languages */
+    .type { background-color: #e8f5e9; }
+    .logic { background-color: #e3f2fd; }
+    .storage { background-color: #fff3e0; }
+    .oop { background-color: #f3e5f5; }
+    .memory { background-color: #ffebee; }
+    .modern { background-color: #fce4ec; }
+    .template-key { background-color: #e0f2f1; }
+    .system { background-color: #eceff1; }
+    .preprocessor { background-color: #f7fafc; border-left: 5px solid #636e72; }
+    .function { background-color: #fff9e6; }
+    .iter { background-color: #fff3f0; }
+    .module { background-color: #f0f4ff; }
+    .concurrency { background-color: #e8f7ec; }
+    .syntax { background-color: #ecf4ff; }
+    .global { background-color: #f8fafc; }
+    .advanced { background-color: #fff7f0; }
+
+    /* Responsive adjustments: keep .legend-row sticky but allow wrapping at narrow widths */
+    @media (max-width:900px) {
+      .legend-row { gap:8px; white-space:normal; }
+      .content { margin-top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>C++ Polyglot Dev Atlas</h1>
+  <div class="legend-row">
+                <div class="legend-item"><div class="color-box type"></div> Data Types</div>
+                <div class="legend-item"><div class="color-box logic"></div> Logic / Flow</div>
+                <div class="legend-item"><div class="color-box storage"></div> Storage / Modifiers</div>
+                <div class="legend-item"><div class="color-box oop"></div> OOP / Classes</div>
+                <div class="legend-item"><div class="color-box memory"></div> Memory / Safety</div>
+                <div class="legend-item"><div class="color-box modern"></div> Modern C++</div>
+                <div class="legend-item"><div class="color-box template-key"></div> Templates & Concepts</div>
+                <div class="legend-item"><div class="color-box preprocessor"></div> Preprocessor</div>
+                <div class="legend-item"><div class="color-box system"></div> System / Coroutines</div>
+        </div>
+  <div class="content">
+    
+    <h2>1. Core Essentials</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Keyword</th>
+                <th style="width: 30%;">Description & Version</th>
+                <th style="width: 15%;">Header</th>
+                <th style="width: 40%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Fundamental Types</td></tr>
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/bool" target="_blank">bool</a></td>
+                <td>True or false values <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>bool isActive = true;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/int" target="_blank">int</a></td>
+                <td>Standard integer <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>int count = 42;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/short" target="_blank">short</a></td>
+                <td>Small integer (at least 16 bits per standard; actual width is implementation-defined) <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">&lt;limits&gt;</span></td>
+                <td><code>short smallNum = 32767; // check with std::numeric_limits&lt;short&gt;::max()</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/long" target="_blank">long</a></td>
+                <td>Large integer (at least 32 bits per standard; actual width is implementation-defined) <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">&lt;limits&gt;</span></td>
+                <td><code>long bigNum = 2147483647L; // check with std::numeric_limits&lt;long&gt;::max()</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/long_long" target="_blank">long long</a></td>
+                <td>Extended large integer (at least 64-bit) <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>long long bigNum64 = 9223372036854775807LL;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/unsigned_long_long" target="_blank">unsigned long long</a></td>
+                <td>Non-negative large integer <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>unsigned long long ubig = 18446744073709551615ULL;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/signed" target="_blank">signed</a></td>
+                <td>Can hold negative/positive <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>signed int temperature = -5;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/char" target="_blank">char</a></td>
+                <td>Character type <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>char grade = &#x27;A&#x27;;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/char8_t" target="_blank">char8_t</a></td>
+                <td>UTF-8 code unit <span class="version-tag">(since C++20)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>char8_t c = u8&quot;A&quot;[0]; // C++20</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/char16_t" target="_blank">char16_t</a></td>
+                <td>UTF-16 code unit <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>char16_t u16 = u&#x27;A&#x27;;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/char32_t" target="_blank">char32_t</a></td>
+                <td>UTF-32 code unit <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>char32_t u32 = U&#x27;A&#x27;;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/wchar_t" target="_blank">wchar_t</a></td>
+                <td>Wide character type <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>wchar_t wc = L&#x27;A&#x27;;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/double" target="_blank">double</a></td>
+                <td>High-precision float <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>double pi = 3.14159;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/float" target="_blank">float</a></td>
+                <td>Single-precision float <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>float temp = 98.6f;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/void" target="_blank">void</a></td>
+                <td>Indicates no value/type <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>void printMessage();</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Control Flow</td></tr>
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/if" target="_blank">if</a></td>
+                <td>Execute if condition true <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if (x &gt; 10) { ... }</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/else" target="_blank">else</a></td>
+                <td>Alternative branch for if <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>else { doSomething(); }</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/switch" target="_blank">switch</a></td>
+                <td>Multi-way branch logic <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>switch(day) { ... }</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/for" target="_blank">for</a></td>
+                <td>Standard iteration loop <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>for(int i=0; i&lt;5; ++i)</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/range-based_for" target="_blank">range-based for</a></td>
+                <td>Iterate over elements of a container <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>for (auto &amp;e : container) { ... }</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/while" target="_blank">while</a></td>
+                <td>Loop while condition is true <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>while(x &lt; 100) { x++; }</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/do" target="_blank">do</a></td>
+                <td>Loop executed at least once <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>do { x++; } while(x &lt; 5);</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/return" target="_blank">return</a></td>
+                <td>Exit and return from function <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>return result;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/break" target="_blank">break</a></td>
+                <td>Exit immediate loop/switch <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if(error) break;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/continue" target="_blank">continue</a></td>
+                <td>Skip to next loop iteration <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if(skip) continue;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/case" target="_blank">case</a></td>
+                <td>Individual label in a switch <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>case 1: score += 10; break;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/default" target="_blank">default</a></td>
+                <td>Catch-all in a switch block <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>default: logError(); break;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/goto" target="_blank">goto</a></td>
+                <td>Jump to a labeled statement (Avoid) <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if(err) goto cleanup;</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Storage & Behavior</td></tr>
+            <tr class="storage">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/const" target="_blank">const</a></td>
+                <td>Value cannot be changed <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>const int MAX = 100;</code></td>
+            </tr>
+            
+            <tr class="storage">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/static" target="_blank">static</a></td>
+                <td>Persistent local storage <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>static int instances = 0;</code></td>
+            </tr>
+            
+            <tr class="storage">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/volatile" target="_blank">volatile</a></td>
+                <td>Prevent certain optimizations; used for hardware/atomic access <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>volatile int flag;</code></td>
+            </tr>
+            
+            <tr class="storage">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/inline" target="_blank">inline</a></td>
+                <td>Allow inline functions/variables and one-definition across TUs <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>inline void f() {}</code></td>
+            </tr>
+            
+            <tr class="storage">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/register" target="_blank">register</a></td>
+                <td>Storage-class hint <span class="deprecated-tag">(deprecated in C++17)</span> <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>register int r = 0;</code></td>
+            </tr>
+            
+            <tr class="storage">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/typedef" target="_blank">typedef</a></td>
+                <td>Alias for a type (pre C++11) <span class="version-tag">(since pre-C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>typedef unsigned int uint;</code></td>
+            </tr>
+            
+            <tr class="storage">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/unsigned" target="_blank">unsigned</a></td>
+                <td>Non-negative integers only <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>unsigned int score = 50;</code></td>
+            </tr>
+            
+            <tr class="storage">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/extern" target="_blank">extern</a></td>
+                <td>Linked to another file <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>extern int globalVar;</code></td>
+            </tr>
+            
+            <tr class="storage">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/mutable" target="_blank">mutable</a></td>
+                <td>Modifiable in a const function <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>mutable int cacheHitCount;</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">OOP & Classes</td></tr>
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/class" target="_blank">class</a></td>
+                <td>User defined type (private default) <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>class Player { ... };</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/struct" target="_blank">struct</a></td>
+                <td>User defined type (public default) <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>struct Point { int x, y; };</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/friend" target="_blank">friend</a></td>
+                <td>Allow external access to private <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>friend class Database;</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/explicit" target="_blank">explicit</a></td>
+                <td>Prevent implicit conversions <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>explicit MyClass(int x);</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/operator" target="_blank">operator</a></td>
+                <td>Define custom symbol behavior <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>bool operator==(const Obj&amp; x);</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/enum" target="_blank">enum</a></td>
+                <td>Set of named integer constants <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>enum Color { RED, BLUE };</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/enum_class" target="_blank">enum class</a></td>
+                <td>Scoped and strongly typed enumeration <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>enum class Color { RED, BLUE };</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/union" target="_blank">union</a></td>
+                <td>Type that holds one of several members <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>union Data { int i; float f; };</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/public" target="_blank">public</a></td>
+                <td>Accessible outside class <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>public: int health;</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/protected" target="_blank">protected</a></td>
+                <td>Accessible in class and derived classes <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>protected: int shield;</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/private" target="_blank">private</a></td>
+                <td>Accessible only within class <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>private: int secretKey;</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/virtual" target="_blank">virtual</a></td>
+                <td>Enables method overriding <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>virtual void attack();</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/this" target="_blank">this</a></td>
+                <td>Pointer to current instance <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>this-&gt;name = &quot;Hero&quot;;</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Memory & Safety</td></tr>
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/new" target="_blank">new</a></td>
+                <td>Allocate on heap <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>int* p = new int(5);</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/new[]" target="_blank">new[]</a></td>
+                <td>Allocate array on heap <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>int* arr = new int[10];</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/delete" target="_blank">delete</a></td>
+                <td>Free heap memory <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>delete p;</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/delete[]" target="_blank">delete[]</a></td>
+                <td>Free dynamically allocated arrays <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>delete[] arr;</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/try" target="_blank">try</a></td>
+                <td>Block to test for errors <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>try { riskyLogic(); }</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/catch" target="_blank">catch</a></td>
+                <td>Handle error from try block <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>catch(...) { recover(); }</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/throw" target="_blank">throw</a></td>
+                <td>Throw an exception <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">&lt;stdexcept&gt;</span></td>
+                <td><code>throw std::runtime_error(&quot;error&quot;);</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/sizeof" target="_blank">sizeof</a></td>
+                <td>Query size of a type or expression in bytes <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>size_t s = sizeof(int);</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <div class="separator"><span>Advanced & Modern</span></div>
+    <h2>2. Advanced & Modern Extensions</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Keyword</th>
+                <th style="width: 30%;">Description & Version</th>
+                <th style="width: 15%;">Header</th>
+                <th style="width: 40%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Modern Logic & Deduction</td></tr>
+            <tr class="modern">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/auto" target="_blank">auto</a></td>
+                <td>Deduce type from initializer <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>auto x = 3.14; // double</code></td>
+            </tr>
+            
+            <tr class="modern">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/lambda" target="_blank">lambda</a></td>
+                <td>Anonymous function object <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>auto f = [](int x){ return x + 1; };</code></td>
+            </tr>
+            
+            <tr class="modern">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/override" target="_blank">override</a></td>
+                <td>Explicitly override virtual func <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>void run() override;</code></td>
+            </tr>
+            
+            <tr class="modern">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/final" target="_blank">final</a></td>
+                <td>Prevent inheritance/overriding <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>class Base final { ... };</code></td>
+            </tr>
+            
+            <tr class="modern">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/constexpr" target="_blank">constexpr</a></td>
+                <td>Evaluate at compile time <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>constexpr int v = 10 * 5;</code></td>
+            </tr>
+            
+            <tr class="modern">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/consteval" target="_blank">consteval</a></td>
+                <td>Function must be evaluated at compile time <span class="version-tag">(since C++20)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>consteval int sq(int x) { return x*x; }</code></td>
+            </tr>
+            
+            <tr class="modern">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/constinit" target="_blank">constinit</a></td>
+                <td>Ensure static initialization <span class="version-tag">(since C++20)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>constinit static int v = 0;</code></td>
+            </tr>
+            
+            <tr class="modern">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/noexcept" target="_blank">noexcept</a></td>
+                <td>Guarantee function won&#x27;t throw <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>void log() noexcept;</code></td>
+            </tr>
+            
+            <tr class="modern">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/decltype" target="_blank">decltype</a></td>
+                <td>Extract type from expression <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>decltype(1 + 2.0) result; // double</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Advanced Memory Management & Casting</td></tr>
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/nullptr" target="_blank">nullptr</a></td>
+                <td>Safe null pointer literal <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>int* p = nullptr;</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/alignas" target="_blank">alignas</a></td>
+                <td>Specify memory alignment requirement <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>alignas(16) int a;</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/alignof" target="_blank">alignof</a></td>
+                <td>Query memory alignment requirement <span class="version-tag">(since C++11)</span></td>
+                <td><span class="header-note">&lt;cstddef&gt;</span></td>
+                <td><code>std::size_t a = alignof(int);</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/static_cast" target="_blank">static_cast</a></td>
+                <td>Compile-time conversion <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>float f = static_cast&lt;float&gt;(i);</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/dynamic_cast" target="_blank">dynamic_cast</a></td>
+                <td>Runtime safe inheritance cast <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>Dog* d = dynamic_cast&lt;Dog*&gt;(a);</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/const_cast" target="_blank">const_cast</a></td>
+                <td>Add or remove &#x27;const&#x27; property <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>int* p = const_cast&lt;int*&gt;(&amp;cVar);</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/reinterpret_cast" target="_blank">reinterpret_cast</a></td>
+                <td>Low-level bit reinterpretation <span class="version-tag">(since C++11)</span></td>
+                <td><span class="header-note">&lt;cstdint&gt;</span></td>
+                <td><code>auto addr = reinterpret_cast&lt;std::uintptr_t&gt;(ptr);</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/static_assert" target="_blank">static_assert</a></td>
+                <td>Compile-time validation (often used for sizes) <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>static_assert(sizeof(int) &gt;= 4);</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Templates & Concepts (C++20)</td></tr>
+            <tr class="template">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/template" target="_blank">template</a></td>
+                <td>Declare generic code <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>template &lt;typename T&gt;</code></td>
+            </tr>
+            
+            <tr class="template">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/typename" target="_blank">typename</a></td>
+                <td>Template type parameter <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>template &lt;typename T&gt; class X;</code></td>
+            </tr>
+            
+            <tr class="template">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/concept" target="_blank">concept</a></td>
+                <td>Define template constraints <span class="version-tag">(since C++20)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>concept Number = requires(T x)</code></td>
+            </tr>
+            
+            <tr class="template">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/import" target="_blank">import</a></td>
+                <td>Import module unit <span class="version-tag">(since C++20)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>import std;</code></td>
+            </tr>
+            
+            <tr class="template">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/export" target="_blank">export</a></td>
+                <td>Export module names <span class="version-tag">(since C++20)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>export module my_lib;</code></td>
+            </tr>
+            
+            <tr class="template">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/namespace" target="_blank">namespace</a></td>
+                <td>Logical scope grouping <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>namespace Graphics { ... }</code></td>
+            </tr>
+            
+            <tr class="template">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/using" target="_blank">using</a></td>
+                <td>Alias or namespace import <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>using String = std::string;</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Coroutines & System</td></tr>
+            <tr class="system">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/co_await" target="_blank">co_await</a></td>
+                <td>Suspend coroutine execution <span class="version-tag">(since C++20)</span></td>
+                <td><span class="header-note">&lt;coroutine&gt;</span></td>
+                <td><code>auto res = co_await task;</code></td>
+            </tr>
+            
+            <tr class="system">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/co_yield" target="_blank">co_yield</a></td>
+                <td>Return value + pause generator <span class="version-tag">(since C++20)</span></td>
+                <td><span class="header-note">&lt;coroutine&gt;</span></td>
+                <td><code>co_yield next_value;</code></td>
+            </tr>
+            
+            <tr class="system">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/co_return" target="_blank">co_return</a></td>
+                <td>Return from a coroutine <span class="version-tag">(since C++20)</span></td>
+                <td><span class="header-note">&lt;coroutine&gt;</span></td>
+                <td><code>co_return value;</code></td>
+            </tr>
+            
+            <tr class="system">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/thread_local" target="_blank">thread_local</a></td>
+                <td>Unique instance per thread <span class="version-tag">(since C++11)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>thread_local int threadTotal;</code></td>
+            </tr>
+            
+            <tr class="system">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/asm" target="_blank">asm</a></td>
+                <td>Inline assembly <span class="version-tag">(since N/A)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>asm(&quot;nop&quot;);</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Logical Tokens</td></tr>
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/and" target="_blank">and</a></td>
+                <td>Alias for &amp;&amp; <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if (isReady and isOk)</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/not" target="_blank">not</a></td>
+                <td>Alias for ! <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if (not isFull)</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/or" target="_blank">or</a></td>
+                <td>Alias for || <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if (isTrue or isValid)</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/xor" target="_blank">xor</a></td>
+                <td>Alias for ^ <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>bool result = a xor b;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/and_eq" target="_blank">and_eq</a></td>
+                <td>Alias for &amp;= <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>x and_eq y;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/or_eq" target="_blank">or_eq</a></td>
+                <td>Alias for |= <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>x or_eq y;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/not_eq" target="_blank">not_eq</a></td>
+                <td>Alias for != <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>x not_eq y;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/xor_eq" target="_blank">xor_eq</a></td>
+                <td>Alias for ^= <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>x xor_eq y;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/bitand" target="_blank">bitand</a></td>
+                <td>Alias for &amp; (bitwise AND) <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>int x = a bitand b;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/bitor" target="_blank">bitor</a></td>
+                <td>Alias for | (bitwise OR) <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>int x = a bitor b;</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/compl" target="_blank">compl</a></td>
+                <td>Alias for ~ (bitwise NOT) <span class="version-tag">(since C++98)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>int x = compl a;</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    <h2>3. Essential Standard Library Additions (Non-Keywords)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Keyword</th>
+                <th style="width: 30%;">Description & Version</th>
+                <th style="width: 15%;">Header</th>
+                <th style="width: 40%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Smart Pointers (RAII Classes)</td></tr>
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/memory/unique_ptr" target="_blank">std::unique_ptr</a></td>
+                <td>Exclusive ownership pointer <span class="version-tag">(since C++11)</span></td>
+                <td><span class="header-note">&lt;memory&gt;</span></td>
+                <td><code>auto p = std::make_unique&lt;T&gt;();</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/memory/shared_ptr" target="_blank">std::shared_ptr</a></td>
+                <td>Shared ownership pointer <span class="version-tag">(since C++11)</span></td>
+                <td><span class="header-note">&lt;memory&gt;</span></td>
+                <td><code>auto p = std::make_shared&lt;T&gt;();</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://en.cppreference.com/w/cpp/memory/weak_ptr" target="_blank">std::weak_ptr</a></td>
+                <td>Non-owning observer pointer <span class="version-tag">(since C++11)</span></td>
+                <td><span class="header-note">&lt;memory&gt;</span></td>
+                <td><code>std::weak_ptr&lt;T&gt; wp = sp;</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <div class="separator"><span>Advanced & Modern</span></div>
+    <h2>4. Preprocessor Directives (Meta-Programming)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Keyword</th>
+                <th style="width: 30%;">Description & Version</th>
+                <th style="width: 15%;">Header</th>
+                <th style="width: 40%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Conditional Compilation</td></tr>
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/if" target="_blank">if</a></td>
+                <td>Check if a condition is true <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#if DEBUG_LEVEL &gt; 1</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/elif" target="_blank">elif</a></td>
+                <td>Else-if condition <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#elif defined(TEST_MODE)</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/else" target="_blank">else</a></td>
+                <td>Alternative branch <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#else</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/endif" target="_blank">endif</a></td>
+                <td>End of conditional block <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#endif</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/ifdef" target="_blank">ifdef</a></td>
+                <td>Check if macro is defined <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#ifdef WIN32</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/ifndef" target="_blank">ifndef</a></td>
+                <td>Check if macro is NOT defined <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#ifndef HEADER_H</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/elifdef" target="_blank">elifdef</a></td>
+                <td>Else-if macro is defined <span class="version-tag">(since C++23)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#elifdef FEATURE_X</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/elifndef" target="_blank">elifndef</a></td>
+                <td>Else-if macro is NOT defined <span class="version-tag">(since C++23)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#elifndef FEATURE_Y</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Macro Definition</td></tr>
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/define" target="_blank">define</a></td>
+                <td>Define a macro or constant <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#define MAX_BUFFER 1024</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/undef" target="_blank">undef</a></td>
+                <td>Cancel a macro definition <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#undef MAX_BUFFER</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Source Control & Diagnostics</td></tr>
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/include" target="_blank">include</a></td>
+                <td>Include source file <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#include &lt;vector&gt;</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/embed" target="_blank">embed</a></td>
+                <td>Binary resource inclusion <span class="version-tag">(since C++26)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#embed &quot;image.png&quot;</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/line" target="_blank">line</a></td>
+                <td>Change internal line number/filename <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#line 100 &quot;custom.cpp&quot;</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/error" target="_blank">error</a></td>
+                <td>Stop compilation with error message <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#error &quot;Unsupported OS!&quot;</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/warning" target="_blank">warning</a></td>
+                <td>Issue compilation warning <span class="version-tag">(since C++23)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#warning &quot;Using beta feature&quot;</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/pragma" target="_blank">pragma</a></td>
+                <td>Compiler-specific instructions <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#pragma once</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Functional Checks</td></tr>
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/defined" target="_blank">defined</a></td>
+                <td>Unary operator to check macro existence <span class="version-tag">(since C++98)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#if defined(A) &amp;&amp; defined(B)</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/__has_include" target="_blank">__has_include</a></td>
+                <td>Check if a header file exists <span class="version-tag">(since C++17)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#if __has_include(&lt;filesystem&gt;)</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/__has_cpp_attribute" target="_blank">__has_cpp_attribute</a></td>
+                <td>Check for attribute support <span class="version-tag">(since C++20)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#if __has_cpp_attribute(nodiscard)</code></td>
+            </tr>
+            
+            <tr class="preprocessor">
+                <td><a href="https://en.cppreference.com/w/cpp/preprocessor/__has_embed" target="_blank">__has_embed</a></td>
+                <td>Check for binary resource existence <span class="version-tag">(since C++26)</span></td>
+                <td><span class="header-note">Preprocessor</span></td>
+                <td><code>#if __has_embed(&quot;data.bin&quot;)</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Module Directives (Preprocessor Context)</td></tr>
+            <tr class="template">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/export" target="_blank">export</a></td>
+                <td>Export module declaration <span class="version-tag">(since C++20)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>export module math;</code></td>
+            </tr>
+            
+            <tr class="template">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/import" target="_blank">import</a></td>
+                <td>Import module declaration <span class="version-tag">(since C++20)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>import std;</code></td>
+            </tr>
+            
+            <tr class="template">
+                <td><a href="https://en.cppreference.com/w/cpp/keyword/module" target="_blank">module</a></td>
+                <td>Declare module or global fragment <span class="version-tag">(since C++20)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>module; // Global fragment</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+  </div>
+</body>
+</html>

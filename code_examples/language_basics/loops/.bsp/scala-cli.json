@@ -1,0 +1,20 @@
+{
+  "name": "scala-cli",
+  "argv": [
+    "C:\\Program Files\\scala-cli-x86_64-pc-win32\\scala-cli.exe",
+    "bsp",
+    "--json-options",
+    "C:\\Users\\Kegyi\\C++\\TestProject\\polyglot_dev_atlas\\code_examples\\language_basics\\loops\\.scala-build\\ide-options-v2.json",
+    "--json-launcher-options",
+    "C:\\Users\\Kegyi\\C++\\TestProject\\polyglot_dev_atlas\\code_examples\\language_basics\\loops\\.scala-build\\ide-launcher-options.json",
+    "--envs-file",
+    "C:\\Users\\Kegyi\\C++\\TestProject\\polyglot_dev_atlas\\code_examples\\language_basics\\loops\\.scala-build\\ide-envs.json",
+    "C:\\Users\\Kegyi\\C++\\TestProject\\polyglot_dev_atlas\\code_examples\\language_basics\\loops\\scala.scala"
+  ],
+  "version": "1.12.4",
+  "bspVersion": "2.1.1",
+  "languages": [
+    "scala",
+    "java"
+  ]
+}

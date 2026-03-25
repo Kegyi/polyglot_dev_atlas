@@ -1,0 +1,7 @@
+# sample data
+Alice, 90
+Bob, 80
+Alice, 70
+# ignored comment
+Charlie, 100
+Bob, 60

@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Go Polyglot Dev Atlas</title>
+  <style>
+    /* Common sheet styles (single source-of-truth for all sheets) */
+    body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.5; padding: 20px; background-color: #f8fafb; color: #102a43; }
+    h1, h2 { text-align: center; color: #0b3b66; margin: 0 0 8px 0; }
+
+    .legend-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start; justify-content:flex-start; padding:10px 12px; background: white; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.04); position:sticky; top:12px; z-index:50; margin:12px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; }
+    .legend-row .legend-item { flex:0 0 auto; }
+    .legend-item { display:flex; align-items:center; gap:8px; font-size:0.9em; font-weight:700; }
+    .color-box { width:18px; height:18px; border-radius:3px; border:1px solid rgba(0,0,0,0.06); flex:0 0 18px; }
+
+    .content { margin-top:6px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 40px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); table-layout: fixed; }
+    th, td { padding: 10px 15px; text-align: left; border-bottom: 1px solid #eef2f7; vertical-align: middle; }
+    th { background-color: #1b3a57; color: white; text-transform: uppercase; font-size: 0.85em; }
+    code { background: #0f1720; color: #dbeafe; padding: 4px 8px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 0.85em; display: block; white-space: pre; }
+    .version-tag { font-size: 0.75em; color: #475569; font-style: italic; display: block; }
+    .header-note { font-family: 'Consolas', monospace; font-size: 0.8em; color: #b91c1c; font-weight: bold; }
+    .separator { text-align: center; margin: 50px 0 30px; border-top: 3px dashed #cbd5e1; position: relative; }
+    .separator span { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: inherit; padding: 0 20px; font-weight: bold; color: #64748b; }
+    .category-label { font-size: 0.7em; font-weight: 800; color: #64748b; background: #f8fafc; text-transform: uppercase; }
+    .version-note { text-align:center; font-size:0.95em; color:#334155; margin-bottom:8px; }
+
+    /* Broad set of color key classes used across languages */
+    .type { background-color: #e8f5e9; }
+    .logic { background-color: #e3f2fd; }
+    .storage { background-color: #fff3e0; }
+    .oop { background-color: #f3e5f5; }
+    .memory { background-color: #ffebee; }
+    .modern { background-color: #fce4ec; }
+    .template-key { background-color: #e0f2f1; }
+    .system { background-color: #eceff1; }
+    .preprocessor { background-color: #f7fafc; border-left: 5px solid #636e72; }
+    .function { background-color: #fff9e6; }
+    .iter { background-color: #fff3f0; }
+    .module { background-color: #f0f4ff; }
+    .concurrency { background-color: #e8f7ec; }
+    .syntax { background-color: #ecf4ff; }
+    .global { background-color: #f8fafc; }
+    .advanced { background-color: #fff7f0; }
+
+    /* Responsive adjustments: keep .legend-row sticky but allow wrapping at narrow widths */
+    @media (max-width:900px) {
+      .legend-row { gap:8px; white-space:normal; }
+      .content { margin-top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Go Polyglot Dev Atlas</h1>
+  <div class="legend-row">
+        <div class="legend-item"><div class="color-box syntax"></div> Syntax</div>
+        <div class="legend-item"><div class="color-box concurrency"></div> Concurrency</div>
+        <div class="legend-item"><div class="color-box module"></div> Stdlib & Tools</div>
+    </div>
+  <div class="content">
+    
+    <h2>1. Core Keywords &amp; Types</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Item</th>
+                <th style="width: 42%;">Description & Version</th>
+                <th style="width: 15%;">Context</th>
+                <th style="width: 25%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Fundamental Types</td></tr>
+            <tr class="type">
+                <td><a href="https://pkg.go.dev/search?q=bool" target="_blank">bool</a></td>
+                <td>Boolean type (true/false) <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>var b bool = true</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://pkg.go.dev/search?q=string" target="_blank">string</a></td>
+                <td>Immutable UTF-8 string <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>s := &quot;hello&quot;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://pkg.go.dev/search?q=int%20/%20int8%20/%20int16%20/%20int32%20/%20int64" target="_blank">int / int8 / int16 / int32 / int64</a></td>
+                <td>Signed integer types <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>var n int = 42
+var i8 int8 = -1</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://pkg.go.dev/search?q=uint%20/%20byte%20/%20rune" target="_blank">uint / byte / rune</a></td>
+                <td>Unsigned integer / alias types (byte=rune) <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>var u uint = 7
+var r rune = &#x27;ä¸–&#x27;</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://pkg.go.dev/search?q=float32%20/%20float64" target="_blank">float32 / float64</a></td>
+                <td>Floating point numbers <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>var f float64 = 3.14</code></td>
+            </tr>
+            
+            <tr class="type">
+                <td><a href="https://pkg.go.dev/search?q=complex64%20/%20complex128" target="_blank">complex64 / complex128</a></td>
+                <td>Complex number types <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>z := complex(1, 2)</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Declarations &amp; Basics</td></tr>
+            <tr class="decl">
+                <td><a href="https://pkg.go.dev/search?q=package" target="_blank">package</a></td>
+                <td>Define package name for the file <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>package main</code></td>
+            </tr>
+            
+            <tr class="decl">
+                <td><a href="https://pkg.go.dev/search?q=import" target="_blank">import</a></td>
+                <td>Import packages <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>import &quot;fmt&quot;</code></td>
+            </tr>
+            
+            <tr class="decl">
+                <td><a href="https://pkg.go.dev/search?q=var" target="_blank">var</a></td>
+                <td>Declare variables <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>var x int = 5</code></td>
+            </tr>
+            
+            <tr class="decl">
+                <td><a href="https://pkg.go.dev/search?q=const" target="_blank">const</a></td>
+                <td>Declare constants <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>const Pi = 3.14159</code></td>
+            </tr>
+            
+            <tr class="decl">
+                <td><a href="https://pkg.go.dev/search?q=type" target="_blank">type</a></td>
+                <td>Define new types <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>type Point struct { X, Y int }</code></td>
+            </tr>
+            
+            <tr class="decl">
+                <td><a href="https://pkg.go.dev/search?q=func" target="_blank">func</a></td>
+                <td>Define a function <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>func Add(a, b int) int { return a + b }</code></td>
+            </tr>
+            
+            <tr class="decl">
+                <td><a href="https://pkg.go.dev/search?q=%3A%3D" target="_blank">:=</a></td>
+                <td>Short variable declaration and type inference <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>x := 10</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Control Flow</td></tr>
+            <tr class="logic">
+                <td><a href="https://go.dev/ref/spec" target="_blank">if / else</a></td>
+                <td>Conditional branching <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>if x &gt; 0 {
+    // ...
+} else {
+    // ...
+}</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://go.dev/ref/spec" target="_blank">for / range</a></td>
+                <td>Looping (Go&#x27;s only loop) <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>for i := 0; i &lt; 5; i++ { }
+for i, v := range slice { }</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://go.dev/ref/spec" target="_blank">switch / case</a></td>
+                <td>Multi-way branch (supports type switches) <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>switch x { case 1: 
+    // ...
+}</code></td>
+            </tr>
+            
+            <tr class="concurrency">
+                <td><a href="https://go.dev/ref/spec" target="_blank">select</a></td>
+                <td>Wait on multiple channel operations <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>select { case v := &lt;-ch: 
+    _ = v
+}</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://go.dev/ref/spec" target="_blank">defer</a></td>
+                <td>Schedule call to run when function returns <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>defer file.Close()</code></td>
+            </tr>
+            
+            <tr class="logic">
+                <td><a href="https://go.dev/ref/spec" target="_blank">goto / break / continue / fallthrough</a></td>
+                <td>Loop and flow control primitives <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>break
+continue
+fallthrough</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Memory &amp; Pointers</td></tr>
+            <tr class="memory">
+                <td><a href="https://pkg.go.dev/builtin#new" target="_blank">new</a></td>
+                <td>Allocate zeroed storage and return pointer <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>p := new(int)</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://pkg.go.dev/builtin#make" target="_blank">make</a></td>
+                <td>Create slices, maps, and channels <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>s := make([]int, 0, 10)
+m := make(map[string]int)
+ch := make(chan int)</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://pkg.go.dev/search?q=%26%20/%20%2A" target="_blank">&amp; / *</a></td>
+                <td>Address-of and pointer dereference <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>p := &amp;x
+*x = 10</code></td>
+            </tr>
+            
+            <tr class="memory">
+                <td><a href="https://pkg.go.dev/search?q=nil" target="_blank">nil</a></td>
+                <td>Zero value for pointers, channels, maps, slices, interfaces <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>var p *int = nil</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <div class="separator"><span>Advanced & Concurrency</span></div>
+    <h2>2. Concurrency &amp; Advanced</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Item</th>
+                <th style="width: 42%;">Description & Version</th>
+                <th style="width: 15%;">Context</th>
+                <th style="width: 25%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Goroutines &amp; Channels</td></tr>
+            <tr class="concurrency">
+                <td><a href="https://go.dev/ref/spec" target="_blank">go</a></td>
+                <td>Start a new goroutine (lightweight thread) <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>go doWork()</code></td>
+            </tr>
+            
+            <tr class="concurrency">
+                <td><a href="https://pkg.go.dev/search?q=chan" target="_blank">chan</a></td>
+                <td>Channel type for communication between goroutines <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>ch := make(chan int)
+ch &lt;- 1
+v := &lt;-ch</code></td>
+            </tr>
+            
+            <tr class="concurrency">
+                <td><a href="https://pkg.go.dev/builtin#close" target="_blank">close</a></td>
+                <td>Close a channel when no more values will be sent <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="header-note">builtin</span></td>
+                <td><code>close(ch)</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Synchronization</td></tr>
+            <tr class="sync">
+                <td><a href="https://pkg.go.dev/sync" target="_blank">sync.Mutex / sync.RWMutex</a></td>
+                <td>Mutual exclusion locks <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="header-note">sync</span></td>
+                <td><code>var mu sync.Mutex
+mu.Lock()
+mu.Unlock()</code></td>
+            </tr>
+            
+            <tr class="sync">
+                <td><a href="https://pkg.go.dev/sync" target="_blank">sync.WaitGroup</a></td>
+                <td>Wait for a collection of goroutines to finish <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="header-note">sync</span></td>
+                <td><code>var wg sync.WaitGroup
+wg.Add(1)
+go func() { defer wg.Done(); ... }()
+wg.Wait()</code></td>
+            </tr>
+            
+            <tr class="sync">
+                <td><a href="https://pkg.go.dev/context" target="_blank">context.Context</a></td>
+                <td>Cancellation, deadlines and request-scoped values <span class="version-tag">(since Go 1.7)</span></td>
+                <td><span class="header-note">context</span></td>
+                <td><code>ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+defer cancel()</code></td>
+            </tr>
+            <tr class="category-label"><td colspan="4">Interfaces &amp; Types</td></tr>
+            <tr class="oop">
+                <td><a href="https://pkg.go.dev/search?q=interface" target="_blank">interface</a></td>
+                <td>Define behavior via method set <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>type Reader interface { Read(p []byte) (n int, err error) }</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://pkg.go.dev/search?q=struct%20/%20methods" target="_blank">struct / methods</a></td>
+                <td>Block of fields + methods on types <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>type S struct { A int }
+func (s *S) M() {}</code></td>
+            </tr>
+            
+            <tr class="oop">
+                <td><a href="https://pkg.go.dev/search?q=embedding" target="_blank">embedding</a></td>
+                <td>Compose types by embedding struct/types <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="">Built-in</span></td>
+                <td><code>type T struct { S }</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    <h2>3. Standard Library Highlights (Non-Keywords)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 18%;">Item</th>
+                <th style="width: 42%;">Description & Version</th>
+                <th style="width: 15%;">Context</th>
+                <th style="width: 25%;">Snippet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-label"><td colspan="4">Common Packages</td></tr>
+            <tr class="module">
+                <td><a href="https://pkg.go.dev/fmt" target="_blank">fmt</a></td>
+                <td>Formatted I/O (Print, Sprintf) <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="header-note">fmt</span></td>
+                <td><code>fmt.Println(&quot;hello&quot;)</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://pkg.go.dev/net/http" target="_blank">net/http</a></td>
+                <td>HTTP client and server <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="header-note">net/http</span></td>
+                <td><code>http.ListenAndServe(&quot;:8080&quot;, handler)</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://pkg.go.dev/io" target="_blank">io / io/ioutil</a></td>
+                <td>I/O primitives and helpers <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="header-note">io</span></td>
+                <td><code>io.Copy(dst, src)</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://pkg.go.dev/encoding/json" target="_blank">encoding/json</a></td>
+                <td>JSON marshal/unmarshal <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="header-note">encoding/json</span></td>
+                <td><code>json.Unmarshal(data, &amp;v)</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://pkg.go.dev/sync" target="_blank">sync</a></td>
+                <td>Concurrency primitives (Mutex, WaitGroup) <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="header-note">sync</span></td>
+                <td><code>var mu sync.Mutex</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://pkg.go.dev/time" target="_blank">time</a></td>
+                <td>Time, timers, sleeping <span class="version-tag">(since Go 1)</span></td>
+                <td><span class="header-note">time</span></td>
+                <td><code>time.Sleep(time.Second)</code></td>
+            </tr>
+            
+            <tr class="module">
+                <td><a href="https://pkg.go.dev/context" target="_blank">context</a></td>
+                <td>Cancellation and deadlines <span class="version-tag">(since Go 1.7)</span></td>
+                <td><span class="header-note">context</span></td>
+                <td><code>ctx := context.Background()</code></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+  </div>
+</body>
+</html>

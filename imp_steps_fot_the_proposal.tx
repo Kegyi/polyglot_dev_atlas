@@ -1,0 +1,50 @@
+**How I would start**
+1. Add plumbing first, no new content yet.
+2. Add one new view end-to-end (Workflow) as the vertical slice.
+3. Add Course view and adapter insight rendering.
+4. Then add the new learning entries and course copy.
+
+**Why this order**
+- You already have centralized extension points:
+- View registry in polyglot_dev_atlas.html
+- View buttons in polyglot_dev_atlas.html
+- Metadata renderer in polyglot_dev_atlas.html
+- Main render switch in polyglot_dev_atlas.html
+
+So we can add features with low risk and minimal rewiring.
+
+**Concrete phase plan**
+
+1. Phase 1: Data and UI plumbing
+- Add WORKFLOW dataset.
+- Add COURSE_STEPS dataset.
+- Add adapterInsight field support in entries.
+- Add a dedicated adapter note container in metadata panel.
+- Add course to view button order.
+
+2. Phase 2: Workflow view (Rosetta Stone)
+- New view key: workflow
+- Reuse compare mode and language selection.
+- Render compact table: concept, per-language snippet, practical note.
+- Keep this simple first; no sidebar yet.
+
+3. Phase 3: Course view
+- New view key: course
+- Sidebar for steps (1..N), main panel with:
+- Compare links (which existing basics/pattern entries to open)
+- Adapter Insight text
+- “Why this matters” block
+- Optional “Try this mini exercise” block
+
+4. Phase 4: Content additions
+- Type system comparison entry
+- Null model entry
+- Scala 2 to 3 bridge entry
+- Quick context switch table on home
+- Add adapterInsight on top problems first (balanced brackets, top-k, grid shortest path, etc.)
+
+**Recommended first implementation target (1 PR)**
+- Workflow view + one adapterInsight example + metadata panel support.
+- This gives immediate value and validates UX before adding large content volume.
+
+If you want, I can implement Phase 1 and Phase 2 now directly in the generator flow, regenerate the HTML, and leave you with a clean first milestone.
