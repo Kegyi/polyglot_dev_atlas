@@ -1264,6 +1264,85 @@
         margin: 0 0 12px 18px;
     }
 
+    .lang-feature-overview {
+        margin: 10px 0 14px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        background: color-mix(in srgb, var(--panel-title-bg) 72%, transparent);
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 78%, transparent);
+    }
+
+    .lang-feature-overview p {
+        margin: 0;
+    }
+
+    .lang-feature-grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        margin-bottom: 8px;
+    }
+
+    .lang-feature-card {
+        border: 1px solid var(--panel-title-border);
+        border-radius: 10px;
+        padding: 12px;
+        background: color-mix(in srgb, var(--card-bg) 92%, var(--panel-title-bg) 8%);
+        box-shadow: var(--meta-shadow);
+    }
+
+    .lang-feature-lang {
+        margin: 0 0 8px;
+        color: var(--panel-title-fg);
+        font-size: var(--title-main-size);
+        font-weight: var(--title-main-weight);
+        letter-spacing: var(--title-letter-spacing);
+        line-height: 1.3;
+    }
+
+    .lang-feature-intro {
+        margin: 0 0 10px;
+        color: var(--sheet-td-fg);
+        line-height: 1.5;
+    }
+
+    .lang-feature-section {
+        margin-top: 8px;
+    }
+
+    .lang-feature-heading {
+        margin: 0 0 6px;
+        color: var(--sheet-title-fg);
+        font-size: var(--title-sub-size);
+        font-weight: var(--title-sub-weight);
+        letter-spacing: var(--title-letter-spacing);
+        line-height: 1.3;
+    }
+
+    .lang-feature-section ul {
+        margin: 0 0 6px 18px;
+    }
+
+    .lang-feature-snippet {
+        margin-top: 10px;
+        padding: 8px 9px;
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 70%, transparent);
+        border-radius: 8px;
+        background: color-mix(in srgb, var(--panel-title-bg) 38%, transparent);
+    }
+
+    .lang-feature-snippet p {
+        margin: 0 0 8px;
+        color: var(--sheet-muted-fg);
+    }
+
+    .home-code-block {
+        border-radius: 8px;
+        margin-top: 4px;
+        max-height: 280px;
+        white-space: pre-wrap;
+    }
+
     .doc-table-wrap {
         overflow-x: auto;
         margin: 12px 0 16px;
@@ -1522,6 +1601,109 @@
             'Exhaustive pattern matching and extractors',
             'Effect-style composition with monads and for-comprehensions'
         ]
+    };
+
+    var LANGUAGE_SPECIFIC_BEGINNER_GUIDE = {
+        cpp: {
+            intro: 'C++ gives you direct control over memory and object lifetime. That makes performance strong, but it also means ownership rules matter from day one.',
+            mindsets: [
+                'Think in terms of object lifetime: stack, heap, and who owns cleanup.',
+                'Prefer value semantics first, then add pointers when sharing or polymorphism is needed.',
+                'Use RAII wrappers so cleanup happens automatically.'
+            ],
+            snippets: [
+                {
+                    title: 'RAII cleanup (automatic)',
+                    note: 'When scope ends, destructors run. No manual close call needed.',
+                    code: 'struct FileGuard {\n  ~FileGuard() { /* close file */ }\n};\n\nvoid readConfig() {\n  FileGuard guard;\n  // use file\n} // guard cleanup happens here'
+                },
+                {
+                    title: 'Move semantics (transfer ownership)',
+                    note: 'Use std::move to transfer expensive resources instead of copying.',
+                    code: 'std::vector<int> build() {\n  std::vector<int> data{1,2,3};\n  return data; // moved (or elided)\n}\n\nstd::vector<int> numbers = build();'
+                }
+            ]
+        },
+        python: {
+            intro: 'Python is optimized for readability and quick iteration. Many advanced patterns are runtime-based, so you can build power incrementally.',
+            mindsets: [
+                'Start with clear functions and classes before advanced magic methods.',
+                'Use decorators for cross-cutting behavior like logging or timing.',
+                'Think in protocols: if it behaves like the needed interface, it usually works.'
+            ],
+            snippets: [
+                {
+                    title: 'Decorator for reusable behavior',
+                    note: 'Wrap a function once, then reuse that behavior everywhere.',
+                    code: 'def logged(fn):\n    def wrapper(*args, **kwargs):\n        print("calling", fn.__name__)\n        return fn(*args, **kwargs)\n    return wrapper\n\n@logged\ndef add(a, b):\n    return a + b'
+                },
+                {
+                    title: 'Context manager style cleanup',
+                    note: 'Use with to guarantee cleanup even when errors happen.',
+                    code: 'with open("notes.txt", "r", encoding="utf-8") as f:\n    text = f.read()\n# file is closed automatically'
+                }
+            ]
+        },
+        go: {
+            intro: 'Go keeps the language small and predictable. Concurrency and explicit error handling are core habits, not optional extras.',
+            mindsets: [
+                'Return errors as values and handle them immediately.',
+                'Use goroutines for concurrent work and channels for coordination.',
+                'Use defer right after acquiring a resource.'
+            ],
+            snippets: [
+                {
+                    title: 'Error-first flow',
+                    note: 'Go favors explicit branches over exceptions.',
+                    code: 'n, err := strconv.Atoi(input)\nif err != nil {\n    return fmt.Errorf("invalid number: %w", err)\n}\nfmt.Println("parsed", n)'
+                },
+                {
+                    title: 'Goroutine + channel',
+                    note: 'Start work concurrently and receive the result through a channel.',
+                    code: 'ch := make(chan string)\ngo func() {\n    ch <- "done"\n}()\nmsg := <-ch\nfmt.Println(msg)'
+                }
+            ]
+        },
+        typescript: {
+            intro: 'TypeScript adds a strong static type layer on top of JavaScript. It is excellent for making APIs self-documenting and safer to refactor.',
+            mindsets: [
+                'Use union types to model possible states clearly.',
+                'Narrow types with guards before using specific fields.',
+                'Let interfaces describe behavior, then implement with any matching shape.'
+            ],
+            snippets: [
+                {
+                    title: 'Discriminated union',
+                    note: 'Model variants and handle each one safely in switch.',
+                    code: 'type Result =\n  | { ok: true; value: number }\n  | { ok: false; error: string }\n\nfunction show(r: Result) {\n  return r.ok ? `value=${r.value}` : `error=${r.error}`\n}'
+                },
+                {
+                    title: 'Type guard narrowing',
+                    note: 'A guard helps TypeScript infer the precise type.',
+                    code: 'function isText(v: unknown): v is string {\n  return typeof v === "string"\n}\n\nconst value: unknown = "hello"\nif (isText(value)) console.log(value.toUpperCase())'
+                }
+            ]
+        },
+        scala: {
+            intro: 'Scala blends object-oriented and functional styles. You can start simple, then gradually adopt stronger abstractions like Options, Eithers, and type classes.',
+            mindsets: [
+                'Prefer immutable collections and expression-style code.',
+                'Use Option instead of null for absent values.',
+                'Treat pattern matching as a primary control-flow tool.'
+            ],
+            snippets: [
+                {
+                    title: 'Option instead of null',
+                    note: 'Represent missing values explicitly and handle both cases.',
+                    code: 'val maybeAge: Option[Int] = Some(20)\nval label = maybeAge match\n  case Some(age) => s"age=$age"\n  case None => "age=unknown"'
+                },
+                {
+                    title: 'Collection pipeline',
+                    note: 'Transform data with small composable steps.',
+                    code: 'val nums = List(1, 2, 3, 4, 5)\nval result = nums\n  .filter(_ % 2 == 1)\n  .map(_ * 10)\n  .sum'
+                }
+            ]
+        }
     };
 
     var EXERCISE_GROUPS = [
@@ -2545,23 +2727,75 @@
             pushUniqueLang(state.selectedLangs[1]);
         }
 
-        var rows = '';
+        function snippetLanguage(baseLang) {
+            if (baseLang === 'scala') {
+                return 'scala';
+            }
+            return highlightLang(baseLang);
+        }
+
+        var cards = '';
         selected.forEach(function (langKey) {
+            var profile = LANGUAGE_SPECIFIC_BEGINNER_GUIDE[langKey] || null;
             var points = LANGUAGE_SPECIFIC_FEATURES[langKey] || [];
-            var list = '<ul>' + points.map(function (p) {
-                return '<li>' + escapeHtml(p) + '</li>';
+
+            if (!profile) {
+                var fallbackList = '<ul>' + points.map(function (p) {
+                    return '<li>' + escapeHtml(p) + '</li>';
+                }).join('') + '</ul>';
+                cards += ''
+                    + '<article class="lang-feature-card">'
+                    + '  <h3 class="lang-feature-lang">' + escapeHtml(LANG_LABELS[langKey] || langKey) + '</h3>'
+                    + '  <p class="lang-feature-intro">Detailed beginner guide is not configured yet.</p>'
+                    + '  <section class="lang-feature-section">'
+                    + '    <h4 class="lang-feature-heading">Key Features</h4>'
+                    +      fallbackList
+                    + '  </section>'
+                    + '</article>';
+                return;
+            }
+
+            var mindsetHtml = '<ul>' + (profile.mindsets || []).map(function (point) {
+                return '<li>' + escapeHtml(point) + '</li>';
             }).join('') + '</ul>';
-            rows += '<tr><td>' + escapeHtml(LANG_LABELS[langKey] || langKey) + '</td><td>' + list + '</td></tr>';
+
+            var snippetHtml = (profile.snippets || []).map(function (item) {
+                return ''
+                    + '<section class="lang-feature-snippet">'
+                    + '  <h4 class="lang-feature-heading">' + escapeHtml(item.title || 'Snippet') + '</h4>'
+                    + '  <p>' + escapeHtml(item.note || '') + '</p>'
+                    + '  <pre class="code-block home-code-block"><code class="code-sample language-' + snippetLanguage(langKey) + '">' + escapeHtml(item.code || '') + '</code></pre>'
+                    + '</section>';
+            }).join('');
+
+            cards += ''
+                + '<article class="lang-feature-card">'
+                + '  <h3 class="lang-feature-lang">' + escapeHtml(LANG_LABELS[langKey] || langKey) + '</h3>'
+                + '  <p class="lang-feature-intro">' + escapeHtml(profile.intro || '') + '</p>'
+                + '  <section class="lang-feature-section">'
+                + '    <h4 class="lang-feature-heading">Beginner Mindset</h4>'
+                +      mindsetHtml
+                + '  </section>'
+                + '  <section class="lang-feature-section">'
+                + '    <h4 class="lang-feature-heading">Code Patterns</h4>'
+                +      snippetHtml
+                + '  </section>'
+                + '</article>';
         });
 
-        if (!rows) {
-            rows = '<tr><td>None</td><td>Select a language above to show language-specific features.</td></tr>';
+        if (!cards) {
+            cards = ''
+                + '<article class="lang-feature-card">'
+                + '  <h3 class="lang-feature-lang">No language selected</h3>'
+                + '  <p class="lang-feature-intro">Pick one or two languages from the top row to see beginner-friendly language-specific features.</p>'
+                + '</article>';
         }
 
         var dynamicSection = ''
-            + '<div class="doc-table-wrap"><table class="doc-table">'
-            + '<thead><tr><th>Language</th><th>Detailed language-specific features</th></tr></thead>'
-            + '<tbody>' + rows + '</tbody></table></div>';
+            + '<div class="lang-feature-overview">'
+            + '  <p>This section explains why each feature matters, then shows tiny snippets you can pattern-match while learning.</p>'
+            + '</div>'
+            + '<div class="lang-feature-grid">' + cards + '</div>';
 
         baseHtml = baseHtml.replace('<p>__LANG_SPECIFIC_FEATURES__</p>', dynamicSection);
         baseHtml = baseHtml.replace('__LANG_SPECIFIC_FEATURES__', dynamicSection);
