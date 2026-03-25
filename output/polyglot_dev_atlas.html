@@ -3373,26 +3373,40 @@
             var atlasViews = listLabels((VIEW_CATEGORIES.atlas && VIEW_CATEGORIES.atlas.views) || []);
             var learningViews = listLabels((VIEW_CATEGORIES.learning && VIEW_CATEGORIES.learning.views) || []);
 
-            var primaryLang = LANG_LABELS[state.selectedLangs[0]] || state.selectedLangs[0] || (LANG_ORDER[0] ? (LANG_LABELS[LANG_ORDER[0]] || LANG_ORDER[0]) : 'C++');
-            var secondaryLang = LANG_LABELS[state.selectedLangs[1]] || state.selectedLangs[1] || (LANG_ORDER[1] ? (LANG_LABELS[LANG_ORDER[1]] || LANG_ORDER[1]) : 'Python');
+            var primaryLangKey = LANG_ORDER.indexOf(state.selectedLangs[0]) !== -1
+                ? state.selectedLangs[0]
+                : (LANG_ORDER[0] || 'cpp');
 
-            if (!secondaryLang || secondaryLang === primaryLang) {
-                secondaryLang = LANG_ORDER[1]
-                    ? (LANG_LABELS[LANG_ORDER[1]] || LANG_ORDER[1])
-                    : 'Python';
+            var secondaryLangKey = LANG_ORDER.indexOf(state.selectedLangs[1]) !== -1
+                ? state.selectedLangs[1]
+                : chooseNextLang(primaryLangKey);
+
+            if (!secondaryLangKey || secondaryLangKey === primaryLangKey) {
+                secondaryLangKey = chooseNextLang(primaryLangKey);
             }
 
-            var movingLang = LANG_ORDER[2]
-                ? (LANG_LABELS[LANG_ORDER[2]] || LANG_ORDER[2])
-                : 'Go';
+            var movingLangKey = LANG_ORDER.find(function (k) {
+                return k !== primaryLangKey && k !== secondaryLangKey;
+            });
 
-            var allLangChips = LANG_ORDER.map(function (k) {
-                return LANG_LABELS[k] || k;
-            }).filter(Boolean);
-
-            if (allLangChips.length === 0) {
-                allLangChips = [primaryLang, secondaryLang, movingLang, 'TypeScript', 'Scala'];
+            if (!movingLangKey) {
+                movingLangKey = chooseNextLang(secondaryLangKey || primaryLangKey);
             }
+
+            var primaryLang = LANG_LABELS[primaryLangKey] || primaryLangKey || 'C++';
+            var secondaryLang = LANG_LABELS[secondaryLangKey] || secondaryLangKey || 'Python';
+            var movingLang = LANG_LABELS[movingLangKey] || movingLangKey || 'Go';
+
+            var allLangChips = [primaryLang, secondaryLang, movingLang];
+            LANG_ORDER.forEach(function (k) {
+                if (k === primaryLangKey || k === secondaryLangKey || k === movingLangKey) {
+                    return;
+                }
+                var label = LANG_LABELS[k] || k;
+                if (label) {
+                    allLangChips.push(label);
+                }
+            });
 
             function chipsToHtml(items) {
                 if (!items.length) {
