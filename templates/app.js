@@ -827,9 +827,9 @@
         var nav = document.getElementById('viewNav');
         nav.innerHTML = '';
 
-        var allViews = ['sheets', 'basics', 'course', 'exercises', 'workflow', 'problems', 'interview', 'patterns', 'principles'];
-        var visibleViews = allViews.filter(function (viewKey) {
-            return isViewInCurrentCategory(viewKey);
+        var currentCategory = VIEW_CATEGORIES[state.viewCategory];
+        var visibleViews = (currentCategory && currentCategory.views ? currentCategory.views : []).filter(function (viewKey) {
+            return !!VIEW_CONFIG[viewKey];
         });
 
         visibleViews.forEach(function (viewKey) {
@@ -1193,6 +1193,152 @@
         var baseHtml = HOME_HTML;
         var selected = [];
 
+        function listLabels(viewKeys) {
+            return (viewKeys || []).map(function (k) {
+                return VIEW_CONFIG[k] ? VIEW_CONFIG[k].label : k;
+            }).filter(Boolean);
+        }
+
+        function renderUsageGuideGraphic() {
+            var atlasViews = listLabels((VIEW_CATEGORIES.atlas && VIEW_CATEGORIES.atlas.views) || []);
+            var learningViews = listLabels((VIEW_CATEGORIES.learning && VIEW_CATEGORIES.learning.views) || []);
+
+            var primaryLang = LANG_LABELS[state.selectedLangs[0]] || state.selectedLangs[0] || (LANG_ORDER[0] ? (LANG_LABELS[LANG_ORDER[0]] || LANG_ORDER[0]) : 'C++');
+            var secondaryLang = LANG_LABELS[state.selectedLangs[1]] || state.selectedLangs[1] || (LANG_ORDER[1] ? (LANG_LABELS[LANG_ORDER[1]] || LANG_ORDER[1]) : 'Python');
+
+            if (!secondaryLang || secondaryLang === primaryLang) {
+                secondaryLang = LANG_ORDER[1]
+                    ? (LANG_LABELS[LANG_ORDER[1]] || LANG_ORDER[1])
+                    : 'Python';
+            }
+
+            var movingLang = LANG_ORDER[2]
+                ? (LANG_LABELS[LANG_ORDER[2]] || LANG_ORDER[2])
+                : 'Go';
+
+            var allLangChips = LANG_ORDER.map(function (k) {
+                return LANG_LABELS[k] || k;
+            }).filter(Boolean);
+
+            if (allLangChips.length === 0) {
+                allLangChips = [primaryLang, secondaryLang, movingLang, 'TypeScript', 'Scala'];
+            }
+
+            function chipsToHtml(items) {
+                if (!items.length) {
+                    return '<span class="viewset-view-chip">No Views</span>';
+                }
+                return items.map(function (v) {
+                    return '<span class="viewset-view-chip">' + escapeHtml(v) + '</span>';
+                }).join('');
+            }
+
+            function renderTargetSequence(direction) {
+                var right = direction === 'right';
+                var head = allLangChips.slice(0, 2);
+                var tail = allLangChips.slice(3);
+                var html = '';
+
+                head.forEach(function (label, idx) {
+                    var cls = 'usage-chip';
+                    cls += idx === 0 ? ' is-left' : ' is-right';
+                    html += '<span class="' + cls + '">' + escapeHtml(label) + '</span>';
+                });
+
+                html += '<span class="usage-chip ' + (right ? 'is-moving-right' : 'is-moving-left') + '">' + escapeHtml(movingLang) + '</span>';
+
+                tail.forEach(function (label) {
+                    html += '<span class="usage-chip">' + escapeHtml(label) + '</span>';
+                });
+
+                return html;
+            }
+
+            return ''
+                + '<section class="usage-guide-graphic">'
+                + '  <header class="usage-guide-header">'
+                + '    <h2>Graphical Usage Guide</h2>'
+                + '    <p>This guide is generated from current project state so labels and views stay up to date.</p>'
+                + '  </header>'
+                + '  <div class="usage-steps-grid">'
+                + '    <article class="usage-step-card">'
+                + '      <div class="usage-step-number">1</div>'
+                + '      <h3 class="usage-step-title">Selection Controls</h3>'
+                + '      <p class="usage-step-text">Compare controls one-panel or two-panel selection. Swap flashes and swaps the language order.</p>'
+                + '      <div class="usage-compare-demo">'
+                + '        <div class="usage-compare-state state-off">'
+                + '          <div class="usage-inline-row"><span class="usage-inline-label">Compare</span><div class="usage-chip-row"><span class="usage-chip is-left">' + escapeHtml(primaryLang) + '</span></div></div>'
+                + '        </div>'
+                + '        <div class="usage-compare-state state-on">'
+                + '          <div class="usage-inline-row"><span class="usage-inline-label is-on">Compare</span><div class="usage-chip-row"><span class="usage-chip is-left">' + escapeHtml(primaryLang) + '</span><span class="usage-chip is-right">' + escapeHtml(secondaryLang) + '</span></div></div>'
+                + '          <div class="usage-inline-row selection-swap-demo"><span class="usage-inline-label swap-btn">Swap</span><div class="usage-compare-unified"><div class="usage-target-unified"><div class="usage-target-lang-row"><span class="usage-target-lang-cell panel-left-active swap-side"><span class="swap-label-old">' + escapeHtml(primaryLang) + '</span><span class="swap-label-new">' + escapeHtml(secondaryLang) + '</span></span><span class="usage-target-lang-cell panel-right-active swap-side"><span class="swap-label-old">' + escapeHtml(secondaryLang) + '</span><span class="swap-label-new">' + escapeHtml(primaryLang) + '</span></span></div><div class="usage-target-code-row"><span class="usage-target-code-cell">//code//</span><span class="usage-target-code-cell">//code//</span></div></div></div></div>'
+                + '        </div>'
+                + '      </div>'
+                + '    </article>'
+                + '    <article class="usage-step-card">'
+                + '      <div class="usage-step-number">2</div>'
+                + '      <h3 class="usage-step-title">Language Targeting</h3>'
+                + '      <p class="usage-step-text">Moving language replaces the targeted side. Highlight shifts to the new selected pair.</p>'
+                + '      <div class="usage-lang-target-demo">'
+                + '        <div class="usage-target-block target-right">'
+                + '          <h4>Right Target</h4>'
+                + '          <div class="usage-chip-row usage-target-seq">' + renderTargetSequence('right') + '</div>'
+                + '          <div class="usage-target-result">'
+                + '            <div class="usage-target-unified">'
+                + '              <div class="usage-target-lang-row">'
+                + '                <span class="usage-target-lang-cell panel-left-active">' + escapeHtml(primaryLang) + '</span>'
+                + '                <span class="usage-target-lang-cell usage-panel-dynamic panel-right-active">'
+                + '                <span class="label-old">' + escapeHtml(secondaryLang) + '</span>'
+                + '                <span class="label-new">' + escapeHtml(movingLang) + '</span>'
+                + '                </span>'
+                + '              </div>'
+                + '              <div class="usage-target-code-row">'
+                + '                <span class="usage-target-code-cell">//code//</span>'
+                + '                <span class="usage-target-code-cell">//code//</span>'
+                + '              </div>'
+                + '            </div>'
+                + '          </div>'
+                + '        </div>'
+                + '        <div class="usage-target-block target-left">'
+                + '          <h4>Left Target</h4>'
+                + '          <div class="usage-chip-row usage-target-seq">' + renderTargetSequence('left') + '</div>'
+                + '          <div class="usage-target-result">'
+                + '            <div class="usage-target-unified">'
+                + '              <div class="usage-target-lang-row">'
+                + '                <span class="usage-target-lang-cell usage-panel-dynamic panel-left-active">'
+                + '                <span class="label-old">' + escapeHtml(primaryLang) + '</span>'
+                + '                <span class="label-new">' + escapeHtml(movingLang) + '</span>'
+                + '                </span>'
+                + '                <span class="usage-target-lang-cell panel-right-active">' + escapeHtml(secondaryLang) + '</span>'
+                + '              </div>'
+                + '              <div class="usage-target-code-row">'
+                + '                <span class="usage-target-code-cell">//code//</span>'
+                + '                <span class="usage-target-code-cell">//code//</span>'
+                + '              </div>'
+                + '            </div>'
+                + '          </div>'
+                + '        </div>'
+                + '      </div>'
+                + '    </article>'
+                + '    <article class="usage-step-card">'
+                + '      <div class="usage-step-number">3</div>'
+                + '      <h3 class="usage-step-title">Choose View Set</h3>'
+                + '      <p class="usage-step-text">Switch between ATLAS VIEWS and LEARNING VIEWS, then read the active view keywords below.</p>'
+                + '      <div class="usage-viewset-demo">'
+                + '        <div class="usage-viewset-state state-atlas">'
+                + '          <span class="viewset-stage-label atlas">ATLAS VIEWS</span>'
+                + '          <div class="viewset-view-chips">' + chipsToHtml(atlasViews) + '</div>'
+                + '        </div>'
+                + '        <div class="usage-viewset-state state-learning">'
+                + '          <span class="viewset-stage-label learning">LEARNING VIEWS</span>'
+                + '          <div class="viewset-view-chips">' + chipsToHtml(learningViews) + '</div>'
+                + '        </div>'
+                + '      </div>'
+                + '    </article>'
+                + '  </div>'
+                + '</section>';
+        }
+
         function pushUniqueLang(langKey) {
             var base = langKey;
             if (base === 'scala2' || base === 'scala3') {
@@ -1275,9 +1421,11 @@
 
         var dynamicSection = ''
             + '<div class="lang-feature-overview">'
-            + '  <p>This section explains why each feature matters, then shows tiny snippets you can pattern-match while learning.</p>'
+            + '  <p>Some advanced features are intentionally language-specific and should be documented per language instead of forced into one-to-one equivalents. <span class="lang-feature-overview-highlight">This section explains why each feature matters, then shows tiny snippets you can pattern-match while learning.</span></p>'
             + '</div>'
             + '<div class="lang-feature-grid">' + cards + '</div>';
+
+        baseHtml = baseHtml.replace('<h2>Quick Usage Guide</h2>', '<h2>Quick Usage Guide</h2>' + renderUsageGuideGraphic());
 
         baseHtml = baseHtml.replace('<p>__LANG_SPECIFIC_FEATURES__</p>', dynamicSection);
         baseHtml = baseHtml.replace('__LANG_SPECIFIC_FEATURES__', dynamicSection);

@@ -49,8 +49,6 @@ Legend: `X` means no close built-in equivalent. `Partial (approx)` means concept
 
 ## Language-specific Features
 
-Some advanced features are intentionally language-specific and should be documented per language instead of forced into one-to-one equivalents.
-
 __LANG_SPECIFIC_FEATURES__
 
 Use this page as orientation, then move into `ATLAS VIEWS` or `LEARNING VIEWS` for side-by-side code exploration.

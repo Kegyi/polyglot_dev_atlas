@@ -1223,6 +1223,646 @@
         margin: 0;
     }
 
+    .lang-feature-overview-highlight {
+        font-weight: 700;
+        color: var(--sheet-title-fg);
+        background: color-mix(in srgb, var(--chip-active-bg) 22%, transparent);
+        border-radius: 4px;
+        padding: 0 4px;
+    }
+
+    .usage-guide-graphic {
+        margin: 8px 0 16px;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid var(--panel-title-border);
+        background: color-mix(in srgb, var(--panel-title-bg) 38%, var(--card-bg) 62%);
+        box-shadow: var(--meta-shadow);
+    }
+
+    .usage-guide-header h2 {
+        margin: 0 0 6px;
+        color: var(--panel-title-fg);
+    }
+
+    .usage-guide-header p {
+        margin: 0 0 10px;
+        color: var(--sheet-muted-fg);
+    }
+
+    .usage-steps-grid {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .usage-step-card {
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 75%, transparent);
+        border-radius: 9px;
+        padding: 10px;
+        background: color-mix(in srgb, var(--card-bg) 86%, var(--panel-title-bg) 14%);
+    }
+
+    .usage-step-number {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 800;
+        color: var(--chip-active-fg);
+        background: var(--chip-active-bg);
+        margin-bottom: 6px;
+    }
+
+    .usage-step-title {
+        margin: 0 0 6px;
+        color: var(--panel-title-fg);
+        font-size: var(--title-sub-size);
+        font-weight: var(--title-sub-weight);
+        letter-spacing: var(--title-letter-spacing);
+    }
+
+    .usage-step-text {
+        margin: 0 0 8px;
+        color: var(--sheet-td-fg);
+        line-height: 1.45;
+        font-size: 0.9rem;
+    }
+
+    .usage-inline-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .usage-inline-label {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 0.82rem;
+        font-weight: 800;
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 80%, transparent);
+        background: var(--card-bg);
+        color: var(--panel-title-fg);
+        min-height: 34px;
+    }
+
+    .usage-inline-label.is-on {
+        background: var(--chip-active-bg);
+        color: var(--chip-active-fg);
+        border-color: color-mix(in srgb, var(--chip-active-bg) 70%, #000000 8%);
+    }
+
+    .usage-chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .usage-chip {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--panel-title-fg);
+        background: var(--card-bg);
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 80%, transparent);
+        min-width: 92px;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .usage-compare-demo,
+    .usage-lang-target-demo,
+    .usage-viewset-demo {
+        border: 1px dashed color-mix(in srgb, var(--panel-title-border) 72%, transparent);
+        border-radius: 8px;
+        padding: 8px;
+        background: color-mix(in srgb, var(--panel-title-bg) 34%, transparent);
+    }
+
+    .usage-compare-demo {
+        position: relative;
+        min-height: 168px;
+    }
+
+    .usage-compare-state {
+        position: absolute;
+        inset: 8px;
+        display: grid;
+        gap: 8px;
+        align-content: start;
+        opacity: 0;
+    }
+
+    .usage-compare-state.state-off { animation: compareStateOff 4.2s ease-in-out infinite; }
+    .usage-compare-state.state-on { animation: compareStateOn 4.2s ease-in-out infinite; }
+
+    .compare-pill {
+        display: inline-flex;
+        width: fit-content;
+        border-radius: 999px;
+        padding: 4px 9px;
+        font-size: 0.78rem;
+        font-weight: 800;
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 80%, transparent);
+        background: color-mix(in srgb, var(--panel-title-bg) 74%, transparent);
+        color: var(--panel-title-fg);
+    }
+
+    .compare-pill.on {
+        background: var(--chip-active-bg);
+        color: var(--chip-active-fg);
+    }
+
+    .usage-panel-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0;
+        flex-wrap: wrap;
+    }
+
+    .usage-panel-box {
+        min-width: auto;
+        padding: 6px 10px;
+        border-radius: 0;
+        font-size: 0.82rem;
+        font-weight: 700;
+        border: none;
+        border-right: 1px solid color-mix(in srgb, var(--panel-title-border) 80%, transparent);
+        background: var(--card-bg);
+        color: var(--panel-title-fg);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 34px;
+    }
+
+    .usage-panel-box:last-child {
+        border-right: none;
+    }
+
+    .usage-chip.is-left,
+    .usage-chip.is-right {
+        background: var(--chip-active-bg);
+        color: var(--chip-active-fg);
+    }
+
+    .usage-chip.is-right {
+        background: var(--chip-active2-bg);
+        color: var(--chip-active2-fg);
+    }
+
+    .usage-chip.is-moving-right {
+        animation: movingChipGuideRight 2.8s ease-in-out infinite;
+    }
+
+    .usage-chip.is-moving-left {
+        animation: movingChipGuideLeft 2.8s ease-in-out infinite;
+    }
+
+    .panel-left-active {
+        background: var(--chip-active-bg);
+        color: var(--chip-active-fg);
+        border-color: color-mix(in srgb, var(--chip-active-bg) 70%, #000000 8%);
+    }
+
+    .panel-right-active {
+        background: var(--chip-active2-bg);
+        color: var(--chip-active2-fg);
+        border-color: color-mix(in srgb, var(--chip-active2-bg) 70%, #000000 8%);
+    }
+
+    .usage-panel-dynamic {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .usage-panel-dynamic .label-old,
+    .usage-panel-dynamic .label-new {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .usage-panel-dynamic .label-old { animation: panelLabelOld 2.8s ease-in-out infinite; }
+    .usage-panel-dynamic .label-new { opacity: 0; animation: panelLabelNew 2.8s ease-in-out infinite; }
+
+    .target-left .usage-panel-dynamic .label-old {
+        animation: panelLabelOldLeft 2.8s ease-in-out infinite;
+    }
+
+    .target-left .usage-panel-dynamic .label-new {
+        animation: panelLabelNewLeft 2.8s ease-in-out infinite;
+    }
+
+    .usage-target-block {
+        margin-bottom: 9px;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 70%, transparent);
+        background: color-mix(in srgb, var(--card-bg) 86%, transparent);
+    }
+
+    .usage-target-block h4 {
+        margin: 0 0 6px;
+        font-size: 0.82rem;
+        color: var(--panel-title-fg);
+    }
+
+    .usage-target-seq {
+        align-items: center;
+    }
+
+    .usage-target-result {
+        margin-top: 16px;
+        display: grid;
+        gap: 0;
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 80%, transparent);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .usage-compare-unified {
+        display: grid;
+        gap: 0;
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 80%, transparent);
+        border-radius: 6px;
+        overflow: hidden;
+        min-width: 206px;
+    }
+
+    .usage-target-unified {
+        display: grid;
+        grid-template-rows: auto auto;
+    }
+
+    .usage-target-lang-row,
+    .usage-target-code-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .usage-target-lang-cell {
+        min-height: 34px;
+        padding: 6px 10px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .usage-target-lang-row .usage-target-lang-cell:first-child,
+    .usage-target-code-row .usage-target-code-cell:first-child {
+        border-right: 1px solid color-mix(in srgb, var(--panel-title-border) 80%, transparent);
+    }
+
+    .usage-target-code-row {
+        border-top: 1px solid color-mix(in srgb, var(--panel-title-border) 80%, transparent);
+    }
+
+    .usage-target-code-cell {
+        min-height: 32px;
+        padding: 5px 10px;
+        font-size: 0.74rem;
+        font-weight: 600;
+        font-family: Consolas, 'Courier New', monospace;
+        color: var(--sheet-td-fg);
+        background: var(--card-bg);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .usage-target-to {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--sheet-link-fg);
+    }
+
+    .usage-swap-demo {
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .swap-unified {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 80%, transparent);
+        border-radius: 6px;
+        overflow: hidden;
+        min-width: 190px;
+    }
+
+    .swap-side {
+        position: relative;
+        min-width: 92px;
+        min-height: 34px;
+        padding: 6px 10px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .swap-side-left {
+        background: var(--chip-active-bg);
+        color: var(--chip-active-fg);
+        border-right: 1px solid color-mix(in srgb, var(--panel-title-border) 80%, transparent);
+    }
+
+    .swap-side-right {
+        background: var(--chip-active2-bg);
+        color: var(--chip-active2-fg);
+    }
+
+    .swap-side .swap-label-old,
+    .swap-side .swap-label-new {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .swap-side .swap-label-old {
+        animation: swapSideLabelOld 4.2s ease-in-out infinite;
+    }
+
+    .swap-side .swap-label-new {
+        opacity: 0;
+        animation: swapSideLabelNew 4.2s ease-in-out infinite;
+    }
+
+    .selection-swap-demo {
+        animation: selectionSwapAppear 4.2s ease-in-out infinite;
+    }
+
+    .swap-btn {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 0.78rem;
+        font-weight: 800;
+        background: color-mix(in srgb, var(--panel-title-bg) 78%, transparent);
+        color: var(--panel-title-fg);
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 82%, transparent);
+        animation: swapBtnClick 4.2s ease-in-out infinite;
+    }
+
+    .target-right .usage-chip.is-right {
+        animation: chipDisplaceRight 2.8s ease-in-out infinite;
+    }
+
+    .target-left .usage-chip.is-left {
+        animation: chipDisplaceLeft 2.8s ease-in-out infinite;
+    }
+
+    @keyframes compareStateOff {
+        0%, 44% { opacity: 1; }
+        50%, 100% { opacity: 0; }
+    }
+
+    @keyframes compareStateOn {
+        0%, 44% { opacity: 0; }
+        50%, 100% { opacity: 1; }
+    }
+
+    @keyframes movingChipGuideRight {
+        0%, 100% { transform: translateX(0); }
+        50% {
+            transform: translateX(14px);
+            background: var(--chip-active2-bg);
+            color: var(--chip-active2-fg);
+        }
+    }
+
+    @keyframes movingChipGuideLeft {
+        0%, 100% { transform: translateX(0); }
+        50% {
+            transform: translateX(-14px);
+            background: var(--chip-active-bg);
+            color: var(--chip-active-fg);
+        }
+    }
+
+    @keyframes panelLabelOld {
+        0%, 48% { opacity: 1; transform: translateX(0); }
+        62%, 100% { opacity: 0; transform: translateX(-8px); }
+    }
+
+    @keyframes panelLabelNew {
+        0%, 48% { opacity: 0; transform: translateX(8px); }
+        62%, 100% { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes panelLabelOldLeft {
+        0%, 48% { opacity: 1; transform: translateX(0); }
+        62%, 100% { opacity: 0; transform: translateX(8px); }
+    }
+
+    @keyframes panelLabelNewLeft {
+        0%, 48% { opacity: 0; transform: translateX(-8px); }
+        62%, 100% { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes swapSideLabelOld {
+        0%, 56% { opacity: 1; transform: translateY(0); }
+        72%, 100% { opacity: 0; transform: translateY(-6px); }
+    }
+
+    @keyframes swapSideLabelNew {
+        0%, 56% { opacity: 0; transform: translateY(6px); }
+        72%, 100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes chipDisplaceRight {
+        0%, 42% { background: var(--chip-active2-bg); color: var(--chip-active2-fg); }
+        56%, 100% { background: color-mix(in srgb, var(--panel-title-bg) 74%, transparent); color: var(--panel-title-fg); }
+    }
+
+    @keyframes chipDisplaceLeft {
+        0%, 42% { background: var(--chip-active-bg); color: var(--chip-active-fg); }
+        56%, 100% { background: color-mix(in srgb, var(--panel-title-bg) 74%, transparent); color: var(--panel-title-fg); }
+    }
+
+    @keyframes selectionSwapAppear {
+        0%, 44% { opacity: 0; }
+        50%, 100% { opacity: 1; }
+    }
+
+    @keyframes swapBtnClick {
+        0%, 55% { transform: scale(1); background: color-mix(in srgb, var(--panel-title-bg) 78%, transparent); color: var(--panel-title-fg); box-shadow: none; }
+        60% { transform: scale(0.84); background: var(--chip-active-bg); color: var(--chip-active-fg); box-shadow: 0 0 0 8px color-mix(in srgb, var(--chip-active-bg) 45%, transparent); }
+        68%, 100% { transform: scale(1); background: color-mix(in srgb, var(--panel-title-bg) 78%, transparent); color: var(--panel-title-fg); box-shadow: none; }
+    }
+
+    @keyframes viewsetLabelFlashAtlas {
+        0%, 33% {
+            background: var(--chip-active-bg);
+            color: var(--chip-active-fg);
+            border-color: color-mix(in srgb, var(--chip-active-bg) 70%, #000000 8%);
+        }
+        37%, 43% {
+            background: var(--chip-active2-bg);
+            color: var(--chip-active2-fg);
+            border-color: color-mix(in srgb, var(--chip-active2-bg) 70%, #000000 8%);
+        }
+        47%, 100% {
+            background: var(--chip-active-bg);
+            color: var(--chip-active-fg);
+            border-color: color-mix(in srgb, var(--chip-active-bg) 70%, #000000 8%);
+        }
+    }
+
+    @keyframes viewsetLabelFlashLearning {
+        0%, 84% {
+            background: var(--chip-active-bg);
+            color: var(--chip-active-fg);
+            border-color: color-mix(in srgb, var(--chip-active-bg) 70%, #000000 8%);
+        }
+        88%, 94% {
+            background: var(--chip-active2-bg);
+            color: var(--chip-active2-fg);
+            border-color: color-mix(in srgb, var(--chip-active2-bg) 70%, #000000 8%);
+        }
+        97%, 100% {
+            background: var(--chip-active-bg);
+            color: var(--chip-active-fg);
+            border-color: color-mix(in srgb, var(--chip-active-bg) 70%, #000000 8%);
+        }
+    }
+
+    .usage-viewset-demo {
+        position: relative;
+        overflow: hidden;
+        min-height: 130px;
+    }
+
+    .usage-viewset-state {
+        position: absolute;
+        inset: 8px;
+        display: grid;
+        gap: 6px;
+        align-content: start;
+        opacity: 0;
+    }
+
+    .usage-viewset-state.state-atlas {
+        animation: compareStateOff 4.2s ease-in-out infinite;
+    }
+
+    .usage-viewset-state.state-learning {
+        animation: compareStateOn 4.2s ease-in-out infinite;
+    }
+
+    .viewset-tag {
+        display: inline-flex;
+        width: fit-content;
+        border-radius: 999px;
+        padding: 4px 9px;
+        font-size: 0.78rem;
+        font-weight: 800;
+    }
+
+    .viewset-tag.atlas {
+        background: var(--chip-active-bg);
+        color: var(--chip-active-fg);
+    }
+
+    .viewset-tag.learning {
+        background: var(--chip-active2-bg);
+        color: var(--chip-active2-fg);
+    }
+
+    .viewset-view-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        align-items: center;
+    }
+
+    .viewset-stage-label {
+        display: inline-flex;
+        width: fit-content;
+        border-radius: 999px;
+        padding: 4px 8px;
+        font-size: 0.74rem;
+        font-weight: 800;
+        border: 1px solid color-mix(in srgb, var(--chip-active-bg) 70%, #000000 8%);
+        background: var(--chip-active-bg);
+        color: var(--chip-active-fg);
+    }
+
+    .viewset-stage-label.atlas {
+        animation: viewsetLabelFlashAtlas 4.2s ease-in-out infinite;
+    }
+
+    .viewset-stage-label.learning {
+        animation: viewsetLabelFlashLearning 4.2s ease-in-out infinite;
+    }
+
+    .viewset-view-chip {
+        font-size: 0.72rem;
+        padding: 2px 7px;
+        border-radius: 5px;
+        background: color-mix(in srgb, var(--card-bg) 80%, transparent);
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 60%, transparent);
+        color: var(--sheet-td-fg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .usage-step-number,
+        .usage-chip.is-moving-left,
+        .usage-chip.is-moving-right,
+        .target-right .usage-chip.is-right,
+        .target-left .usage-chip.is-left,
+        .usage-panel-dynamic .label-old,
+        .usage-panel-dynamic .label-new,
+        .swap-btn,
+        .swap-side .swap-label-old,
+        .swap-side .swap-label-new,
+        .viewset-stage-label.atlas,
+        .viewset-stage-label.learning,
+        .usage-compare-state.state-off,
+        .usage-compare-state.state-on,
+        .usage-viewset-state.state-atlas,
+        .usage-viewset-state.state-learning {
+            animation: none !important;
+        }
+
+        .usage-compare-state.state-off,
+        .usage-viewset-state.state-atlas {
+            opacity: 1;
+        }
+
+        .usage-compare-state.state-on,
+        .usage-viewset-state.state-learning,
+        .usage-panel-dynamic .label-new {
+            opacity: 0;
+        }
+    }
+
     .lang-feature-grid {
         display: grid;
         gap: 12px;
@@ -1281,6 +1921,18 @@
     .lang-feature-snippet p {
         margin: 0 0 8px;
         color: var(--sheet-muted-fg);
+    }
+
+    .doc-table-wrap + h2 {
+        margin-top: 30px;
+    }
+
+    .doc-table-wrap + h2 + p strong {
+        font-weight: 700;
+        color: var(--sheet-title-fg);
+        background: color-mix(in srgb, var(--chip-active-bg) 22%, transparent);
+        border-radius: 4px;
+        padding: 0 4px;
     }
 
     .home-code-block {
