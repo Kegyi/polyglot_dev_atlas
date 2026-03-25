@@ -1276,7 +1276,7 @@
 
         var modernHtml = '';
         if (modernCode) {
-            modernHtml = '<div class="display-title" style="font-size:0.8rem;opacity:0.85;">Modern ' + escapeHtml(LANG_LABELS[langKey] || langKey) + '</div>'
+            modernHtml = '<div class="display-title display-title-subtle">Modern ' + escapeHtml(LANG_LABELS[langKey] || langKey) + '</div>'
                 + '<pre class="code-block"><code class="code-sample language-' + highlightLang(langKey) + '">' + escapeHtml(modernCode) + '</code></pre>';
         }
 
