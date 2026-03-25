@@ -29,6 +29,10 @@ jobs:
         run: |
           test -f output/polyglot_dev_atlas.html
 
+      - name: Prepare index page for GitHub Pages
+        run: |
+          cp output/polyglot_dev_atlas.html output/index.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
