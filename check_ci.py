@@ -12,9 +12,9 @@ def run_step(base_dir, args, label):
     subprocess.run(cmd, cwd=base_dir, check=True)
 
 
-def run_unittest_step(base_dir, test_targets, label):
+def run_unittest_step(base_dir, label):
     print(f"[check] {label}")
-    cmd = [sys.executable, "-m", "unittest", *test_targets]
+    cmd = [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"]
     subprocess.run(cmd, cwd=base_dir, check=True)
 
 
@@ -24,11 +24,7 @@ def main():
     try:
         run_step(base_dir, ["--validate-content"], "validate external content")
         run_step(base_dir, ["--strict-content", "--skip-gen"], "strict build (skip generators)")
-        run_unittest_step(
-            base_dir,
-            ["test_content_loader.py", "test_atlas_builder.py"],
-            "unit tests",
-        )
+        run_unittest_step(base_dir, "unit tests")
     except subprocess.CalledProcessError as exc:
         print(f"[fail] command exited with code {exc.returncode}")
         return exc.returncode

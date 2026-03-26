@@ -15,10 +15,10 @@ from atlas_builder.sheets import load_sheets
 from atlas_builder.ui_templates import load_ui_templates
 
 
-BASE_DIR = Path(__file__).resolve().parent
-DOCUMENT_STRUCTURE_FIXTURE = BASE_DIR / "test_fixtures" / "document_structure.json"
-APP_JS_STRUCTURE_FIXTURE = BASE_DIR / "test_fixtures" / "app_js_structure.json"
-ORCHESTRATOR_OUTPUT_STRUCTURE_FIXTURE = BASE_DIR / "test_fixtures" / "orchestrator_output_structure.json"
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DOCUMENT_STRUCTURE_FIXTURE = PROJECT_ROOT / "test_fixtures" / "document_structure.json"
+APP_JS_STRUCTURE_FIXTURE = PROJECT_ROOT / "test_fixtures" / "app_js_structure.json"
+ORCHESTRATOR_OUTPUT_STRUCTURE_FIXTURE = PROJECT_ROOT / "test_fixtures" / "orchestrator_output_structure.json"
 
 
 class TemplateTests(unittest.TestCase):
@@ -68,7 +68,7 @@ class UiTemplateTests(unittest.TestCase):
         self.assertEqual(app_template, "console.log('legacy');\n")
 
     def test_load_ui_templates_includes_store_router_and_renderer_registry(self):
-        _ui_styles, app_template = load_ui_templates(str(BASE_DIR))
+        _ui_styles, app_template = load_ui_templates(str(PROJECT_ROOT))
 
         self.assertIn("var appStore = {", app_template)
         self.assertIn("var appRouter = {", app_template)
@@ -85,7 +85,7 @@ class UiTemplateTests(unittest.TestCase):
         self.assertIn("hasCourseTopicCollapseState: function (collapseKey) {", app_template)
 
     def test_load_ui_templates_includes_view_category_and_sidebar_persistence_flow(self):
-        _ui_styles, app_template = load_ui_templates(str(BASE_DIR))
+        _ui_styles, app_template = load_ui_templates(str(PROJECT_ROOT))
 
         self.assertIn("appStore.setViewCategory(appStore.getViewCategory() === 'atlas' ? 'learning' : 'atlas');", app_template)
         self.assertIn("localStorage.setItem(VIEW_CATEGORY_STORAGE_KEY, appStore.getViewCategory());", app_template)
@@ -96,7 +96,7 @@ class UiTemplateTests(unittest.TestCase):
         self.assertIn("appStore.setSidebarCollapsed(savedSidebarCollapsed === '1');", app_template)
 
     def test_load_ui_templates_includes_course_mode_transition_flow(self):
-        _ui_styles, app_template = load_ui_templates(str(BASE_DIR))
+        _ui_styles, app_template = load_ui_templates(str(PROJECT_ROOT))
 
         self.assertIn("appStore.setCourseReturnState(appStore.getSelectionSnapshot());", app_template)
         self.assertIn("var snapshot = appStore.consumeCourseReturnState();", app_template)
@@ -110,7 +110,7 @@ class UiTemplateTests(unittest.TestCase):
         self.assertIn("navigateCourse(0);", app_template)
 
     def test_load_ui_templates_includes_compare_side_selection_flow(self):
-        _ui_styles, app_template = load_ui_templates(str(BASE_DIR))
+        _ui_styles, app_template = load_ui_templates(str(PROJECT_ROOT))
 
         self.assertIn("document.getElementById('compareToggle').addEventListener('click', function () {", app_template)
         self.assertIn("appStore.toggleCompareCount();", app_template)
@@ -122,7 +122,7 @@ class UiTemplateTests(unittest.TestCase):
         self.assertIn("return selectActiveCompareSlot();", app_template)
 
     def test_load_ui_templates_preserves_key_event_flow_order(self):
-        _ui_styles, app_template = load_ui_templates(str(BASE_DIR))
+        _ui_styles, app_template = load_ui_templates(str(PROJECT_ROOT))
 
         compare_handler_anchor = "document.getElementById('contentHost').addEventListener('click', function (event) {"
         compare_handler_start = app_template.index(compare_handler_anchor)

@@ -26,7 +26,7 @@ Direct Python commands (from `polyglot_dev_atlas/`):
 
 - `python generate_output.py --validate-content`
 - `python generate_output.py --strict-content --skip-gen`
-- `python -m unittest test_content_loader.py test_atlas_builder.py`
+- `python -m unittest discover -s tests -v`
 
 ## External content files
 
@@ -76,6 +76,26 @@ Validation logic is implemented in `content_loader.py` and used by `generate_out
 3. Run `npm run atlas:validate-content`.
 4. Run `npm run atlas:test` or `npm run atlas:check`.
 5. Open generated output in `output/polyglot_dev_atlas.html` and spot-check affected views.
+
+## Phase 4 generator onboarding
+
+Use this flow when adding a new language sheet generator under `sheet_generators/<lang>/`.
+
+1. Create `generate_<lang>_cheat_sheet.py` and add a root import bootstrap:
+  - Resolve `BASE_DIR` from the script location.
+  - Insert `BASE_DIR` into `sys.path` if missing.
+2. Define `KEYWORDS_DATA` as section/category/item maps matching existing generators.
+3. Implement a language-specific `build_doc_url(item)` adapter only.
+4. Reuse shared rendering helpers from `sheet_generators/shared_renderer.py`:
+  - `render_section_table(...)` for table rendering.
+  - `build_content_html(...)` for section assembly and advanced separator injection.
+  - `render_sheet_html(...)` and `write_sheet_output(...)` for final output.
+5. Add the language entry to builder config (`atlas_builder/config.py`) so orchestrator can load the generated HTML.
+6. Run checks:
+  - `python -m unittest -q`
+  - `python generate_output.py`
+
+Design rule: keep generators as thin adapters (data + doc URL mapping), and place shared formatting/output behavior in the shared renderer module.
 
 ## Fallback behavior
 

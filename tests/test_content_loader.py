@@ -3,9 +3,9 @@ from pathlib import Path
 import sys
 
 
-BASE_DIR = Path(__file__).resolve().parent
-if str(BASE_DIR) not in sys.path:
-    sys.path.insert(0, str(BASE_DIR))
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from content_loader import (
     load_adapter_insights,
@@ -28,7 +28,7 @@ from content_loader import (
 class ContentLoaderTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.base_dir = str(BASE_DIR)
+        cls.base_dir = str(PROJECT_ROOT)
 
     def test_manifest_is_valid(self):
         manifest = validate_content_manifest(self.base_dir)

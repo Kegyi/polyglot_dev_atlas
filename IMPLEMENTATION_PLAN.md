@@ -167,7 +167,7 @@ Break large frontend monoliths into maintainable UI modules.
   - No assembly-time contract checking → now validated by 26 regression tests covering wiring patterns and invariants.
 
 
-## Phase 4 - Shared abstractions for language generators (Planned)
+## Phase 4 - Shared abstractions for language generators (Complete)
 
 ### Goal
 
@@ -185,11 +185,34 @@ Eliminate duplication across per-language sheet generators.
 - Reduced repeated code across language generator scripts.
 - Consistent output invariants across all language sheets.
 
+### Progress note
+
+- Introduced a shared generator toolkit module (`sheet_generators/shared_renderer.py`) for common table rendering, deprecation/version formatting, template loading, and output writing.
+- Refactored C++, Python, Go, TypeScript, and Scala generators to consume shared rendering helpers while preserving language-specific documentation link adapters.
+- Added dedicated unit coverage for shared toolkit contracts in `test_sheet_generators_shared.py`.
+- Added shared section-assembly helper (`build_content_html`) so generators no longer duplicate advanced-separator/content-block orchestration loops.
+- Documented a concrete new-language onboarding path in `DEVELOPMENT.md` centered on thin adapter generators plus shared renderer contracts.
+- Added snapshot-like regression checks in `test_sheet_generators_output.py` that execute generators and assert key HTML output fragments and Scala variant headings.
+
 ### Exit criteria
 
 - Generator scripts become smaller and easier to extend.
 - New language onboarding path documented.
 - No regression in generated sheet structure.
+
+### Closeout note
+
+- Delivered scope:
+  - Shared generator toolkit implemented in `sheet_generators/shared_renderer.py` (table rendering, deprecation/version formatting, section assembly, template rendering, output writing).
+  - Per-language generators refactored into thin adapters (language data + doc URL mapping) for C++, Python, Go, TypeScript, and Scala.
+  - New-language onboarding workflow documented in `DEVELOPMENT.md`.
+  - Regression safety expanded with shared-renderer unit tests and snapshot-like generator output checks (`tests/test_sheet_generators_shared.py`, `tests/test_sheet_generators_output.py`).
+  - Test suite reorganized under `tests/` and standardized on unittest discovery (`python -m unittest discover -s tests -v`).
+- Deferred items:
+  - Additional doc-link adapter normalization can be layered as future cleanup if needed.
+- Known risks addressed:
+  - Cross-generator formatting drift reduced by centralized shared renderer contracts.
+  - Output-structure regression risk reduced by generator output assertions and full-suite validation.
 
 ## Phase 5 - Testing and regression safety expansion (Planned)
 
