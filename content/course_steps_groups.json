@@ -1,0 +1,32 @@
+[
+  {
+    "label": "Phase 1 – Foundation",
+    "keys": [
+      "step_1_memory_layout",
+      "step_2_collections_generics",
+      "step_3_function_paradigm",
+      "step_4_error_philosophies"
+    ]
+  },
+  {
+    "label": "Phase 2 – Type System & Idioms",
+    "keys": [
+      "step_5_type_system_interfaces",
+      "step_6_strings_pattern_matching"
+    ]
+  },
+  {
+    "label": "Phase 3 – Concurrency & I/O",
+    "keys": [
+      "step_7_concurrency_model",
+      "step_8_io_serialization"
+    ]
+  },
+  {
+    "label": "Phase 4 – Algorithms & Architecture",
+    "keys": [
+      "step_9_sorting_pipelines",
+      "step_10_testability_di"
+    ]
+  }
+]

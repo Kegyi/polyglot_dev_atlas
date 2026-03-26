@@ -1,0 +1,18 @@
+{
+  "balanced_brackets": {
+    "insight": "Compare stack data structures: C++ std::stack vs Python list vs Go slice. Notice recursion vs iteration trade-offs: C++ prefers explicit stacks to avoid stack overflow; Python and JavaScript use call stacks more freely. TypeScript resembles JavaScript; Go's simplicity favors explicit loops.",
+    "compareEntries": []
+  },
+  "word_count": {
+    "insight": "Map/dictionary patterns diverge significantly: C++ std::unordered_map, Python dict, Go map, TypeScript Map/Object. Observe how each language handles iteration order, hash collisions, and performance. Python's Counter is idiomatic; C++ requires explicit iteration.",
+    "compareEntries": []
+  },
+  "matrix_mul": {
+    "insight": "Nested loops reveal cache and memory patterns. C++ row-major layout; Python NumPy optimizations. Contrast eager 2D arrays (C++, Go) vs built-in matrix libraries (Python). Notice type signatures: C++ templates for generics, Python duck typing, TypeScript compile-time types.",
+    "compareEntries": []
+  },
+  "top_k_frequent": {
+    "insight": "Sorting and heap/priority queue usage: C++ priority_queue (max-heap by default), Python heapq (min-heap with negation trick), Go sort.Slice with custom comparator, TypeScript sort. See how each language expresses frequency counting (counter dict/map) vs selection (heap or sort).",
+    "compareEntries": []
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "chain_of_responsibility": {
+    "cpp": {
+      "classic": "Linked handler subclasses via `setNext`",
+      "modern": "`std::vector<Handler>` — flat chain of `std::function`, each returns `bool`"
+    },
+    "python": {
+      "classic": "Linked `Handler` ABC subclasses with `set_next`",
+      "modern": "Flat `list[Callable[[Request], bool]]` — handlers return `bool` to stop propagation"
+    }
+  },
+  "command": {
+    "cpp": {
+      "classic": "Command class hierarchy",
+      "modern": "`std::vector<std::function<void()>>` with lambdas"
+    },
+    "python": {
+      "classic": "`Command` ABC subclasses",
+      "modern": "`list[Callable[[], None]]` — bound methods or lambdas"
+    },
+    "typescript": {
+      "classic": "`Command` interface + class hierarchy",
+      "modern": "`Array<() => void>` closures"
+    },
+    "go": {
+      "classic": "`Command` interface + struct implementations",
+      "modern": "`[]func()` closure slice"
+    }
+  },
+  "observer": {
+    "cpp": {
+      "classic": "Observer interface subclasses",
+      "modern": "`std::function` callbacks — any callable subscribes directly"
+    },
+    "python": {
+      "classic": "`Observer` ABC subclasses",
+      "modern": "`list[Callable[[str], None]]` — any callable subscribes directly"
+    },
+    "typescript": {
+      "classic": "`Observer` interface + class hierarchy",
+      "modern": "Generic `Listener<T>` type alias + typed callback array"
+    },
+    "go": {
+      "classic": "`Observer` interface + struct implementations",
+      "modern": "`[]func(string)` callback slice"
+    }
+  },
+  "state": {
+    "cpp": {
+      "classic": "Virtual `handle` + heap-allocated state objects",
+      "modern": "`std::variant` — transitions are value assignments"
+    },
+    "python": {
+      "classic": "`State` ABC + subclasses + `Context`",
+      "modern": "Dataclasses + `match` statement (Python 3.10+)"
+    },
+    "typescript": {
+      "classic": "`IState` interface + class hierarchy",
+      "modern": "Discriminated union + exhaustive `switch` (compile-time safety)"
+    },
+    "scala": {
+      "classic": "`State` trait + subclasses",
+      "modern": "Sealed trait ADT + `match` (compiler-enforced exhaustiveness)"
+    }
+  },
+  "strategy": {
+    "cpp": {
+      "classic": "Virtual strategy base class",
+      "modern": "Policy templates (compile-time) or `std::function` (runtime)"
+    },
+    "python": {
+      "classic": "`Strategy` ABC subclasses",
+      "modern": "`Callable[[int, int], int]` type alias — lambdas or functions directly"
+    },
+    "typescript": {
+      "classic": "`Strategy` interface + class hierarchy",
+      "modern": "Function type alias `(a: number, b: number) => number`"
+    },
+    "go": {
+      "classic": "`Strategy` interface + struct implementations",
+      "modern": "`type Strategy func(a, b int) int` — function value field"
+    },
+    "scala": {
+      "classic": "`Strategy` trait + subclasses",
+      "modern": "Function value `(Int, Int) => Int` or `given`/`using` type class (Scala 3)"
+    }
+  },
+  "template_method": {
+    "cpp": {
+      "classic": "Virtual steps in a base class (runtime polymorphism)",
+      "modern": "CRTP — compile-time polymorphism, no vtable"
+    },
+    "python": {
+      "classic": "`@abstractmethod` step methods in base class",
+      "modern": "Higher-order function that takes `Callable` steps as parameters"
+    }
+  },
+  "visitor": {
+    "cpp": {
+      "classic": "Virtual `accept` / `visit` double dispatch",
+      "modern": "`std::variant` + `std::visit` + `overload` helper"
+    },
+    "python": {
+      "classic": "`Visitor` / `Element` ABC + `accept` / `visit` double dispatch",
+      "modern": "`@functools.singledispatch` — dispatch on argument type, no base classes"
+    },
+    "typescript": {
+      "classic": "`IVisitor` / `IElement` interfaces + `accept` / `visit` double dispatch",
+      "modern": "Discriminated union + exhaustive `switch` — `never` check enforces completeness"
+    },
+    "go": {
+      "classic": "`Visitor` / `Element` interfaces + `Accept` / `Visit` methods",
+      "modern": "Type switch — `switch s.(type)` dispatches on concrete type"
+    },
+    "scala": {
+      "classic": "`Visitor` / `Element` traits + `accept` / `visit` double dispatch",
+      "modern": "Sealed trait ADT + `match` — exhaustive pattern matching"
+    }
+  }
+}

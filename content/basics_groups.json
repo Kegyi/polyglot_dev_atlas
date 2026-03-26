@@ -1,0 +1,69 @@
+[
+  {
+    "label": "Project Setup & Environment",
+    "keys": [
+      "project_lifecycle",
+      "command_line_args",
+      "environment_variables"
+    ]
+  },
+  {
+    "label": "Control Flow",
+    "keys": [
+      "loops",
+      "conditions",
+      "recursion"
+    ]
+  },
+  {
+    "label": "Functions & Errors",
+    "keys": [
+      "functions_and_errors",
+      "exceptions_and_recovery"
+    ]
+  },
+  {
+    "label": "Data Structures",
+    "keys": [
+      "arrays_and_collections",
+      "maps_and_sets",
+      "strings",
+      "collection_mappings"
+    ]
+  },
+  {
+    "label": "OOP & Abstraction",
+    "keys": [
+      "classes_and_objects",
+      "interfaces_and_polymorphism",
+      "enums_and_constants"
+    ]
+  },
+  {
+    "label": "Algorithms",
+    "keys": [
+      "sorting_and_searching",
+      "hashing_and_checksums",
+      "random_numbers"
+    ]
+  },
+  {
+    "label": "Input / Output",
+    "keys": [
+      "file_io",
+      "file_paths_and_directories",
+      "json_and_serialization"
+    ]
+  },
+  {
+    "label": "System & Environment",
+    "keys": [
+      "dates_and_time",
+      "nullable_optional_values",
+      "type_system_comparison",
+      "scala_migration",
+      "memory_management",
+      "concurrency_models"
+    ]
+  }
+]

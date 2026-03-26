@@ -1,0 +1,38 @@
+{
+  "package_manager": {
+    "label": "Package Manager",
+    "description": "How each ecosystem manages third-party dependencies and versions.",
+    "codes": {
+      "cpp": "vcpkg / conan",
+      "python": "pip / poetry",
+      "go": "go mod",
+      "typescript": "npm / yarn / pnpm",
+      "scala2": "sbt / mill",
+      "scala3": "sbt / scala-cli"
+    }
+  },
+  "entry_point": {
+    "label": "Entry Point & Execution",
+    "description": "How to structure a runnable program and define the starting point.",
+    "codes": {
+      "cpp": "int main(int argc, char** argv) { /* code */ }",
+      "python": "if __name__ == '__main__': # code",
+      "go": "func main() { /* code */ } // inside package main",
+      "typescript": "// Top-level or main() in a script; executed after imports",
+      "scala2": "object Main extends App { /* code */ }",
+      "scala3": "@main def run(): Unit = /* code */"
+    }
+  },
+  "build_run": {
+    "label": "Build & Run Workflow",
+    "description": "Compile, link, or interpret; how to prepare code for execution.",
+    "codes": {
+      "cpp": "g++ main.cpp -o app && ./app",
+      "python": "python main.py",
+      "go": "go run main.go",
+      "typescript": "ts-node main.ts",
+      "scala2": "sbt 'run'",
+      "scala3": "scala-cli main.scala"
+    }
+  }
+}

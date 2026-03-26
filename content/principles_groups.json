@@ -1,0 +1,40 @@
+[
+  {
+    "label": "Core Design",
+    "keys": [
+      "single_responsibility",
+      "open_closed",
+      "liskov_substitution",
+      "interface_segregation",
+      "dependency_inversion",
+      "composition_over_inheritance"
+    ]
+  },
+  {
+    "label": "Code Quality",
+    "keys": [
+      "dry",
+      "kiss",
+      "yagni",
+      "law_of_demeter",
+      "separation_of_concerns"
+    ]
+  },
+  {
+    "label": "Reliability",
+    "keys": [
+      "fail_fast",
+      "immutability_first"
+    ]
+  },
+  {
+    "label": "Language Paradigms",
+    "keys": [
+      "memory_management",
+      "concurrency_models",
+      "structural_typing",
+      "nominal_typing",
+      "duck_typing"
+    ]
+  }
+]

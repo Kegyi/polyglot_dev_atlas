@@ -1,0 +1,40 @@
+[
+  {
+    "label": "Creational Patterns",
+    "keys": [
+      "abstract_factory",
+      "builder",
+      "factory_method",
+      "prototype",
+      "singleton"
+    ]
+  },
+  {
+    "label": "Structural Patterns",
+    "keys": [
+      "adapter",
+      "bridge",
+      "composite",
+      "decorator",
+      "facade",
+      "flyweight",
+      "proxy"
+    ]
+  },
+  {
+    "label": "Behavioral Patterns",
+    "keys": [
+      "chain_of_responsibility",
+      "command",
+      "iterator",
+      "mediator",
+      "memento",
+      "observer",
+      "state",
+      "strategy",
+      "template_method",
+      "visitor",
+      "interpreter"
+    ]
+  }
+]

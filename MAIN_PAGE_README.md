@@ -2,6 +2,8 @@
 
 This atlas helps compare practical code patterns across C++, Python, Go, TypeScript, and Scala.
 
+For maintainers, see `DEVELOPMENT.md` for content contracts, validation, and build-check workflows.
+
 ## Quick Usage Guide
 
 If this is your first time here, use this flow:
