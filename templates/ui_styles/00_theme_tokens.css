@@ -1,0 +1,324 @@
+    :root {
+        --sticky-offset: 0px;
+
+        --bg-main: #f6f4ea;
+        --text-main: #183043;
+        --top-bg: linear-gradient(135deg, #0f4c5c 0%, #1f6f78 55%, #2a9d8f 100%);
+        --top-border: rgba(255, 255, 255, 0.26);
+
+        --chip-fg: #ffffff;
+        --chip-bg: rgba(255, 255, 255, 0.16);
+        --chip-bg-hover: rgba(255, 255, 255, 0.28);
+        --chip-active-bg: #ffd166;
+        --chip-active-fg: #173246;
+        --chip-active2-bg: #90be6d;
+        --chip-active2-fg: #102814;
+
+        --item-row-bg: #e6efe8;
+        --item-row-fg: #1f3c4c;
+        --item-select-border: #bdd2cc;
+        --item-select-bg: #fdfcf8;
+        --item-select-fg: #183043;
+
+        --card-bg: #fffdf7;
+        --card-shadow: 0 4px 14px rgba(11, 31, 46, 0.1);
+        --meta-shadow: 0 3px 10px rgba(11, 31, 46, 0.08);
+
+        --panel-title-bg: #eaf4f1;
+        --panel-title-fg: #153b49;
+        --panel-title-border: #cddfda;
+        --panel-title-hover-bg: #dcece7;
+        --panel-title-active-bg: #c8e2dc;
+        --panel-title-active-fg: #11313f;
+
+        --code-bg: #f5f8f5;
+        --code-fg: #1d3140;
+        --error-fg: #b91c1c;
+
+        --sheet-title-fg: #123b50;
+        --sheet-muted-fg: #5f7484;
+        --sheet-link-fg: #0f766e;
+        --sheet-legend-bg: #fffdf7;
+        --sheet-legend-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        --sheet-table-bg: #fffdf7;
+        --sheet-table-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --sheet-th-bg: #1f6f78;
+        --sheet-th-fg: #ffffff;
+        --sheet-td-border: #d9e6e2;
+        --sheet-td-fg: #183043;
+        --sheet-category-bg: #f3f8f6;
+        --sheet-category-fg: #5f7484;
+        --sheet-sep-border: #b8c9c4;
+        --sheet-sep-fg: #5f7484;
+        --sheet-sep-bg: #fffdf7;
+
+        --sheet-type-bg: #e6f4ea;
+        --sheet-logic-bg: #e7f3ff;
+        --sheet-storage-bg: #fff1df;
+        --sheet-oop-bg: #f1e9ff;
+        --sheet-memory-bg: #ffe7eb;
+        --sheet-modern-bg: #ffeef4;
+        --sheet-template-bg: #ddf2ee;
+        --sheet-system-bg: #e8eef2;
+        --sheet-preprocessor-bg: #f4f7fb;
+        --sheet-function-bg: #fff8df;
+        --sheet-iter-bg: #fff0e8;
+        --sheet-module-bg: #e8efff;
+        --sheet-concurrency-bg: #e6f7ee;
+        --sheet-syntax-bg: #eaf4ff;
+        --sheet-advanced-bg: #fff5ea;
+        --sheet-collection-bg: #e8f6ff;
+        --sheet-typing-bg: #eef1ff;
+        --sheet-guards-bg: #f3ecff;
+        --sheet-dom-bg: #eaf7ff;
+        --sheet-functional-bg: #edf9e7;
+
+        --title-main-size: 1.15rem;
+        --title-sub-size: 1rem;
+        --title-main-weight: 700;
+        --title-sub-weight: 700;
+        --title-letter-spacing: 0.01em;
+    }
+
+    body.palette-technical {
+        --bg-main: #edf3ff;
+        --text-main: #0c2240;
+        --top-bg: linear-gradient(135deg, #0a1f44 0%, #123e7a 55%, #1d4ed8 100%);
+        --top-border: rgba(255, 255, 255, 0.28);
+
+        --chip-active-bg: #22d3ee;
+        --chip-active-fg: #04212b;
+        --chip-active2-bg: #a78bfa;
+        --chip-active2-fg: #20113e;
+
+        --item-row-bg: #e2ecff;
+        --item-row-fg: #12325d;
+        --item-select-border: #bbcdf3;
+        --item-select-bg: #f8fbff;
+        --item-select-fg: #0f2b50;
+
+        --card-bg: #fefeff;
+        --panel-title-bg: #e8f0ff;
+        --panel-title-fg: #112f59;
+        --panel-title-border: #ccdcf7;
+        --panel-title-hover-bg: #dde9ff;
+        --panel-title-active-bg: #cedeff;
+        --panel-title-active-fg: #0d284d;
+
+        --code-bg: #f4f8ff;
+        --code-fg: #152f52;
+
+        --sheet-title-fg: #0d315f;
+        --sheet-muted-fg: #5d718e;
+        --sheet-link-fg: #0054c7;
+        --sheet-th-bg: #133f7a;
+        --sheet-td-border: #d6e4fb;
+        --sheet-td-fg: #112d51;
+        --sheet-category-bg: #edf3ff;
+        --sheet-category-fg: #5d718e;
+        --sheet-sep-border: #b9cae7;
+        --sheet-sep-fg: #5d718e;
+        --sheet-sep-bg: #fefeff;
+    }
+
+    body.palette-soft {
+        --bg-main: #faf7f2;
+        --text-main: #3f3a34;
+        --top-bg: linear-gradient(135deg, #5b6d63 0%, #7b8f7f 55%, #9bb39a 100%);
+        --top-border: rgba(255, 255, 255, 0.25);
+
+        --chip-active-bg: #f6c177;
+        --chip-active-fg: #3f2c14;
+        --chip-active2-bg: #b8d8be;
+        --chip-active2-fg: #203126;
+
+        --item-row-bg: #eef1ea;
+        --item-row-fg: #434b41;
+        --item-select-border: #cbd6c8;
+        --item-select-bg: #fffdf9;
+        --item-select-fg: #3f3a34;
+
+        --card-bg: #fffdf9;
+        --panel-title-bg: #f3f1ea;
+        --panel-title-fg: #48443c;
+        --panel-title-border: #ddd8cd;
+        --panel-title-hover-bg: #ebe7dd;
+        --panel-title-active-bg: #e3ddcf;
+        --panel-title-active-fg: #3c382f;
+
+        --code-bg: #f7f4ef;
+        --code-fg: #3f3a34;
+
+        --sheet-title-fg: #4a443b;
+        --sheet-muted-fg: #7a7266;
+        --sheet-link-fg: #4d7b6f;
+        --sheet-th-bg: #7a8f7d;
+        --sheet-td-border: #e4ddd2;
+        --sheet-td-fg: #433e37;
+        --sheet-category-bg: #f7f3eb;
+        --sheet-category-fg: #7a7266;
+        --sheet-sep-border: #d7cfc1;
+        --sheet-sep-fg: #7a7266;
+        --sheet-sep-bg: #fffdf9;
+    }
+
+    body.theme-dark {
+        --bg-main: #071318;
+        --text-main: #d6e9ea;
+        --top-bg: linear-gradient(135deg, #08242f 0%, #0a3c48 55%, #0f5b5a 100%);
+        --top-border: rgba(255, 255, 255, 0.2);
+
+        --chip-fg: #ffffff;
+        --chip-bg: rgba(255, 255, 255, 0.14);
+        --chip-bg-hover: rgba(255, 255, 255, 0.24);
+        --chip-active-bg: #ffd166;
+        --chip-active-fg: #2f2000;
+        --chip-active2-bg: #8bd17c;
+        --chip-active2-fg: #081f10;
+
+        --item-row-bg: #0d1f29;
+        --item-row-fg: #c2dde0;
+        --item-select-border: #315160;
+        --item-select-bg: #0a1822;
+        --item-select-fg: #d4ebee;
+
+        --card-bg: #0f202b;
+        --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.42);
+        --meta-shadow: 0 3px 10px rgba(0, 0, 0, 0.38);
+
+        --panel-title-bg: #16303d;
+        --panel-title-fg: #d2ebef;
+        --panel-title-border: #2b5062;
+        --panel-title-hover-bg: #1f3e4d;
+        --panel-title-active-bg: #2d5f70;
+        --panel-title-active-fg: #eaffff;
+
+        --code-bg: #0a1823;
+        --code-fg: #d8edf3;
+        --error-fg: #ffb3b3;
+
+        --sheet-title-fg: #d8f0f4;
+        --sheet-muted-fg: #93b8c4;
+        --sheet-link-fg: #79d4c6;
+        --sheet-legend-bg: #0c1c26;
+        --sheet-legend-shadow: 0 3px 10px rgba(0, 0, 0, 0.48);
+        --sheet-table-bg: #102532;
+        --sheet-table-shadow: 0 4px 14px rgba(0, 0, 0, 0.42);
+        --sheet-th-bg: #1f4f63;
+        --sheet-th-fg: #e8f9ff;
+        --sheet-td-border: #2a4b5b;
+        --sheet-td-fg: #d3eaf2;
+        --sheet-category-bg: #163040;
+        --sheet-category-fg: #9fc5d3;
+        --sheet-sep-border: #356075;
+        --sheet-sep-fg: #9fc5d3;
+        --sheet-sep-bg: #102532;
+
+        --sheet-type-bg: #1d3d2c;
+        --sheet-logic-bg: #1a3850;
+        --sheet-storage-bg: #4a371d;
+        --sheet-oop-bg: #3b3050;
+        --sheet-memory-bg: #4f2732;
+        --sheet-modern-bg: #4c3041;
+        --sheet-template-bg: #1f4440;
+        --sheet-system-bg: #2b3c47;
+        --sheet-preprocessor-bg: #24323d;
+        --sheet-function-bg: #473d1f;
+        --sheet-iter-bg: #4b3125;
+        --sheet-module-bg: #253a52;
+        --sheet-concurrency-bg: #1f452f;
+        --sheet-syntax-bg: #223b53;
+        --sheet-advanced-bg: #4b3828;
+        --sheet-collection-bg: #224052;
+        --sheet-typing-bg: #2d3952;
+        --sheet-guards-bg: #3e3554;
+        --sheet-dom-bg: #214154;
+        --sheet-functional-bg: #274430;
+    }
+
+    body.theme-dark.palette-technical {
+        --bg-main: #050c1a;
+        --text-main: #d7e7ff;
+        --top-bg: linear-gradient(135deg, #071331 0%, #0d2e63 55%, #1a4bb8 100%);
+
+        --chip-active-bg: #22d3ee;
+        --chip-active-fg: #031b25;
+        --chip-active2-bg: #b69cff;
+        --chip-active2-fg: #180d33;
+
+        --item-row-bg: #0c1a33;
+        --item-row-fg: #c1d7ff;
+        --item-select-border: #314d7e;
+        --item-select-bg: #081326;
+        --item-select-fg: #d6e6ff;
+
+        --card-bg: #0d1d3a;
+        --panel-title-bg: #152a50;
+        --panel-title-fg: #d8e6ff;
+        --panel-title-border: #294476;
+        --panel-title-hover-bg: #1a3561;
+        --panel-title-active-bg: #24508d;
+        --panel-title-active-fg: #f2f7ff;
+
+        --code-bg: #081226;
+        --code-fg: #d8e7ff;
+
+        --sheet-title-fg: #dce9ff;
+        --sheet-muted-fg: #9ab5df;
+        --sheet-link-fg: #80b8ff;
+        --sheet-legend-bg: #0b1730;
+        --sheet-table-bg: #0f203f;
+        --sheet-th-bg: #1a3e77;
+        --sheet-td-border: #294674;
+        --sheet-td-fg: #d3e4ff;
+        --sheet-category-bg: #162d55;
+        --sheet-category-fg: #9eb9df;
+        --sheet-sep-border: #35598e;
+        --sheet-sep-fg: #9eb9df;
+        --sheet-sep-bg: #0f203f;
+    }
+
+    body.theme-dark.palette-soft {
+        --bg-main: #171616;
+        --text-main: #e7dfd3;
+        --top-bg: linear-gradient(135deg, #2f2a25 0%, #4e4136 55%, #6a594a 100%);
+
+        --chip-active-bg: #f6c177;
+        --chip-active-fg: #3e2b13;
+        --chip-active2-bg: #a3c4aa;
+        --chip-active2-fg: #1f2d21;
+
+        --item-row-bg: #242220;
+        --item-row-fg: #d3c7b6;
+        --item-select-border: #61584e;
+        --item-select-bg: #1c1a18;
+        --item-select-fg: #eadfce;
+
+        --card-bg: #221f1c;
+        --panel-title-bg: #312c27;
+        --panel-title-fg: #e5dac8;
+        --panel-title-border: #50483f;
+        --panel-title-hover-bg: #3a342e;
+        --panel-title-active-bg: #4b433b;
+        --panel-title-active-fg: #f5ecdd;
+
+        --code-bg: #1b1816;
+        --code-fg: #eadfcc;
+
+        --sheet-title-fg: #eadfcf;
+        --sheet-muted-fg: #b9ab98;
+        --sheet-link-fg: #a6ccb0;
+        --sheet-legend-bg: #25221f;
+        --sheet-table-bg: #292521;
+        --sheet-th-bg: #5f5347;
+        --sheet-td-border: #4c443c;
+        --sheet-td-fg: #e5d9c7;
+        --sheet-category-bg: #35302b;
+        --sheet-category-fg: #c1b39f;
+        --sheet-sep-border: #6a5f53;
+        --sheet-sep-fg: #c1b39f;
+        --sheet-sep-bg: #292521;
+    }
+
+    * { box-sizing: border-box; }
+

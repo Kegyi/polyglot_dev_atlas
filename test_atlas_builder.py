@@ -12,6 +12,7 @@ from atlas_builder.enrichment import apply_config_enrichment
 from atlas_builder.output_writer import write_output
 from atlas_builder.runtime_content import load_home_html
 from atlas_builder.sheets import load_sheets
+from atlas_builder.ui_templates import load_ui_templates
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -30,6 +31,122 @@ class TemplateTests(unittest.TestCase):
 
         ordered_indexes = [output.index(substring) for substring in fixture["orderedSubstrings"]]
         self.assertEqual(ordered_indexes, sorted(ordered_indexes))
+
+
+class UiTemplateTests(unittest.TestCase):
+    def test_load_ui_templates_assembles_split_template_directories(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base_dir = Path(temp_dir)
+            templates_dir = base_dir / "templates"
+            (templates_dir / "app").mkdir(parents=True)
+            (templates_dir / "ui_styles").mkdir(parents=True)
+
+            (templates_dir / "app" / "00_head.js").write_text("(function () {\n", encoding="utf-8")
+            (templates_dir / "app" / "10_body.js").write_text("console.log('atlas');\n", encoding="utf-8")
+            (templates_dir / "app" / "20_tail.js").write_text("}());\n", encoding="utf-8")
+
+            (templates_dir / "ui_styles" / "00_base.css").write_text(":root { --x: 1; }\n", encoding="utf-8")
+            (templates_dir / "ui_styles" / "10_body.css").write_text("body { color: black; }\n", encoding="utf-8")
+
+            ui_styles, app_template = load_ui_templates(str(base_dir))
+
+        self.assertEqual(ui_styles, ":root { --x: 1; }\nbody { color: black; }\n")
+        self.assertEqual(app_template, "(function () {\nconsole.log('atlas');\n}());\n")
+
+    def test_load_ui_templates_falls_back_to_legacy_files(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base_dir = Path(temp_dir)
+            templates_dir = base_dir / "templates"
+            templates_dir.mkdir(parents=True)
+
+            (templates_dir / "app.js").write_text("console.log('legacy');\n", encoding="utf-8")
+            (templates_dir / "ui_styles.css").write_text("body{}\n", encoding="utf-8")
+
+            ui_styles, app_template = load_ui_templates(str(base_dir))
+
+        self.assertEqual(ui_styles, "body{}\n")
+        self.assertEqual(app_template, "console.log('legacy');\n")
+
+    def test_load_ui_templates_includes_store_router_and_renderer_registry(self):
+        _ui_styles, app_template = load_ui_templates(str(BASE_DIR))
+
+        self.assertIn("var appStore = {", app_template)
+        self.assertIn("var appRouter = {", app_template)
+        self.assertIn("var VIEW_RENDERERS = {", app_template)
+        self.assertIn("function selectCurrentView() {", app_template)
+        self.assertIn("function selectCurrentViewCategory() {", app_template)
+        self.assertIn("function selectPrimaryLang() {", app_template)
+        self.assertIn("function selectSecondaryLang() {", app_template)
+        self.assertIn("function selectIsCompareMode() {", app_template)
+        self.assertIn("function selectActiveCompareSlot() {", app_template)
+        self.assertIn("function selectIsCourseMode() {", app_template)
+        self.assertIn("function selectCourseLevel() {", app_template)
+        self.assertIn("isSidebarCollapsed: function () {", app_template)
+        self.assertIn("hasCourseTopicCollapseState: function (collapseKey) {", app_template)
+
+    def test_load_ui_templates_includes_view_category_and_sidebar_persistence_flow(self):
+        _ui_styles, app_template = load_ui_templates(str(BASE_DIR))
+
+        self.assertIn("appStore.setViewCategory(appStore.getViewCategory() === 'atlas' ? 'learning' : 'atlas');", app_template)
+        self.assertIn("localStorage.setItem(VIEW_CATEGORY_STORAGE_KEY, appStore.getViewCategory());", app_template)
+        self.assertIn("savedViewCategory = window.localStorage.getItem(VIEW_CATEGORY_STORAGE_KEY) || 'atlas';", app_template)
+        self.assertIn("appStore.setSidebarCollapsed(true);", app_template)
+        self.assertIn("appStore.setSidebarCollapsed(false);", app_template)
+        self.assertIn("savedSidebarCollapsed = window.localStorage.getItem(SIDEBAR_STORAGE_KEY) || '0';", app_template)
+        self.assertIn("appStore.setSidebarCollapsed(savedSidebarCollapsed === '1');", app_template)
+
+    def test_load_ui_templates_includes_course_mode_transition_flow(self):
+        _ui_styles, app_template = load_ui_templates(str(BASE_DIR))
+
+        self.assertIn("appStore.setCourseReturnState(appStore.getSelectionSnapshot());", app_template)
+        self.assertIn("var snapshot = appStore.consumeCourseReturnState();", app_template)
+        self.assertIn("appStore.restoreSelectionSnapshot(snapshot);", app_template)
+        self.assertIn("appStore.setCourseMode(false);", app_template)
+        self.assertIn("appStore.setCourseLevel(0);", app_template)
+        self.assertIn("restorePreCourseView();", app_template)
+        self.assertIn("rememberPreCourseView();", app_template)
+        self.assertIn("appStore.setCourseMode(true);", app_template)
+        self.assertIn("appStore.setViewCategory('atlas');", app_template)
+        self.assertIn("navigateCourse(0);", app_template)
+
+    def test_load_ui_templates_includes_compare_side_selection_flow(self):
+        _ui_styles, app_template = load_ui_templates(str(BASE_DIR))
+
+        self.assertIn("document.getElementById('compareToggle').addEventListener('click', function () {", app_template)
+        self.assertIn("appStore.toggleCompareCount();", app_template)
+        self.assertIn("var btn = event.target.closest('.side-pick-btn');", app_template)
+        self.assertIn("if (!btn || !selectIsCompareMode()) {", app_template)
+        self.assertIn("var side = Number(btn.dataset.side);", app_template)
+        self.assertIn("appStore.setActiveSlot(side);", app_template)
+        self.assertIn("function activeCompareSlot() {", app_template)
+        self.assertIn("return selectActiveCompareSlot();", app_template)
+
+    def test_load_ui_templates_preserves_key_event_flow_order(self):
+        _ui_styles, app_template = load_ui_templates(str(BASE_DIR))
+
+        compare_handler_anchor = "document.getElementById('contentHost').addEventListener('click', function (event) {"
+        compare_handler_start = app_template.index(compare_handler_anchor)
+        compare_flow = [
+            "var btn = event.target.closest('.side-pick-btn');",
+            "if (!btn || !selectIsCompareMode()) {",
+            "var side = Number(btn.dataset.side);",
+            "if (side !== 0 && side !== 1) {",
+            "appStore.setActiveSlot(side);",
+            "renderAll();",
+        ]
+        compare_indexes = [app_template.index(step, compare_handler_start) for step in compare_flow]
+        self.assertEqual(compare_indexes, sorted(compare_indexes))
+
+        view_category_anchor = "function toggleViewCategory() {"
+        view_category_start = app_template.index(view_category_anchor)
+        view_category_flow = [
+            "appStore.setViewCategory(appStore.getViewCategory() === 'atlas' ? 'learning' : 'atlas');",
+            "localStorage.setItem(VIEW_CATEGORY_STORAGE_KEY, appStore.getViewCategory());",
+            "appStore.setView('');",
+            "renderAll();",
+        ]
+        view_category_indexes = [app_template.index(step, view_category_start) for step in view_category_flow]
+        self.assertEqual(view_category_indexes, sorted(view_category_indexes))
 
 
 class AppPayloadTests(unittest.TestCase):

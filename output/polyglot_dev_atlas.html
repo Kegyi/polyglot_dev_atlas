@@ -374,7 +374,6 @@
     }
 
     * { box-sizing: border-box; }
-
     body {
         margin: 0;
         padding: 0;
@@ -643,7 +642,7 @@
         color: #ffe8a8;
     }
 
-    /* ── Catalog layout: persistent sidebar + main content ──────────────── */
+    /* -- Catalog layout: persistent sidebar + main content -- */
     .catalog-layout {
         display: flex;
         align-items: flex-start;
@@ -936,7 +935,6 @@
     .entry-source-link:hover {
         background: color-mix(in srgb, var(--panel-title-hover-bg) 88%, transparent);
     }
-
     .display-grid {
         max-width: 1400px;
         margin: 0 auto;
@@ -1301,7 +1299,6 @@
         overflow-wrap: anywhere;
         word-break: break-word;
     }
-
     .doc-body {
         line-height: 1.65;
         color: var(--text-main);
@@ -1805,7 +1802,6 @@
     .target-left .usage-chip.is-left {
         animation: chipDisplaceLeft 2.8s ease-in-out infinite;
     }
-
     @keyframes compareStateOff {
         0%, 44% { opacity: 1; }
         50%, 100% { opacity: 0; }
@@ -2224,7 +2220,7 @@
         }
     }
 
-    /* ── Course mode: level panel (inside sidebar, above topic list) ─────── */
+    /* -- Course mode: level panel (inside sidebar, above topic list) -- */
     .course-level-panel {
         flex: 0 0 auto;
         border-bottom: 2px solid var(--chip-active-bg);
@@ -2235,7 +2231,7 @@
         padding: 7px 12px;
     }
 
-    /* ── Course mode: nav header (above content area) ────────────────────── */
+    /* -- Course mode: nav header (above content area) -- */
     .course-nav-header {
         background: var(--card-bg);
         border: 1px solid var(--panel-title-border);
@@ -2288,6 +2284,7 @@
         color: var(--sheet-muted-fg);
         line-height: 1.5;
     }
+
   </style>
 </head>
 <body class="theme-dark palette-brand">
@@ -2662,12 +2659,12 @@
             label: 'Intermediate: Temperature Unit Converter',
             description: 'Convert between Celsius, Fahrenheit, and Kelvin. Accept a temperature and unit, output conversions to the other two.',
             codes: {
-                cpp: '#include <iostream>\n#include <iomanip>\n\nint main() {\n    double celsius = 25.0;\n    double fahrenheit = (celsius * 9/5) + 32;\n    double kelvin = celsius + 273.15;\n    \n    std::cout << std::fixed << std::setprecision(2);\n    std::cout << celsius << "°C = " << fahrenheit << "°F = " << kelvin << "K\\n";\n    return 0;\n}',
-                python: 'celsius = 25.0\nfahrenheit = (celsius * 9/5) + 32\nkelvin = celsius + 273.15\n\nprint(f"{celsius}°C = {fahrenheit:.2f}°F = {kelvin:.2f}K")',
-                go: 'package main\n\nimport "fmt"\n\nfunc main() {\n    celsius := 25.0\n    fahrenheit := (celsius * 9 / 5) + 32\n    kelvin := celsius + 273.15\n    \n    fmt.Printf("%.2f°C = %.2f°F = %.2f K\\n", celsius, fahrenheit, kelvin)\n}',
-                typescript: 'const celsius = 25.0;\nconst fahrenheit = (celsius * 9/5) + 32;\nconst kelvin = celsius + 273.15;\n\nconsole.log(`${celsius}°C = ${fahrenheit.toFixed(2)}°F = ${kelvin.toFixed(2)}K`);',
-                scala2: 'val celsius = 25.0\nval fahrenheit = (celsius * 9/5) + 32\nval kelvin = celsius + 273.15\n\nprintln(f"$celsius°C = $fahrenheit%.2f°F = $kelvin%.2f K")',
-                scala3: 'val celsius = 25.0\nval fahrenheit = (celsius * 9/5) + 32\nval kelvin = celsius + 273.15\n\nprintln(f"$celsius°C = $fahrenheit%.2f°F = $kelvin%.2f K")'
+                cpp: '#include <iostream>\n#include <iomanip>\n\nint main() {\n    double celsius = 25.0;\n    double fahrenheit = (celsius * 9/5) + 32;\n    double kelvin = celsius + 273.15;\n    \n    std::cout << std::fixed << std::setprecision(2);\n    std::cout << celsius << " deg C = " << fahrenheit << " deg F = " << kelvin << "K\\n";\n    return 0;\n}',
+                python: 'celsius = 25.0\nfahrenheit = (celsius * 9/5) + 32\nkelvin = celsius + 273.15\n\nprint(f"{celsius} deg C = {fahrenheit:.2f} deg F = {kelvin:.2f}K")',
+                go: 'package main\n\nimport "fmt"\n\nfunc main() {\n    celsius := 25.0\n    fahrenheit := (celsius * 9 / 5) + 32\n    kelvin := celsius + 273.15\n    \n    fmt.Printf("%.2f deg C = %.2f deg F = %.2f K\\n", celsius, fahrenheit, kelvin)\n}',
+                typescript: 'const celsius = 25.0;\nconst fahrenheit = (celsius * 9/5) + 32;\nconst kelvin = celsius + 273.15;\n\nconsole.log(`${celsius} deg C = ${fahrenheit.toFixed(2)} deg F = ${kelvin.toFixed(2)}K`);',
+                scala2: 'val celsius = 25.0\nval fahrenheit = (celsius * 9/5) + 32\nval kelvin = celsius + 273.15\n\nprintln(f"$celsius deg C = $fahrenheit%.2f deg F = $kelvin%.2f K")',
+                scala3: 'val celsius = 25.0\nval fahrenheit = (celsius * 9/5) + 32\nval kelvin = celsius + 273.15\n\nprintln(f"$celsius deg C = $fahrenheit%.2f deg F = $kelvin%.2f K")'
             }
         },
         exercise_parallel_aggregator: {
@@ -2785,7 +2782,6 @@
         courseReturnState: null,
         courseTopicCollapsed: {}
     };
-
     function normalizePaletteKey(paletteName) {
         if (PALETTE_OPTIONS[paletteName]) {
             return paletteName;
@@ -2817,16 +2813,12 @@
     }
 
     function findEntryReference(entryKey) {
-        var catalogs = [
-            { view: 'problems', cfg: VIEW_CONFIG.problems },
-            { view: 'interview', cfg: VIEW_CONFIG.interview },
-            { view: 'basics', cfg: VIEW_CONFIG.basics },
-            { view: 'patterns', cfg: VIEW_CONFIG.patterns },
-            { view: 'course', cfg: VIEW_CONFIG.course },
-            { view: 'exercises', cfg: VIEW_CONFIG.exercises },
-            { view: 'workflow', cfg: VIEW_CONFIG.workflow },
-            { view: 'principles', cfg: VIEW_CONFIG.principles }
-        ];
+        var catalogs = Object.keys(VIEW_REGISTRY).map(function (viewKey) {
+            return {
+                view: viewKey,
+                cfg: appStore.getViewConfig(viewKey)
+            };
+        });
 
         for (var i = 0; i < catalogs.length; i += 1) {
             var item = catalogs[i];
@@ -2870,26 +2862,11 @@
     }
 
     function normalizeSelectedLangs() {
-        if (LANG_ORDER.length === 0) {
-            state.selectedLangs = ['', ''];
-            return;
-        }
-
-        if (LANG_ORDER.indexOf(state.selectedLangs[0]) === -1) {
-            state.selectedLangs[0] = LANG_ORDER[0];
-        }
-
-        if (LANG_ORDER.indexOf(state.selectedLangs[1]) === -1) {
-            state.selectedLangs[1] = chooseNextLang(state.selectedLangs[0]);
-        }
-
-        if (state.compareCount === 2 && state.selectedLangs[0] === state.selectedLangs[1]) {
-            state.selectedLangs[1] = chooseNextLang(state.selectedLangs[0]);
-        }
+        appStore.normalizeSelectedLangs();
     }
 
     function isViewInCurrentCategory(viewKey) {
-        var category = VIEW_CATEGORIES[state.viewCategory];
+        var category = VIEW_CATEGORIES[appStore.getViewCategory()];
         if (!category) {
             return true;
         }
@@ -2897,115 +2874,364 @@
     }
 
     function currentCatalog() {
-        if (state.view === 'problems') {
-            return VIEW_CONFIG.problems;
-        }
-        if (state.view === 'interview') {
-            return VIEW_CONFIG.interview;
-        }
-        if (state.view === 'patterns') {
-            return VIEW_CONFIG.patterns;
-        }
-        if (state.view === 'basics') {
-            return VIEW_CONFIG.basics;
-        }
-        if (state.view === 'course') {
-            return VIEW_CONFIG.course;
-        }
-        if (state.view === 'exercises') {
-            return VIEW_CONFIG.exercises;
-        }
-        if (state.view === 'workflow') {
-            return VIEW_CONFIG.workflow;
-        }
-        if (state.view === 'principles') {
-            return VIEW_CONFIG.principles;
-        }
-        return null;
+        return appStore.getCurrentCatalog();
     }
 
     function selectedItemKey() {
-        if (state.view === 'problems') {
-            return state.selectedProblem;
-        }
-        if (state.view === 'interview') {
-            return state.selectedInterview;
-        }
-        if (state.view === 'patterns') {
-            return state.selectedPattern;
-        }
-        if (state.view === 'basics') {
-            return state.selectedBasic;
-        }
-        if (state.view === 'course') {
-            return state.selectedCourse;
-        }
-        if (state.view === 'exercises') {
-            return state.selectedExercise;
-        }
-        if (state.view === 'workflow') {
-            return state.selectedWorkflow;
-        }
-        return state.selectedPrinciple;
+        return appStore.getSelectedItemKey();
     }
 
     function setSelectedItemKey(key) {
-        if (state.view === 'problems') {
-            state.selectedProblem = key;
-        } else if (state.view === 'interview') {
-            state.selectedInterview = key;
-        } else if (state.view === 'patterns') {
-            state.selectedPattern = key;
-        } else if (state.view === 'basics') {
-            state.selectedBasic = key;
-        } else if (state.view === 'course') {
-            state.selectedCourse = key;
-        } else if (state.view === 'exercises') {
-            state.selectedExercise = key;
-        } else if (state.view === 'workflow') {
-            state.selectedWorkflow = key;
-        } else if (state.view === 'principles') {
-            state.selectedPrinciple = key;
-        }
+        appStore.setSelectedItemKey(key);
     }
 
     function currentEntry() {
-        var catalog = currentCatalog();
-        if (!catalog) {
-            return null;
-        }
-        var key = selectedItemKey();
-        return catalog.entries[key] || null;
+        return appStore.getCurrentEntry();
     }
+    var VIEW_SELECTION_KEYS = {
+        problems: 'selectedProblem',
+        interview: 'selectedInterview',
+        patterns: 'selectedPattern',
+        basics: 'selectedBasic',
+        course: 'selectedCourse',
+        exercises: 'selectedExercise',
+        workflow: 'selectedWorkflow',
+        principles: 'selectedPrinciple'
+    };
 
-    function handleLanguageClick(langKey, targetSlot) {
-        if (state.compareCount === 1) {
-            state.selectedLangs[0] = langKey;
-            renderAll();
-            return;
+    var VIEW_REGISTRY = {
+        problems: VIEW_CONFIG.problems,
+        interview: VIEW_CONFIG.interview,
+        patterns: VIEW_CONFIG.patterns,
+        basics: VIEW_CONFIG.basics,
+        course: VIEW_CONFIG.course,
+        exercises: VIEW_CONFIG.exercises,
+        workflow: VIEW_CONFIG.workflow,
+        principles: VIEW_CONFIG.principles
+    };
+
+    var appStore = {
+        // ========================================
+        // === QUERY METHODS (Read-Only Access) ===
+        // ========================================
+
+        getState: function () {
+            return state;
+        },
+
+        getSelectedLang: function (slot) {
+            var resolvedSlot = slot === 1 ? 1 : 0;
+            return state.selectedLangs[resolvedSlot] || '';
+        },
+
+        getCompareCount: function () {
+            return state.compareCount;
+        },
+
+        getActiveSlot: function () {
+            return state.activeSlot;
+        },
+
+        isCourseModeEnabled: function () {
+            return !!state.courseMode;
+        },
+
+        getCourseLevel: function () {
+            return state.courseLevel;
+        },
+
+        isCourseLevelCollapsed: function () {
+            return !!state.courseLevelCollapsed;
+        },
+
+        getTheme: function () {
+            return state.theme;
+        },
+
+        getPalette: function () {
+            return state.palette;
+        },
+
+        getViewConfig: function (viewKey) {
+            return VIEW_REGISTRY[viewKey] || null;
+        },
+
+        getView: function () {
+            return state.view;
+        },
+
+        getViewCategory: function () {
+            return state.viewCategory;
+        },
+
+        getCurrentCatalog: function () {
+            return this.getViewConfig(this.getView());
+        },
+
+        getSelectedItemKey: function (viewKey) {
+            var resolvedView = typeof viewKey === 'string' ? viewKey : state.view;
+            var stateKey = VIEW_SELECTION_KEYS[resolvedView];
+            return stateKey ? state[stateKey] : '';
+        },
+
+        isSidebarCollapsed: function () {
+            return !!state.sidebarCollapsed;
+        },
+
+        hasCourseTopicCollapseState: function (collapseKey) {
+            return Object.prototype.hasOwnProperty.call(state.courseTopicCollapsed, collapseKey);
+        },
+
+        isCourseTopicCollapsed: function (collapseKey) {
+            return !!state.courseTopicCollapsed[collapseKey];
+        },
+
+        getSelectionSnapshot: function () {
+            return {
+                view: state.view,
+                viewCategory: state.viewCategory,
+                selectedProblem: state.selectedProblem,
+                selectedInterview: state.selectedInterview,
+                selectedPattern: state.selectedPattern,
+                selectedBasic: state.selectedBasic,
+                selectedPrinciple: state.selectedPrinciple,
+                selectedCourse: state.selectedCourse,
+                selectedExercise: state.selectedExercise,
+                selectedWorkflow: state.selectedWorkflow
+            };
+        },
+
+        getCurrentEntry: function () {
+            var catalog = this.getCurrentCatalog();
+            if (!catalog) {
+                return null;
+            }
+            var key = this.getSelectedItemKey();
+            return catalog.entries[key] || null;
+        },
+
+        // ============================================
+        // === MUTATION METHODS (State Modification) ===
+        // ============================================
+
+        setSelectedItemKey: function (key, viewKey) {
+            var resolvedView = typeof viewKey === 'string' ? viewKey : state.view;
+            var stateKey = VIEW_SELECTION_KEYS[resolvedView];
+            if (stateKey) {
+                state[stateKey] = key;
+            }
+        },
+
+        setSelectedLang: function (slot, langKey) {
+            var resolvedSlot = slot === 1 ? 1 : 0;
+            state.selectedLangs[resolvedSlot] = langKey;
+            return state.selectedLangs[resolvedSlot];
+        },
+
+        normalizeSelectedLangs: function () {
+            if (LANG_ORDER.length === 0) {
+                state.selectedLangs = ['', ''];
+                return;
+            }
+
+            if (LANG_ORDER.indexOf(state.selectedLangs[0]) === -1) {
+                state.selectedLangs[0] = LANG_ORDER[0];
+            }
+
+            if (LANG_ORDER.indexOf(state.selectedLangs[1]) === -1) {
+                state.selectedLangs[1] = chooseNextLang(state.selectedLangs[0]);
+            }
+
+            if (state.compareCount === 2 && state.selectedLangs[0] === state.selectedLangs[1]) {
+                state.selectedLangs[1] = chooseNextLang(state.selectedLangs[0]);
+            }
+        },
+
+        setCompareCount: function (compareCount) {
+            state.compareCount = compareCount === 2 ? 2 : 1;
+            return state.compareCount;
+        },
+
+        toggleCompareCount: function () {
+            state.compareCount = state.compareCount === 2 ? 1 : 2;
+            if (state.activeSlot !== 0 && state.activeSlot !== 1) {
+                state.activeSlot = 0;
+            }
+            return state.compareCount;
+        },
+
+        setActiveSlot: function (slot) {
+            state.activeSlot = slot === 1 ? 1 : 0;
+            return state.activeSlot;
+        },
+
+        swapSelectedLangs: function () {
+            var tmp = state.selectedLangs[0];
+            state.selectedLangs[0] = state.selectedLangs[1];
+            state.selectedLangs[1] = tmp;
+        },
+
+        applyLanguageSelection: function (langKey, targetSlot) {
+            if (state.compareCount === 1) {
+                this.setSelectedLang(0, langKey);
+                return;
+            }
+
+            var slot = targetSlot === 1 ? 1 : 0;
+            var other = slot === 0 ? 1 : 0;
+
+            if (state.selectedLangs[slot] === langKey) {
+                this.setActiveSlot(slot);
+                return;
+            }
+
+            if (state.selectedLangs[other] === langKey) {
+                var tmp = state.selectedLangs[slot];
+                state.selectedLangs[slot] = langKey;
+                state.selectedLangs[other] = tmp;
+            } else {
+                state.selectedLangs[slot] = langKey;
+                if (state.selectedLangs[slot] === state.selectedLangs[other]) {
+                    state.selectedLangs[other] = chooseNextLang(state.selectedLangs[slot]);
+                }
+            }
+
+            this.setActiveSlot(slot);
+        },
+
+        setCourseMode: function (enabled) {
+            state.courseMode = !!enabled;
+            return state.courseMode;
+        },
+
+        setCourseLevel: function (levelIndex) {
+            state.courseLevel = levelIndex;
+            return state.courseLevel;
+        },
+
+        setCourseLevelCollapsed: function (collapsed) {
+            state.courseLevelCollapsed = !!collapsed;
+            return state.courseLevelCollapsed;
+        },
+
+        setSidebarCollapsed: function (collapsed) {
+            state.sidebarCollapsed = !!collapsed;
+            return state.sidebarCollapsed;
+        },
+
+        setCourseTopicCollapsed: function (collapseKey, collapsed) {
+            state.courseTopicCollapsed[collapseKey] = !!collapsed;
+            return state.courseTopicCollapsed[collapseKey];
+        },
+
+        restoreSelectionSnapshot: function (snapshot) {
+            if (!snapshot) {
+                return;
+            }
+            this.setView(snapshot.view);
+            this.setViewCategory(snapshot.viewCategory);
+            state.selectedProblem = snapshot.selectedProblem;
+            state.selectedInterview = snapshot.selectedInterview;
+            state.selectedPattern = snapshot.selectedPattern;
+            state.selectedBasic = snapshot.selectedBasic;
+            state.selectedPrinciple = snapshot.selectedPrinciple;
+            state.selectedCourse = snapshot.selectedCourse;
+            state.selectedExercise = snapshot.selectedExercise;
+            state.selectedWorkflow = snapshot.selectedWorkflow;
+        },
+
+        setCourseReturnState: function (snapshot) {
+            state.courseReturnState = snapshot;
+        },
+
+        consumeCourseReturnState: function () {
+            var snapshot = state.courseReturnState;
+            state.courseReturnState = null;
+            return snapshot;
+        },
+
+        setTheme: function (themeName) {
+            state.theme = themeName === 'light' ? 'light' : 'dark';
+            return state.theme;
+        },
+
+        setPalette: function (paletteName) {
+            state.palette = normalizePaletteKey(paletteName);
+            return state.palette;
+        },
+
+        setView: function (viewKey) {
+            state.view = viewKey || '';
+        },
+
+        toggleView: function (viewKey) {
+            state.view = state.view === viewKey ? '' : viewKey;
+            return state.view;
+        },
+
+        setViewCategory: function (categoryKey) {
+            state.viewCategory = categoryKey;
         }
+    };
 
-        var slot = targetSlot === 1 ? 1 : 0;
-        var other = slot === 0 ? 1 : 0;
+    var appRouter = {
+        resolveRendererKey: function () {
+            var view = appStore.getView();
+            if (view === 'sheets') {
+                return 'sheets';
+            }
+            if (!view) {
+                return 'home';
+            }
+            if (view === 'exercises') {
+                return 'exercises';
+            }
+            if (view === 'principles') {
+                return 'principles';
+            }
+            return 'catalogCode';
+        },
 
-        if (state.selectedLangs[slot] === langKey) {
-            state.activeSlot = slot;
-            renderAll();
-            return;
-        }
-
-        if (state.selectedLangs[other] === langKey) {
-            var tmp = state.selectedLangs[slot];
-            state.selectedLangs[slot] = langKey;
-            state.selectedLangs[other] = tmp;
-        } else {
-            state.selectedLangs[slot] = langKey;
-            if (state.selectedLangs[slot] === state.selectedLangs[other]) {
-                state.selectedLangs[other] = chooseNextLang(state.selectedLangs[slot]);
+        renderActiveView: function () {
+            var renderer = VIEW_RENDERERS[this.resolveRendererKey()];
+            if (typeof renderer === 'function') {
+                renderer();
             }
         }
+    };
+    function selectCurrentView() {
+        return appStore.getView();
+    }
 
-        state.activeSlot = slot;
+    function selectCurrentViewCategory() {
+        return appStore.getViewCategory();
+    }
+
+    function selectPrimaryLang() {
+        return appStore.getSelectedLang(0);
+    }
+
+    function selectSecondaryLang() {
+        return appStore.getSelectedLang(1);
+    }
+
+    function selectIsCompareMode() {
+        return appStore.getCompareCount() === 2;
+    }
+
+    function selectActiveCompareSlot() {
+        return appStore.getActiveSlot();
+    }
+
+    function selectIsCourseMode() {
+        return appStore.isCourseModeEnabled();
+    }
+
+    function selectCourseLevel() {
+        return appStore.getCourseLevel();
+    }
+    function handleLanguageClick(langKey, targetSlot) {
+        appStore.applyLanguageSelection(langKey, targetSlot);
         renderAll();
     }
 
@@ -3053,7 +3279,7 @@
     }
 
     function beginLanguageDrag(event, langKey) {
-        if (state.compareCount !== 2 || !event.currentTarget) {
+        if (appStore.getCompareCount() !== 2 || !event.currentTarget) {
             return;
         }
 
@@ -3150,13 +3376,13 @@
             btn.textContent = LANG_LABELS[langKey] || langKey;
             btn.setAttribute('data-lang-key', langKey);
 
-            if (state.selectedLangs[0] === langKey) {
+            if (selectPrimaryLang() === langKey) {
                 btn.classList.add('active');
-            } else if (state.compareCount === 2 && state.selectedLangs[1] === langKey) {
+            } else if (appStore.getCompareCount() === 2 && appStore.getSelectedLang(1) === langKey) {
                 btn.classList.add('active-2');
             }
 
-            if (state.compareCount === 2) {
+            if (appStore.getCompareCount() === 2) {
                 btn.title = 'Tap selects left panel. Drag left or right to choose a side. Right click still selects right panel.';
             }
 
@@ -3170,7 +3396,7 @@
                 });
 
                 btn.addEventListener('contextmenu', function (event) {
-                    if (state.compareCount !== 2) {
+                    if (appStore.getCompareCount() !== 2) {
                         return;
                     }
                     event.preventDefault();
@@ -3202,7 +3428,7 @@
         var nav = document.getElementById('viewNav');
         nav.innerHTML = '';
 
-        var currentCategory = VIEW_CATEGORIES[state.viewCategory];
+        var currentCategory = VIEW_CATEGORIES[selectCurrentViewCategory()];
         var visibleViews = (currentCategory && currentCategory.views ? currentCategory.views : []).filter(function (viewKey) {
             return !!VIEW_CONFIG[viewKey];
         });
@@ -3211,14 +3437,14 @@
             var btn = document.createElement('button');
             btn.type = 'button';
             btn.className = 'chip-btn';
-            btn.textContent = VIEW_CONFIG[viewKey].label;
+            btn.textContent = appStore.getViewConfig(viewKey).label;
 
-            if (state.view === viewKey) {
+            if (selectCurrentView() === viewKey) {
                 btn.classList.add('active');
             }
 
             btn.addEventListener('click', function () {
-                state.view = (state.view === viewKey) ? '' : viewKey;
+                appStore.toggleView(viewKey);
                 renderAll();
             });
 
@@ -3233,7 +3459,7 @@
             return;
         }
 
-        var currentCat = VIEW_CATEGORIES[state.viewCategory];
+        var currentCat = VIEW_CATEGORIES[selectCurrentViewCategory()];
         rowTitle.textContent = (currentCat && currentCat.label ? currentCat.label : 'Atlas Views').toUpperCase();
         rowTitle.classList.add('view-category-toggle-title');
         rowTitle.setAttribute('role', 'button');
@@ -3241,9 +3467,9 @@
         rowTitle.setAttribute('aria-label', 'Toggle view category');
 
         function toggleViewCategory() {
-            state.viewCategory = state.viewCategory === 'atlas' ? 'learning' : 'atlas';
-            localStorage.setItem(VIEW_CATEGORY_STORAGE_KEY, state.viewCategory);
-            state.view = '';
+            appStore.setViewCategory(appStore.getViewCategory() === 'atlas' ? 'learning' : 'atlas');
+            localStorage.setItem(VIEW_CATEGORY_STORAGE_KEY, appStore.getViewCategory());
+            appStore.setView('');
             renderAll();
         }
 
@@ -3260,7 +3486,7 @@
         var toggle = document.getElementById('compareToggle');
         var swap = document.getElementById('swapBtn');
         var course = document.getElementById('courseBtn');
-        if (state.view === 'principles') {
+        if (selectCurrentView() === 'principles') {
             toggle.classList.add('hidden');
             swap.classList.add('hidden');
             if (course) {
@@ -3270,67 +3496,46 @@
         }
 
         toggle.classList.remove('hidden');
-        var isCompare = state.compareCount === 2;
+    var isCompare = appStore.getCompareCount() === 2;
 
         toggle.classList.toggle('active', isCompare);
         toggle.setAttribute('aria-pressed', isCompare ? 'true' : 'false');
         swap.classList.toggle('hidden', !isCompare);
 
         if (course) {
-            course.classList.toggle('active', !!state.courseMode);
-            course.setAttribute('aria-pressed', state.courseMode ? 'true' : 'false');
-            course.title = state.courseMode ? 'Exit course mode' : 'Start 7-level adaptation course';
+            course.classList.toggle('active', appStore.isCourseModeEnabled());
+            course.setAttribute('aria-pressed', appStore.isCourseModeEnabled() ? 'true' : 'false');
+            course.title = appStore.isCourseModeEnabled() ? 'Exit course mode' : 'Start 7-level adaptation course';
         }
     }
 
     function rememberPreCourseView() {
-        state.courseReturnState = {
-            view: state.view,
-            viewCategory: state.viewCategory,
-            selectedProblem: state.selectedProblem,
-            selectedInterview: state.selectedInterview,
-            selectedPattern: state.selectedPattern,
-            selectedBasic: state.selectedBasic,
-            selectedPrinciple: state.selectedPrinciple,
-            selectedCourse: state.selectedCourse,
-            selectedExercise: state.selectedExercise,
-            selectedWorkflow: state.selectedWorkflow
-        };
+        appStore.setCourseReturnState(appStore.getSelectionSnapshot());
     }
 
     function restorePreCourseView() {
-        var snapshot = state.courseReturnState;
-        state.courseReturnState = null;
+        var snapshot = appStore.consumeCourseReturnState();
         if (!snapshot) {
             renderAll();
             return;
         }
-        state.view = snapshot.view;
-        state.viewCategory = snapshot.viewCategory;
-        state.selectedProblem = snapshot.selectedProblem;
-        state.selectedInterview = snapshot.selectedInterview;
-        state.selectedPattern = snapshot.selectedPattern;
-        state.selectedBasic = snapshot.selectedBasic;
-        state.selectedPrinciple = snapshot.selectedPrinciple;
-        state.selectedCourse = snapshot.selectedCourse;
-        state.selectedExercise = snapshot.selectedExercise;
-        state.selectedWorkflow = snapshot.selectedWorkflow;
+        appStore.restoreSelectionSnapshot(snapshot);
         renderAll();
     }
 
     function exitCourseToLearningBasics() {
-        state.courseMode = false;
-        state.courseLevel = 0;
-        state.courseReturnState = null;
-        state.viewCategory = 'learning';
-        state.view = 'basics';
+        appStore.setCourseMode(false);
+        appStore.setCourseLevel(0);
+        appStore.setCourseReturnState(null);
+        appStore.setViewCategory('learning');
+        appStore.setView('basics');
         renderAll();
     }
 
     function renderPaletteSelector() {
         var previewButtons = document.querySelectorAll('.palette-preview-btn');
         previewButtons.forEach(function (btn) {
-            var isActive = btn.getAttribute('data-palette') === state.palette;
+            var isActive = btn.getAttribute('data-palette') === appStore.getPalette();
             btn.classList.toggle('active', isActive);
             btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         });
@@ -3369,7 +3574,7 @@
         btn.type = 'button';
         btn.className = 'sidebar-item' + (key === activeKey ? ' active' : '');
 
-        if (state.view === 'exercises') {
+        if (selectCurrentView() === 'exercises') {
             var parts = exerciseLabelParts(entry.label || key);
             btn.textContent = parts.title || key;
         } else {
@@ -3387,7 +3592,8 @@
         var list = document.getElementById('sidebarList');
         var sidebarHeader = document.getElementById('topicSidebarHeader');
 
-        var needsSidebar = state.view && state.view !== 'sheets';
+        var activeView = selectCurrentView();
+        var needsSidebar = activeView && activeView !== 'sheets';
         if (!needsSidebar) {
             sidebar.classList.add('hidden');
             expandBtn.classList.add('hidden');
@@ -3401,8 +3607,8 @@
             return;
         }
 
-        if (state.courseMode) {
-            if (state.courseLevelCollapsed) {
+        if (appStore.isCourseModeEnabled()) {
+            if (appStore.isCourseLevelCollapsed()) {
                 sidebar.classList.add('hidden');
                 expandBtn.classList.remove('hidden');
                 expandBtn.title = 'Expand course levels';
@@ -3458,7 +3664,7 @@
             sidebarTitle.textContent = catalog.itemLabel || 'Items';
         }
 
-        if (state.sidebarCollapsed) {
+        if (appStore.isSidebarCollapsed()) {
             sidebar.classList.add('hidden');
             expandBtn.classList.remove('hidden');
         } else {
@@ -3477,7 +3683,7 @@
                 var groupHeader = document.createElement('div');
                 groupHeader.className = 'sidebar-group-label';
                 groupHeader.textContent = group.label;
-                if (state.view === 'exercises') {
+                if (selectCurrentView() === 'exercises') {
                     var levelKey = String(group.label || '').toLowerCase();
                     if (levelKey === 'beginner' || levelKey === 'intermediate' || levelKey === 'advanced') {
                         groupHeader.classList.add('exercise-level', 'level-' + levelKey);
@@ -3508,7 +3714,6 @@
             if (active) { active.scrollIntoView({ block: 'nearest' }); }
         }, 0);
     }
-
     function renderModernNotes(modernNotes, langKey) {
         if (!modernNotes || !langKey) {
             return '';
@@ -3599,12 +3804,23 @@
         if (adapterEl) { adapterEl.innerHTML = renderAdapterInsight(adapterInsight); }
         if (compareEl) { compareEl.innerHTML = renderCompareEntries(compareEntries); }
     }
+    function selectedLang(slot) {
+        return slot === 1 ? selectSecondaryLang() : selectPrimaryLang();
+    }
+
+    function isCompareMode() {
+        return selectIsCompareMode();
+    }
+
+    function activeCompareSlot() {
+        return selectActiveCompareSlot();
+    }
 
     function renderSheetsView() {
         var host = document.getElementById('contentHost');
 
-        if (state.compareCount === 1) {
-            var singleLang = state.selectedLangs[0];
+        if (!isCompareMode()) {
+            var singleLang = selectedLang(0);
             var singleSheet = SHEETS[singleLang];
             var singleBody = singleSheet && singleSheet.body
                 ? singleSheet.body
@@ -3620,8 +3836,8 @@
             return;
         }
 
-        var leftLang = state.selectedLangs[0];
-        var rightLang = state.selectedLangs[1];
+        var leftLang = selectedLang(0);
+        var rightLang = selectedLang(1);
         var leftSheet = SHEETS[leftLang];
         var rightSheet = SHEETS[rightLang];
         var leftBody = leftSheet && leftSheet.body
@@ -3633,12 +3849,12 @@
 
         host.innerHTML = ''
             + '<div class="display-grid compare">'
-            + '  <section class="display-panel compare-panel' + (state.activeSlot === 0 ? ' active-side' : '') + '" data-side="0">'
-            + '    <button type="button" class="display-side-btn side-pick-btn' + (state.activeSlot === 0 ? ' active' : '') + '" data-side="0">Left: ' + escapeHtml(LANG_LABELS[leftLang] || leftLang) + '</button>'
+            + '  <section class="display-panel compare-panel' + (activeCompareSlot() === 0 ? ' active-side' : '') + '" data-side="0">'
+            + '    <button type="button" class="display-side-btn side-pick-btn' + (activeCompareSlot() === 0 ? ' active' : '') + '" data-side="0">Left: ' + escapeHtml(LANG_LABELS[leftLang] || leftLang) + '</button>'
             + '    <div class="panel-body sheet-body">' + leftBody + '</div>'
             + '  </section>'
-            + '  <section class="display-panel compare-panel' + (state.activeSlot === 1 ? ' active-side' : '') + '" data-side="1">'
-            + '    <button type="button" class="display-side-btn side-pick-btn' + (state.activeSlot === 1 ? ' active' : '') + '" data-side="1">Right: ' + escapeHtml(LANG_LABELS[rightLang] || rightLang) + '</button>'
+            + '  <section class="display-panel compare-panel' + (activeCompareSlot() === 1 ? ' active-side' : '') + '" data-side="1">'
+            + '    <button type="button" class="display-side-btn side-pick-btn' + (activeCompareSlot() === 1 ? ' active' : '') + '" data-side="1">Right: ' + escapeHtml(LANG_LABELS[rightLang] || rightLang) + '</button>'
             + '    <div class="panel-body sheet-body">' + rightBody + '</div>'
             + '  </section>'
             + '</div>';
@@ -3652,7 +3868,8 @@
 
         function listLabels(viewKeys) {
             return (viewKeys || []).map(function (k) {
-                return VIEW_CONFIG[k] ? VIEW_CONFIG[k].label : k;
+                var viewConfig = appStore.getViewConfig(k);
+                return viewConfig ? viewConfig.label : k;
             }).filter(Boolean);
         }
 
@@ -3660,12 +3877,12 @@
             var atlasViews = listLabels((VIEW_CATEGORIES.atlas && VIEW_CATEGORIES.atlas.views) || []);
             var learningViews = listLabels((VIEW_CATEGORIES.learning && VIEW_CATEGORIES.learning.views) || []);
 
-            var primaryLangKey = LANG_ORDER.indexOf(state.selectedLangs[0]) !== -1
-                ? state.selectedLangs[0]
+            var primaryLangKey = LANG_ORDER.indexOf(selectedLang(0)) !== -1
+                ? selectedLang(0)
                 : (LANG_ORDER[0] || 'cpp');
 
-            var secondaryLangKey = LANG_ORDER.indexOf(state.selectedLangs[1]) !== -1
-                ? state.selectedLangs[1]
+            var secondaryLangKey = LANG_ORDER.indexOf(selectedLang(1)) !== -1
+                ? selectedLang(1)
                 : chooseNextLang(primaryLangKey);
 
             if (!secondaryLangKey || secondaryLangKey === primaryLangKey) {
@@ -3821,9 +4038,9 @@
             selected.push(base);
         }
 
-        pushUniqueLang(state.selectedLangs[0]);
-        if (state.compareCount === 2) {
-            pushUniqueLang(state.selectedLangs[1]);
+        pushUniqueLang(selectedLang(0));
+        if (isCompareMode()) {
+            pushUniqueLang(selectedLang(1));
         }
 
         function snippetLanguage(baseLang) {
@@ -3914,8 +4131,8 @@
         var exerciseTitle = exerciseLabelParts(entry.label || '').title || entry.label || '';
         var sectionAttrs = ' class="display-panel"';
         if (sideIndex === 0 || sideIndex === 1) {
-            sectionAttrs = ' class="display-panel compare-panel' + (state.activeSlot === sideIndex ? ' active-side' : '') + '" data-side="' + sideIndex + '"';
-            titleHtml = '<button type="button" class="display-side-btn side-pick-btn' + (state.activeSlot === sideIndex ? ' active' : '') + '" data-side="' + sideIndex + '">' + escapeHtml((sideIndex === 0 ? 'Left: ' : 'Right: ') + (LANG_LABELS[langKey] || langKey)) + '</button>';
+            sectionAttrs = ' class="display-panel compare-panel' + (activeCompareSlot() === sideIndex ? ' active-side' : '') + '" data-side="' + sideIndex + '"';
+            titleHtml = '<button type="button" class="display-side-btn side-pick-btn' + (activeCompareSlot() === sideIndex ? ' active' : '') + '" data-side="' + sideIndex + '">' + escapeHtml((sideIndex === 0 ? 'Left: ' : 'Right: ') + (LANG_LABELS[langKey] || langKey)) + '</button>';
         } else {
             titleHtml = '<div class="display-title">Task: ' + escapeHtml(exerciseTitle) + ' (' + escapeHtml(LANG_LABELS[langKey] || langKey) + ')</div>';
         }
@@ -3937,18 +4154,18 @@
         var entry = currentEntry();
 
         if (!entry) {
-            updateEntryMeta('', '', [], null, null, null, state.selectedLangs[0]);
+            updateEntryMeta('', '', [], null, null, null, selectedLang(0));
             host.innerHTML = '<div class="display-grid"><section class="display-panel"><p class="empty-note">No exercise tasks available.</p></section></div>';
             return;
         }
 
         var parts = exerciseLabelParts(entry.label || '');
         var exerciseTitle = parts.title || entry.label || '';
-        updateEntryMeta(exerciseTitle, entry.description || '', entry.sourceLinks || [], null, null, entry.compareEntries || [], state.selectedLangs[0]);
+        updateEntryMeta(exerciseTitle, entry.description || '', entry.sourceLinks || [], null, null, entry.compareEntries || [], selectedLang(0));
         setEntryTitleLevel(parts.level || '');
 
-        if (state.compareCount === 1) {
-            var lang = state.selectedLangs[0];
+        if (!isCompareMode()) {
+            var lang = selectedLang(0);
             host.innerHTML = ''
                 + '<div class="display-grid">'
                 + exercisePanel(entry, lang, null)
@@ -3956,8 +4173,8 @@
             return;
         }
 
-        var leftLang = state.selectedLangs[0];
-        var rightLang = state.selectedLangs[1];
+        var leftLang = selectedLang(0);
+        var rightLang = selectedLang(1);
         host.innerHTML = ''
             + '<div class="display-grid compare">'
             + exercisePanel(entry, leftLang, 0)
@@ -3983,7 +4200,7 @@
             return;
         }
 
-        if (state.theme === 'light') {
+        if (appStore.getTheme() === 'light') {
             lightTheme.disabled = false;
             darkTheme.disabled = true;
         } else {
@@ -3998,39 +4215,39 @@
             return;
         }
 
-        var isDark = state.theme === 'dark';
+        var isDark = appStore.getTheme() === 'dark';
         toggle.innerHTML = isDark ? '&#9728;' : '&#9790;';
         toggle.title = isDark ? 'Switch to light theme' : 'Switch to dark theme';
         toggle.setAttribute('aria-label', toggle.title);
     }
 
     function applyTheme(themeName) {
-        state.theme = themeName === 'light' ? 'light' : 'dark';
+        appStore.setTheme(themeName);
 
         document.body.classList.remove('theme-light', 'theme-dark');
-        document.body.classList.add(state.theme === 'light' ? 'theme-light' : 'theme-dark');
+        document.body.classList.add(appStore.getTheme() === 'light' ? 'theme-light' : 'theme-dark');
 
         updateThemeToggle();
         syncHighlightTheme();
         applySyntaxHighlight();
 
         try {
-            window.localStorage.setItem(THEME_STORAGE_KEY, state.theme);
+            window.localStorage.setItem(THEME_STORAGE_KEY, appStore.getTheme());
         } catch (err) {
             // storage can be disabled
         }
     }
 
     function applyPalette(paletteName) {
-        state.palette = normalizePaletteKey(paletteName);
+        appStore.setPalette(paletteName);
 
         document.body.classList.remove('palette-brand', 'palette-technical', 'palette-soft');
-        document.body.classList.add('palette-' + state.palette);
+        document.body.classList.add('palette-' + appStore.getPalette());
 
         renderPaletteSelector();
 
         try {
-            window.localStorage.setItem(PALETTE_STORAGE_KEY, state.palette);
+            window.localStorage.setItem(PALETTE_STORAGE_KEY, appStore.getPalette());
         } catch (err) {
             // storage can be disabled
         }
@@ -4040,8 +4257,8 @@
         var titleHtml = '';
         var sectionAttrs = ' class="display-panel"';
         if (sideIndex === 0 || sideIndex === 1) {
-            sectionAttrs = ' class="display-panel compare-panel' + (state.activeSlot === sideIndex ? ' active-side' : '') + '" data-side="' + sideIndex + '"';
-            titleHtml = '<button type="button" class="display-side-btn side-pick-btn' + (state.activeSlot === sideIndex ? ' active' : '') + '" data-side="' + sideIndex + '">' + escapeHtml(title) + '</button>';
+            sectionAttrs = ' class="display-panel compare-panel' + (activeCompareSlot() === sideIndex ? ' active-side' : '') + '" data-side="' + sideIndex + '"';
+            titleHtml = '<button type="button" class="display-side-btn side-pick-btn' + (activeCompareSlot() === sideIndex ? ' active' : '') + '" data-side="' + sideIndex + '">' + escapeHtml(title) + '</button>';
         } else {
             titleHtml = '<div class="display-title">' + escapeHtml(title) + '</div>';
         }
@@ -4063,13 +4280,13 @@
     }
 
     function courseTopicCollapseKey(topicKey) {
-        return String(state.courseLevel) + ':' + String(topicKey || '');
+        return String(appStore.getCourseLevel()) + ':' + String(topicKey || '');
     }
 
     function isCourseTopicCollapsed(topicKey, topicIndex) {
         var key = courseTopicCollapseKey(topicKey);
-        if (Object.prototype.hasOwnProperty.call(state.courseTopicCollapsed, key)) {
-            return !!state.courseTopicCollapsed[key];
+        if (appStore.hasCourseTopicCollapseState(key)) {
+            return appStore.isCourseTopicCollapsed(key);
         }
         return topicIndex > 0;
     }
@@ -4080,8 +4297,8 @@
             return base + '_modern';
         }
 
-        if (state.compareCount === 1) {
-            var lang = state.selectedLangs[0];
+        if (!isCompareMode()) {
+            var lang = selectedLang(0);
             var modernCode = (entry.codes && entry.codes[modernKey(lang)]) || null;
             return ''
                 + '<div class="display-grid">'
@@ -4089,8 +4306,8 @@
                 + '</div>';
         }
 
-        var leftLang = state.selectedLangs[0];
-        var rightLang = state.selectedLangs[1];
+        var leftLang = selectedLang(0);
+        var rightLang = selectedLang(1);
         var leftModern = (entry.codes && entry.codes[modernKey(leftLang)]) || null;
         var rightModern = (entry.codes && entry.codes[modernKey(rightLang)]) || null;
 
@@ -4103,10 +4320,10 @@
 
     function renderCourseTopicsView() {
         var host = document.getElementById('contentHost');
-        var level = ADAPTATION_COURSE[state.courseLevel];
+        var level = ADAPTATION_COURSE[appStore.getCourseLevel()];
         var entries = (VIEW_CONFIG.basics && VIEW_CONFIG.basics.entries) ? VIEW_CONFIG.basics.entries : {};
 
-        updateEntryMeta('', '', [], null, null, null, state.selectedLangs[0]);
+        updateEntryMeta('', '', [], null, null, null, selectedLang(0));
 
         if (!level) {
             host.innerHTML = '<div class="display-grid"><section class="display-panel"><p class="empty-note">No course level configured.</p></section></div>';
@@ -4169,7 +4386,7 @@
 
     function renderCodeView() {
         setEntryTitleLevel('');
-        if (state.courseMode) {
+        if (appStore.isCourseModeEnabled()) {
             renderCourseTopicsView();
             return;
         }
@@ -4177,20 +4394,20 @@
         var entry = currentEntry();
 
         if (!entry) {
-            updateEntryMeta('', '', [], null, null, null, state.selectedLangs[0]);
+            updateEntryMeta('', '', [], null, null, null, selectedLang(0));
             host.innerHTML = '<div class="display-grid"><section class="display-panel"><p class="empty-note">No entries available for this view.</p></section></div>';
             return;
         }
 
-        updateEntryMeta(entry.label || '', entry.description || '', entry.sourceLinks || [], entry.modernNotes || null, entry.adapterInsight || null, entry.compareEntries || [], state.selectedLangs[0]);
+        updateEntryMeta(entry.label || '', entry.description || '', entry.sourceLinks || [], entry.modernNotes || null, entry.adapterInsight || null, entry.compareEntries || [], selectedLang(0));
 
         function modernKey(langKey) {
             var base = (langKey === 'scala2' || langKey === 'scala3') ? 'scala' : langKey;
             return base + '_modern';
         }
 
-        if (state.compareCount === 1) {
-            var lang = state.selectedLangs[0];
+        if (!isCompareMode()) {
+            var lang = selectedLang(0);
             var modernCode = (entry.codes && entry.codes[modernKey(lang)]) || null;
             host.innerHTML = ''
                 + '<div class="display-grid">'
@@ -4199,8 +4416,8 @@
             return;
         }
 
-        var leftLang = state.selectedLangs[0];
-        var rightLang = state.selectedLangs[1];
+        var leftLang = selectedLang(0);
+        var rightLang = selectedLang(1);
         var leftModern = (entry.codes && entry.codes[modernKey(leftLang)]) || null;
         var rightModern = (entry.codes && entry.codes[modernKey(rightLang)]) || null;
         host.innerHTML = ''
@@ -4216,12 +4433,12 @@
         var entry = currentEntry();
 
         if (!entry) {
-            updateEntryMeta('', '', [], null, null, null, state.selectedLangs[0]);
+            updateEntryMeta('', '', [], null, null, null, selectedLang(0));
             host.innerHTML = '<div class="display-grid"><section class="display-panel"><p class="empty-note">No principles available.</p></section></div>';
             return;
         }
 
-        updateEntryMeta('', '', [], null, null, null, state.selectedLangs[0]);
+        updateEntryMeta('', '', [], null, null, null, selectedLang(0));
 
         var points = entry.points || [];
         var notes = entry.notes || [
@@ -4282,7 +4499,13 @@
             + '  </section>'
             + '</div>';
     }
-
+    var VIEW_RENDERERS = {
+        sheets: renderSheetsView,
+        home: renderHomeView,
+        exercises: renderExercisesView,
+        principles: renderPrinciplesView,
+        catalogCode: renderCodeView
+    };
     function updateStickyOffset() {
         var topStack = document.getElementById('topStack');
         var offset = topStack ? (topStack.offsetHeight + 8) : 0;
@@ -4313,51 +4536,42 @@
         renderCompareButtons();
         renderPaletteSelector();
         renderOfflineWarning();
-            // In course mode, hide only the Views controls — keep style/compare/course visible.
-            var viewsSelection = document.getElementById('viewsSelection');
-            if (viewsSelection) {
-                viewsSelection.classList.toggle('hidden', !!state.courseMode);
+        // In course mode, hide only the Views controls and keep style/compare/course visible.
+        var viewsSelection = document.getElementById('viewsSelection');
+        if (viewsSelection) {
+            viewsSelection.classList.toggle('hidden', appStore.isCourseModeEnabled());
         }
         renderCourseLevelPanel();
         renderCourseNavHeader();
         renderSidebar();
 
-        if (state.view === 'sheets') {
-            updateEntryMeta('Language Reference Sheet', '', [], null, null, null, state.selectedLangs[0]);
-            renderSheetsView();
-        } else if (!state.view) {
-            updateEntryMeta('', '', [], null, null, null, state.selectedLangs[0]);
-            renderHomeView();
-        } else if (state.view === 'exercises') {
-            renderExercisesView();
-        } else if (state.view === 'principles') {
-            renderPrinciplesView();
-        } else {
-            renderCodeView();
+        if (selectCurrentView() === 'sheets') {
+            updateEntryMeta('Language Reference Sheet', '', [], null, null, null, selectPrimaryLang());
+        } else if (!selectCurrentView()) {
+            updateEntryMeta('', '', [], null, null, null, selectPrimaryLang());
         }
+
+        appRouter.renderActiveView();
 
         applySyntaxHighlight();
         updateStickyOffset();
     }
 
     document.getElementById('compareToggle').addEventListener('click', function () {
-        state.compareCount = state.compareCount === 2 ? 1 : 2;
-        if (state.activeSlot !== 0 && state.activeSlot !== 1) {
-            state.activeSlot = 0;
-        }
+        appStore.toggleCompareCount();
         renderAll();
     });
 
     document.getElementById('contentHost').addEventListener('click', function (event) {
         var btn = event.target.closest('.side-pick-btn');
-        if (!btn || state.compareCount !== 2) {
+        if (!btn || !selectIsCompareMode()) {
             return;
         }
         var side = Number(btn.dataset.side);
         if (side !== 0 && side !== 1) {
             return;
         }
-        state.activeSlot = side;
+        appStore.setActiveSlot(side);
         renderAll();
     });
 
@@ -4389,7 +4603,7 @@
 
     document.getElementById('contentHost').addEventListener('click', function (event) {
         var toggle = event.target.closest('.course-topic-toggle');
-        if (!toggle || !state.courseMode) {
+        if (!toggle || !selectIsCourseMode()) {
             return;
         }
         var topicKey = toggle.getAttribute('data-topic-key');
@@ -4399,42 +4613,40 @@
         }
         var collapseKey = courseTopicCollapseKey(topicKey);
         var collapsed = isCourseTopicCollapsed(topicKey, isNaN(topicIndex) ? 0 : topicIndex);
-        state.courseTopicCollapsed[collapseKey] = !collapsed;
+        appStore.setCourseTopicCollapsed(collapseKey, !collapsed);
         renderAll();
     });
 
     document.getElementById('swapBtn').addEventListener('click', function () {
-        var tmp = state.selectedLangs[0];
-        state.selectedLangs[0] = state.selectedLangs[1];
-        state.selectedLangs[1] = tmp;
+        appStore.swapSelectedLangs();
         renderAll();
     });
 
     document.getElementById('courseBtn').addEventListener('click', function () {
-        if (state.courseMode) {
+        if (selectIsCourseMode()) {
             // Toggle OFF: exit course mode
-            state.courseMode = false;
-            state.courseLevel = 0;
+            appStore.setCourseMode(false);
+            appStore.setCourseLevel(0);
             restorePreCourseView();
             return;
         }
         // Toggle ON: enter course mode at level 1
         rememberPreCourseView();
-        state.courseMode = true;
-        state.courseLevel = 0;
-        state.viewCategory = 'atlas';
+        appStore.setCourseMode(true);
+        appStore.setCourseLevel(0);
+        appStore.setViewCategory('atlas');
         navigateCourse(0);
     });
 
     document.getElementById('coursePrevBtn').addEventListener('click', function () {
-        if (state.courseMode && state.courseLevel > 0) {
-            navigateCourse(state.courseLevel - 1);
+        if (selectIsCourseMode() && selectCourseLevel() > 0) {
+            navigateCourse(selectCourseLevel() - 1);
         }
     });
 
     document.getElementById('courseNextBtn').addEventListener('click', function () {
-        if (state.courseMode && state.courseLevel < ADAPTATION_COURSE.length - 1) {
-            navigateCourse(state.courseLevel + 1);
+        if (selectIsCourseMode() && selectCourseLevel() < ADAPTATION_COURSE.length - 1) {
+            navigateCourse(selectCourseLevel() + 1);
         }
     });
 
@@ -4443,7 +4655,7 @@
     });
 
     document.getElementById('courseLevelToggleBtn').addEventListener('click', function () {
-        state.courseLevelCollapsed = true;
+        appStore.setCourseLevelCollapsed(true);
         renderSidebar();
     });
 
@@ -4451,24 +4663,24 @@
         if (!ADAPTATION_COURSE || levelIndex < 0 || levelIndex >= ADAPTATION_COURSE.length) {
             return;
         }
-        state.courseLevel = levelIndex;
+        appStore.setCourseLevel(levelIndex);
         var level = ADAPTATION_COURSE[levelIndex];
         var viewItem = level.viewItems && level.viewItems[0] ? level.viewItems[0] : 'project_lifecycle';
-        state.selectedBasic = viewItem;
-        state.view = 'basics';
-        state.viewCategory = 'atlas';
+        appStore.setSelectedItemKey(viewItem, 'basics');
+        appStore.setView('basics');
+        appStore.setViewCategory('atlas');
         renderAll();
     }
 
     window.nextCourseLevel = function () {
-        if (state.courseMode && state.courseLevel < ADAPTATION_COURSE.length - 1) {
-            navigateCourse(state.courseLevel + 1);
+        if (selectIsCourseMode() && selectCourseLevel() < ADAPTATION_COURSE.length - 1) {
+            navigateCourse(selectCourseLevel() + 1);
         }
     };
 
     window.prevCourseLevel = function () {
-        if (state.courseMode && state.courseLevel > 0) {
-            navigateCourse(state.courseLevel - 1);
+        if (selectIsCourseMode() && selectCourseLevel() > 0) {
+            navigateCourse(selectCourseLevel() - 1);
         }
     };
 
@@ -4476,7 +4688,7 @@
         var panel = document.getElementById('courseLevelPanel');
         if (!panel) { return; }
 
-        if (!state.courseMode || !ADAPTATION_COURSE || ADAPTATION_COURSE.length === 0) {
+        if (!selectIsCourseMode() || !ADAPTATION_COURSE || ADAPTATION_COURSE.length === 0) {
             panel.classList.add('hidden');
             return;
         }
@@ -4498,7 +4710,7 @@
         ADAPTATION_COURSE.forEach(function (lvl, idx) {
             var btn = document.createElement('button');
             btn.type = 'button';
-            btn.className = 'sidebar-item course-level-item' + (idx === state.courseLevel ? ' active' : '');
+            btn.className = 'sidebar-item course-level-item' + (idx === selectCourseLevel() ? ' active' : '');
             btn.textContent = 'L' + lvl.level + ': ' + lvl.title;
             (function (capturedIdx) {
                 btn.addEventListener('click', function () {
@@ -4513,13 +4725,13 @@
         var header = document.getElementById('courseNavHeader');
         if (!header) { return; }
 
-        if (!state.courseMode || !ADAPTATION_COURSE || ADAPTATION_COURSE.length === 0) {
+        if (!selectIsCourseMode() || !ADAPTATION_COURSE || ADAPTATION_COURSE.length === 0) {
             header.classList.add('hidden');
             return;
         }
         header.classList.remove('hidden');
 
-        var lvl = ADAPTATION_COURSE[state.courseLevel] || ADAPTATION_COURSE[0];
+        var lvl = ADAPTATION_COURSE[selectCourseLevel()] || ADAPTATION_COURSE[0];
         var titleEl = document.getElementById('courseNavTitle');
         var descEl = document.getElementById('courseNavDesc');
         var prevBtn = document.getElementById('coursePrevBtn');
@@ -4527,12 +4739,12 @@
 
         if (titleEl) { titleEl.textContent = 'L' + lvl.level + ': ' + lvl.title; }
         if (descEl) { descEl.textContent = lvl.description || ''; }
-        if (prevBtn) { prevBtn.disabled = state.courseLevel <= 0; }
-        if (nextBtn) { nextBtn.disabled = state.courseLevel >= ADAPTATION_COURSE.length - 1; }
+        if (prevBtn) { prevBtn.disabled = selectCourseLevel() <= 0; }
+        if (nextBtn) { nextBtn.disabled = selectCourseLevel() >= ADAPTATION_COURSE.length - 1; }
     }
 
     document.getElementById('themeToggle').addEventListener('click', function () {
-        applyTheme(state.theme === 'dark' ? 'light' : 'dark');
+        applyTheme(appStore.getTheme() === 'dark' ? 'light' : 'dark');
     });
 
     document.getElementById('palettePreviews').addEventListener('click', function (event) {
@@ -4556,18 +4768,18 @@
     });
 
     document.getElementById('sidebarToggleBtn').addEventListener('click', function () {
-        state.sidebarCollapsed = true;
+        appStore.setSidebarCollapsed(true);
         try { window.localStorage.setItem(SIDEBAR_STORAGE_KEY, '1'); } catch (e) {}
         renderSidebar();
     });
 
     document.getElementById('sidebarExpandBtn').addEventListener('click', function () {
-        if (state.courseMode) {
-            state.courseLevelCollapsed = false;
+        if (appStore.isCourseModeEnabled()) {
+            appStore.setCourseLevelCollapsed(false);
             renderSidebar();
             return;
         }
-        state.sidebarCollapsed = false;
+        appStore.setSidebarCollapsed(false);
         try { window.localStorage.setItem(SIDEBAR_STORAGE_KEY, '0'); } catch (e) {}
         renderSidebar();
     });
@@ -4581,8 +4793,8 @@
         var compareView = link.getAttribute('data-compare-view');
         var compareKey = link.getAttribute('data-compare-key');
         if (compareKey) {
-            if (compareView && VIEW_CONFIG[compareView]) {
-                state.view = compareView;
+            if (compareView && appStore.getViewConfig(compareView)) {
+                appStore.setView(compareView);
             }
             setSelectedItemKey(compareKey);
             renderAll();
@@ -4622,11 +4834,12 @@
 
     applyTheme(savedTheme);
     applyPalette(savedPalette);
-    state.viewCategory = savedViewCategory;
-    state.sidebarCollapsed = savedSidebarCollapsed === '1';
+    appStore.setViewCategory(savedViewCategory);
+    appStore.setSidebarCollapsed(savedSidebarCollapsed === '1');
 
     renderAll();
 }());
+
   </script>
 </body>
 </html>

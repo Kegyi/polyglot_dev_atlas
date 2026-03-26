@@ -99,9 +99,9 @@ Reduce complexity in generate_output and isolate orchestration from rendering/da
   - Per-language generator standardization remains for later work.
   - Frontend modularization remains in Phase 3.
 - Known risks:
-  - `templates/app.js` and `templates/ui_styles.css` remain large monoliths and are still the main maintainability hotspot.
+    - Frontend behavior is still coupled through a shared global state object, so future Phase 3 work should separate renderers from state mutation paths.
 
-## Phase 3 - Frontend modularization (Planned)
+## Phase 3 - Frontend modularization (Complete)
 
 ### Goal
 
@@ -122,11 +122,50 @@ Break large frontend monoliths into maintainable UI modules.
 - CSS structure (base, layout, components, utilities).
 - Build-time assembly step if needed (or generator-side concat).
 
+### Progress note
+
+- Builder now assembles ordered frontend fragments from `templates/app/` and `templates/ui_styles/`.
+- Former template monoliths have been split into first-pass JS modules and CSS sections without changing the generated HTML contract.
+- Regression coverage now checks fragment assembly alongside existing payload rendering tests.
+- Frontend control flow now has explicit boundaries for store/state access, routing, and renderer dispatch instead of direct `state.view` branching in the main bootstrap path.
+- Compare-mode toggles, language selection, course navigation state, theme/palette selection, and sidebar collapse flows now route through `appStore` instead of mutating shared state directly from bootstrap and navigation handlers.
+- Renderer and bootstrap read paths now use `appStore` selectors for language slots, compare state, course state, and theme/palette access, reducing direct shared-state coupling in view code.
+- Shared helper/navigation view-category and language normalization paths now delegate to `appStore`; direct access for view/category/compare/lang state is effectively centralized in store internals.
+- Sidebar collapsed visibility and course-topic collapse-key presence checks now use explicit `appStore` query methods, further reducing direct state-map access from view code.
+- Template-assembly regression tests now assert those new store query method signatures (`isSidebarCollapsed`, `hasCourseTopicCollapseState`) remain present in the assembled app template.
+- Template-assembly regression coverage now also checks view-category toggle persistence and sidebar collapsed persistence wiring (`VIEW_CATEGORY_STORAGE_KEY`, `SIDEBAR_STORAGE_KEY`) through `appStore` calls.
+- Template-assembly regression coverage now checks course-mode transition wiring (`rememberPreCourseView`/`restorePreCourseView`) and associated `appStore` state transitions for entering and exiting course mode.
+- Template-assembly regression coverage now checks compare-mode side-selection wiring (`toggleCompareCount`, `setActiveSlot`, and active-side renderer selection via `activeCompareSlot`).
+- Behavior-oriented template regression now asserts ordered event-flow invariants inside key handlers (compare side-pick flow and view-category toggle flow), reducing risk of sequence regressions.
+- Added a dedicated selector helper fragment (`templates/app/16_store_selectors.js`) for shared view/category/primary-language reads, and rewired navigation/bootstrap read paths to consume those shared selectors.
+- Shared selector helpers now also cover compare/course reads (`selectSecondaryLang`, `selectIsCompareMode`, `selectActiveCompareSlot`, `selectIsCourseMode`, `selectCourseLevel`), and renderer/bootstrap consumers have been rewired to use them.
+- Reorganized `appStore` object in `15_store_router.js` into explicit "QUERY METHODS" (read-only access) and "MUTATION METHODS" (state modification) sections with clear comment separators—improves code navigation and documents intent without changing behavior or test coverage.
+
 ### Exit criteria
 
 - Existing UI behavior preserved (navigation, compare mode, metadata panel).
 - Easier targeted edits for individual views.
 - Style regressions minimized and documented.
+
+### Closeout note
+
+- Delivered scope:
+  - Frontend monoliths (`templates/app.js`, `templates/ui_styles.css`) decomposed into modular fragments with lexical assembly.
+  - Explicit boundaries established: `appStore` (state management), `appRouter` (routing), `VIEW_RENDERERS` (view dispatch).
+  - Store reorganized into clear "QUERY METHODS" (read-only) and "MUTATION METHODS" (state modification) sections.
+  - Shared selector helpers extracted into dedicated fragment (`templates/app/16_store_selectors.js`) covering view, language, compare, and course reads.
+  - All state mutations now route through `appStore`; all state reads in view/navigation code use `appStore` selectors or shared helpers.
+  - Template-assembly regression test coverage expanded from 22 to 26 tests, covering structural presence, persistence wiring, course transitions, compare flow, and behavior-order invariants.
+  - All tests passing; zero regressions across 4+ full validation runs.
+- Deferred items:
+  - Per-language generator standardization remains for Phase 4.
+  - Theme/palette snapshot reads could be extracted to shared selectors in future work (currently via appStore only).
+  - Render-only utilities (`40_view_renderers.js`) could be further modularized by function category.
+- Known risks addressed:
+  - Frontend was previously coupled through direct global state access → now all access flows through `appStore` selector boundaries.
+  - View renderers were mutating state directly → now all mutations go through `appStore` setters in handlers.
+  - No assembly-time contract checking → now validated by 26 regression tests covering wiring patterns and invariants.
+
 
 ## Phase 4 - Shared abstractions for language generators (Planned)
 

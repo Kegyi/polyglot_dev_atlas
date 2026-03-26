@@ -2,6 +2,13 @@
 
 This document explains how to maintain the externalized content model introduced in Phase 1.
 
+Phase 3 now stores frontend template sources as ordered fragments under:
+
+- `templates/app/`
+- `templates/ui_styles/`
+
+The builder assembles these directories in lexical filename order, so keep numeric prefixes on fragments when adding or moving sections.
+
 ## Build and validation commands
 
 From repository root:
@@ -19,6 +26,7 @@ Direct Python commands (from `polyglot_dev_atlas/`):
 
 - `python generate_output.py --validate-content`
 - `python generate_output.py --strict-content --skip-gen`
+- `python -m unittest test_content_loader.py test_atlas_builder.py`
 
 ## External content files
 
@@ -64,9 +72,10 @@ Validation logic is implemented in `content_loader.py` and used by `generate_out
 ## Editing workflow
 
 1. Update content JSON file(s).
-2. Run `npm run atlas:validate-content`.
-3. Run `npm run atlas:build:strict` or `npm run atlas:check`.
-4. Open generated output in `output/polyglot_dev_atlas.html` and spot-check affected views.
+2. If you are changing frontend structure, edit the relevant fragment in `templates/app/` or `templates/ui_styles/`.
+3. Run `npm run atlas:validate-content`.
+4. Run `npm run atlas:test` or `npm run atlas:check`.
+5. Open generated output in `output/polyglot_dev_atlas.html` and spot-check affected views.
 
 ## Fallback behavior
 
