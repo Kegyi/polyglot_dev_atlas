@@ -214,7 +214,7 @@ Eliminate duplication across per-language sheet generators.
   - Cross-generator formatting drift reduced by centralized shared renderer contracts.
   - Output-structure regression risk reduced by generator output assertions and full-suite validation.
 
-## Phase 5 - Testing and regression safety expansion (In progress)
+## Phase 5 - Testing and regression safety expansion (Complete)
 
 ### Goal
 
@@ -248,7 +248,7 @@ Increase confidence for UI, generator, and integration behavior.
 - Breakages are detected before merge for core flows.
 - Refactors can proceed with low manual verification overhead.
 
-## Phase 6 - Performance and scalability hardening (Planned)
+## Phase 6 - Performance and scalability hardening (In progress)
 
 ### Goal
 
@@ -270,6 +270,29 @@ Keep build/runtime performance stable as content and features grow.
 
 - Build time and output-size growth are monitored.
 - UI remains responsive under expanded dataset volume.
+
+### Progress note
+
+- Initial profiling runs kicked off against the canonical build with representative large content sets.
+- Baseline metrics collection in progress (cold/hot build times, memory, output sizes, frontend render timings).
+- Early hotspots identified: repeated parse/serialize loops during orchestration, duplicate template loads, and a handful of JS renderer hot paths for very large sheets.
+- Short-term mitigations planned: add caching to template loads, memoize repeated serialization steps in the orchestrator, and add lightweight sampling-based frontend timing hooks for large payloads.
+
+### Closeout note (early Phase 6 work)
+
+- Added a small profiling harness: `perf/run_profile.py` (captures wall time, `tracemalloc` samples, and output size).
+- Added `perf/README.md` documenting how to run the profiler and interpret outputs.
+- Instrumented `atlas_builder/orchestrator.py` with optional per-step timers and memory snapshots; when `POLYGLOT_PROFILE=1` it writes `performance/orchestrator_metrics.json`.
+- Collected baseline metrics (cold run) and saved to `performance/baseline.json`.
+- Added CI workflow `.github/workflows/performance-metrics.yml` to run the profiler on push and upload `polyglot_dev_atlas/performance/` and `polyglot_dev_atlas/output/` as artifacts.
+
+These deliverables provide a repeatable baseline and CI capture so subsequent optimizations can be validated by before/after measurements.
+
+### Exit criteria
+
+- Build and runtime hotspots are reduced to within agreed budgets.
+- Measured build time or memory improvements validated by before/after benchmarks.
+
 
 ## Phase 7 - Release readiness and governance (Planned)
 
@@ -305,5 +328,10 @@ Finalize long-term maintenance workflow and contribution guardrails.
    - known risks
 
 ## Immediate next action
+ 
+Continue Phase 6 by:
 
-Continue Phase 5 by extending snapshot-like assertions for generated HTML fragments and adding focused integration checks around build orchestration paths.
+- Run micro-benchmarks for the top hotspots (`render_app_js`, `assemble_runtime_data`, and template loaders).
+- Implement first low-risk optimizations: template-load caching and memoized serialization paths in the orchestrator.
+- Validate changes with before/after benchmarks using the CI profiler workflow and refine budgets.
+- Open a branch and submit a PR with the profiling changes and an initial optimization (small, self-contained).

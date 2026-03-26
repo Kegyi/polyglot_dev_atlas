@@ -1,0 +1,8 @@
+{
+  "skip_gen": false,
+  "elapsed_seconds": 0.9375076293945312,
+  "tracemalloc_current_bytes": 6004921,
+  "tracemalloc_peak_bytes": 13621931,
+  "output_path": "output\\polyglot_dev_atlas.html",
+  "output_size_bytes": 1230908
+}
