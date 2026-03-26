@@ -252,12 +252,15 @@
 
     .entry-meta h2 {
         margin: 0 0 3px;
-        color: var(--panel-title-fg);
-        font-size: var(--title-main-size);
+        color: var(--panel-title-active-fg);
+        font-size: calc(var(--title-main-size) * 1.5);
         font-weight: var(--title-main-weight);
         letter-spacing: var(--title-letter-spacing);
         line-height: 1.3;
     }
+
+    /* Titles use the panel's active foreground so they match selected sidebar text */
+    /* The color comes from the current palette via --panel-title-active-fg */
 
     .entry-meta p {
         margin: 0;

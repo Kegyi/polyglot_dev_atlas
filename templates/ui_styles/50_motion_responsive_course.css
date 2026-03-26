@@ -469,8 +469,8 @@
         flex: 1 1 auto;
         text-align: center;
         font-weight: 700;
-        font-size: 0.95rem;
-        color: var(--chip-active-bg);
+        font-size: calc(0.95rem * 1.5);
+        color: var(--panel-title-active-fg);
         letter-spacing: 0.02em;
     }
 

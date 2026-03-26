@@ -47,7 +47,7 @@ def _build_top_stack():
         '        <button type="button" class="chip-btn subtle-btn theme-btn" id="themeToggle" aria-label="Switch to light theme" title="Switch to light theme">&#9728;</button>\n',
         '        <button type="button" class="chip-btn" id="compareToggle" aria-pressed="false">Compare</button>\n',
         '        <button type="button" class="chip-btn subtle-btn" id="swapBtn" title="Swap selected languages">Swap</button>\n',
-        '        <button type="button" class="chip-btn" id="courseBtn" title="Start 7-level pro adaptation course">?? Course</button>\n',
+        '        <button type="button" class="chip-btn" id="courseBtn" title="Start 7-level pro adaptation course">&#127891; Course</button>\n',
         "      </div>\n",
         "    </div>\n",
         "  </div>\n",

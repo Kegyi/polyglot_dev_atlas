@@ -897,12 +897,15 @@
 
     .entry-meta h2 {
         margin: 0 0 3px;
-        color: var(--panel-title-fg);
-        font-size: var(--title-main-size);
+        color: var(--panel-title-active-fg);
+        font-size: calc(var(--title-main-size) * 1.5);
         font-weight: var(--title-main-weight);
         letter-spacing: var(--title-letter-spacing);
         line-height: 1.3;
     }
+
+    /* Titles use the panel's active foreground so they match selected sidebar text */
+    /* The color comes from the current palette via --panel-title-active-fg */
 
     .entry-meta p {
         margin: 0;
@@ -2273,8 +2276,8 @@
         flex: 1 1 auto;
         text-align: center;
         font-weight: 700;
-        font-size: 0.95rem;
-        color: var(--chip-active-bg);
+        font-size: calc(0.95rem * 1.5);
+        color: var(--panel-title-active-fg);
         letter-spacing: 0.02em;
     }
 
@@ -2315,7 +2318,7 @@
         <button type="button" class="chip-btn subtle-btn theme-btn" id="themeToggle" aria-label="Switch to light theme" title="Switch to light theme">&#9728;</button>
         <button type="button" class="chip-btn" id="compareToggle" aria-pressed="false">Compare</button>
         <button type="button" class="chip-btn subtle-btn" id="swapBtn" title="Swap selected languages">Swap</button>
-        <button type="button" class="chip-btn" id="courseBtn" title="Start 7-level pro adaptation course">?? Course</button>
+        <button type="button" class="chip-btn" id="courseBtn" title="Start 7-level pro adaptation course">&#127891; Course</button>
       </div>
     </div>
   </div>
@@ -3427,17 +3430,20 @@
     function renderViewButtons() {
         var nav = document.getElementById('viewNav');
         nav.innerHTML = '';
-
-        var currentCategory = VIEW_CATEGORIES[selectCurrentViewCategory()];
-        var visibleViews = (currentCategory && currentCategory.views ? currentCategory.views : []).filter(function (viewKey) {
+        // Render views for the currently selected category (atlas | learning)
+        var categoryKey = selectCurrentViewCategory();
+        var category = VIEW_CATEGORIES[categoryKey] || VIEW_CATEGORIES.atlas;
+        var visibleViews = (category.views || []).filter(function (viewKey) {
             return !!VIEW_CONFIG[viewKey];
         });
 
         visibleViews.forEach(function (viewKey) {
+            var cfg = VIEW_CONFIG[viewKey];
+            if (!cfg) { return; }
             var btn = document.createElement('button');
             btn.type = 'button';
             btn.className = 'chip-btn';
-            btn.textContent = appStore.getViewConfig(viewKey).label;
+            btn.textContent = cfg.label || viewKey;
 
             if (selectCurrentView() === viewKey) {
                 btn.classList.add('active');

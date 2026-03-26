@@ -195,17 +195,20 @@
     function renderViewButtons() {
         var nav = document.getElementById('viewNav');
         nav.innerHTML = '';
-
-        var currentCategory = VIEW_CATEGORIES[selectCurrentViewCategory()];
-        var visibleViews = (currentCategory && currentCategory.views ? currentCategory.views : []).filter(function (viewKey) {
+        // Render views for the currently selected category (atlas | learning)
+        var categoryKey = selectCurrentViewCategory();
+        var category = VIEW_CATEGORIES[categoryKey] || VIEW_CATEGORIES.atlas;
+        var visibleViews = (category.views || []).filter(function (viewKey) {
             return !!VIEW_CONFIG[viewKey];
         });
 
         visibleViews.forEach(function (viewKey) {
+            var cfg = VIEW_CONFIG[viewKey];
+            if (!cfg) { return; }
             var btn = document.createElement('button');
             btn.type = 'button';
             btn.className = 'chip-btn';
-            btn.textContent = appStore.getViewConfig(viewKey).label;
+            btn.textContent = cfg.label || viewKey;
 
             if (selectCurrentView() === viewKey) {
                 btn.classList.add('active');
