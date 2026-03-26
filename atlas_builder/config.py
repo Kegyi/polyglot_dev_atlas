@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 SHEET_GENERATORS_DIR = os.path.join(BASE_DIR, "sheet_generators")
 CODE_EXAMPLES_DIR = os.path.join(BASE_DIR, "code_examples")
-MAIN_PAGE_DOC_PATH = os.path.join(BASE_DIR, "MAIN_PAGE_README.md")
+MAIN_PAGE_DOC_PATH = os.path.join(BASE_DIR, "metadata", "MAIN_PAGE_README.md")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "polyglot_dev_atlas.html")
 OFFLINE_ASSETS_DIR = os.path.join(OUTPUT_DIR, "assets", "hljs")
 

@@ -80,7 +80,7 @@ Reduce complexity in generate_output and isolate orchestration from rendering/da
 ### Progress note
 
 - Entry module is now coordinator-only.
-- Internal responsibilities are split across dedicated modules for assets, sheets, runtime content, enrichment, payload rendering, UI templates, output writing, and HTML composition.
+- Internal responsibilities are split across dedicated modules for orchestration, assets, sheets, runtime content, enrichment, payload rendering, UI templates, output writing, and HTML composition.
 - Canonical check pipeline includes focused regression tests for module boundaries and rendered output fragments.
 
 ### Exit criteria
@@ -166,7 +166,6 @@ Break large frontend monoliths into maintainable UI modules.
   - View renderers were mutating state directly → now all mutations go through `appStore` setters in handlers.
   - No assembly-time contract checking → now validated by 26 regression tests covering wiring patterns and invariants.
 
-
 ## Phase 4 - Shared abstractions for language generators (Complete)
 
 ### Goal
@@ -199,20 +198,6 @@ Eliminate duplication across per-language sheet generators.
 - Generator scripts become smaller and easier to extend.
 - New language onboarding path documented.
 - No regression in generated sheet structure.
-
-### Closeout note
-
-- Delivered scope:
-  - Shared generator toolkit implemented in `sheet_generators/shared_renderer.py` (table rendering, deprecation/version formatting, section assembly, template rendering, output writing).
-  - Per-language generators refactored into thin adapters (language data + doc URL mapping) for C++, Python, Go, TypeScript, and Scala.
-  - New-language onboarding workflow documented in `DEVELOPMENT.md`.
-  - Regression safety expanded with shared-renderer unit tests and snapshot-like generator output checks (`tests/test_sheet_generators_shared.py`, `tests/test_sheet_generators_output.py`).
-  - Test suite reorganized under `tests/` and standardized on unittest discovery (`python -m unittest discover -s tests -v`).
-- Deferred items:
-  - Additional doc-link adapter normalization can be layered as future cleanup if needed.
-- Known risks addressed:
-  - Cross-generator formatting drift reduced by centralized shared renderer contracts.
-  - Output-structure regression risk reduced by generator output assertions and full-suite validation.
 
 ## Phase 5 - Testing and regression safety expansion (Complete)
 
