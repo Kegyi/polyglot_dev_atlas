@@ -13,7 +13,7 @@ From repository root:
 - `npm run atlas:check`
   - Runs validation, strict build, and unit tests in one command.
 - `npm run atlas:test`
-  - Runs loader-level unit tests for content contracts.
+  - Runs loader-level tests for content contracts and builder-level regression tests.
 
 Direct Python commands (from `polyglot_dev_atlas/`):
 

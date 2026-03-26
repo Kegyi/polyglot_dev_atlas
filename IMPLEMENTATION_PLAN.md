@@ -56,7 +56,7 @@ Move content/config data out of generator logic and enforce correctness with val
 - Unit tests pass.
 - Single-command quality gate passes consistently.
 
-## Phase 2 - Generator decomposition (Planned)
+## Phase 2 - Generator decomposition (Complete)
 
 ### Goal
 
@@ -77,11 +77,29 @@ Reduce complexity in generate_output and isolate orchestration from rendering/da
 - Reduced file size and cyclomatic complexity for generator entry module.
 - Regression-safe adapter layer to preserve public behavior.
 
+### Progress note
+
+- Entry module is now coordinator-only.
+- Internal responsibilities are split across dedicated modules for assets, sheets, runtime content, enrichment, payload rendering, UI templates, output writing, and HTML composition.
+- Canonical check pipeline includes focused regression tests for module boundaries and rendered output fragments.
+
 ### Exit criteria
 
 - Existing check pipeline remains green.
 - No functional regression in produced HTML output.
 - Main generator file becomes coordinator-focused rather than content-heavy.
+
+### Closeout note
+
+- Delivered scope:
+  - `generate_output.py` reduced to a thin CLI entrypoint.
+  - Generator internals decomposed into focused modules for orchestration, assets, sheets, runtime content, enrichment, payload rendering, UI templates, output writing, and HTML composition.
+  - Canonical check pipeline expanded with regression tests for module boundaries and rendered output fragments.
+- Deferred items:
+  - Per-language generator standardization remains for later work.
+  - Frontend modularization remains in Phase 3.
+- Known risks:
+  - `templates/app.js` and `templates/ui_styles.css` remain large monoliths and are still the main maintainability hotspot.
 
 ## Phase 3 - Frontend modularization (Planned)
 
@@ -215,4 +233,4 @@ Finalize long-term maintenance workflow and contribution guardrails.
 
 ## Immediate next action
 
-Start Phase 2 by extracting generate_output orchestration into a small entry module and move data assembly/render wiring into dedicated modules, while keeping CLI flags and output identical.
+Start Phase 3 by decomposing `templates/app.js` into explicit state, routing, renderer, and shared UI utility modules while preserving current behavior.

@@ -1,0 +1,11 @@
+{
+  "requiredSubstrings": [
+    "<title>Polyglot Dev Atlas</title>",
+    "<style>",
+    "body{}",
+    ".ui{}",
+    "id=\"contentHost\"",
+    "\"cpp\"",
+    "\"Word Count\""
+  ]
+}
