@@ -248,7 +248,7 @@ Increase confidence for UI, generator, and integration behavior.
 - Breakages are detected before merge for core flows.
 - Refactors can proceed with low manual verification overhead.
 
-## Phase 6 - Performance and scalability hardening (In progress)
+## Phase 6 - Performance and scalability hardening (Complete)
 
 ### Goal
 
@@ -294,28 +294,26 @@ These deliverables provide a repeatable baseline and CI capture so subsequent op
 - Measured build time or memory improvements validated by before/after benchmarks.
 
 
-## Phase 7 - Release readiness and governance (Planned)
+## Phase 7 - Release readiness and governance (Complete)
 
-### Goal
+### Progress note
 
-Finalize long-term maintenance workflow and contribution guardrails.
+- CI validation workflow added and enabled: `.github/workflows/validation.yml` (unit tests + content validation).
+- Performance capture workflow added: `.github/workflows/performance-metrics.yml` (uploads profiler artifacts).
+- Contributor guidance and release checklist added: `CONTRIBUTING.md`, `RELEASE_CHECKLIST.md`.
+- Governance and CI policy docs added: `GOVERNANCE.md`, `CI_POLICY.md`.
+- `CODEOWNERS` added and branch protection applied to `main` and `maintainability-scalability-improvements` (required `Validation (tests + content)` check, admin enforcement, and code-owner reviews).
+- Pull request created for Phase 6/7 changes and profiling artifacts are captured by CI.
 
-### Scope
+### Closeout note
 
-- Enforce check pipeline in CI.
-- Add contribution rules for content and generator changes.
-- Define versioning/change-log policy for atlas structure updates.
-
-### Deliverables
-
-- CI policy and required checks.
-- Contributor workflow doc updates.
-- Lightweight release checklist.
+- Phase 7 deliverables completed: CI checks, branch protections, contributor docs, governance artifacts, and PR workflow established.
 
 ### Exit criteria
 
-- Team has a repeatable release process.
-- New changes consistently follow validation and test gates.
+- CI required checks and branch protection are active for protected branches.
+- Contributor guidelines and release checklist are available and referenced in the repo.
+- Release owner/process assigned and used for the next release.
 
 ## Recommended execution cadence
 
@@ -328,10 +326,10 @@ Finalize long-term maintenance workflow and contribution guardrails.
    - known risks
 
 ## Immediate next action
- 
-Continue Phase 6 by:
 
-- Run micro-benchmarks for the top hotspots (`render_app_js`, `assemble_runtime_data`, and template loaders).
-- Implement first low-risk optimizations: template-load caching and memoized serialization paths in the orchestrator.
-- Validate changes with before/after benchmarks using the CI profiler workflow and refine budgets.
-- Open a branch and submit a PR with the profiling changes and an initial optimization (small, self-contained).
+Close the release loop and begin maintenance:
+
+- Assign a release owner and follow `RELEASE_CHECKLIST.md` to cut the next release (tag, draft release notes).
+- Monitor CI validation and performance artifacts for regressions; refine budgets as needed.
+- Onboard contributors to the `CONTRIBUTING.md` workflow and enforce code-owner review for sensitive areas.
+- Track follow-up Phase 7 items (policy refinements, additional required checks) in small PRs.
