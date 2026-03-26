@@ -28,6 +28,21 @@ Direct Python commands (from `polyglot_dev_atlas/`):
 - `python generate_output.py --strict-content --skip-gen`
 - `python -m unittest discover -s tests -v`
 
+## Test matrix
+
+- `tests/test_content_loader.py`
+  - External content manifest and payload contract checks.
+- `tests/test_sheet_generators_shared.py`
+  - Shared sheet-renderer helper contracts and formatting behavior.
+- `tests/test_sheet_generators_output.py`
+  - Snapshot-like HTML fragment checks for per-language generator output.
+- `tests/test_atlas_builder.py`
+  - Builder composition/orchestration regressions, template assembly invariants, and payload rendering structure checks.
+- `tests/test_builder_internals.py`
+  - Builder-internal unit/integration checks for content loading strictness, runtime assembly wiring, and offline asset/generator behavior.
+- `tests/test_ui_flow_smoke.py`
+  - UI event-flow smoke checks over assembled app template wiring and persisted state restoration order.
+
 ## External content files
 
 External JSON files live under `polyglot_dev_atlas/content/`.

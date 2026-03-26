@@ -214,7 +214,7 @@ Eliminate duplication across per-language sheet generators.
   - Cross-generator formatting drift reduced by centralized shared renderer contracts.
   - Output-structure regression risk reduced by generator output assertions and full-suite validation.
 
-## Phase 5 - Testing and regression safety expansion (Planned)
+## Phase 5 - Testing and regression safety expansion (In progress)
 
 ### Goal
 
@@ -231,6 +231,17 @@ Increase confidence for UI, generator, and integration behavior.
 - Expanded automated test suite.
 - Golden/snapshot fixtures for deterministic generator output segments.
 - Clear test matrix in docs.
+
+### Progress note
+
+- Added builder-internal regression tests in `tests/test_builder_internals.py` covering strict-vs-fallback content loading, runtime data assembly wiring, generator deduplication, and offline asset caching/download behavior.
+- Added UI smoke regression tests in `tests/test_ui_flow_smoke.py` covering course-mode toggle flow, language-chip input mode wiring (click/contextmenu/pointer), and persisted theme/palette/view-category/sidebar restoration ordering before first render.
+- Added a dedicated test-matrix section in `DEVELOPMENT.md` to document test intent and execution surface.
+- Expanded orchestrator output snapshot fixture coverage (`test_fixtures/orchestrator_output_structure.json`) with stronger required and ordered HTML structure assertions.
+- Added default-mode orchestration smoke coverage in `tests/test_atlas_builder.py` to assert generator execution and offline asset provisioning calls use canonical config inputs.
+- Added app-payload token rendering contract fixture (`test_fixtures/app_payload_render_contract.json`) and corresponding golden-style assertions in `tests/test_atlas_builder.py`.
+- Added strict-content failure propagation smoke coverage in `tests/test_atlas_builder.py` to ensure build aborts before output write when runtime assembly raises validation errors.
+- Added CLI dispatch and failure-surfacing regression coverage in `tests/test_generate_output_cli.py` for `--validate-content`, `--skip-gen`, and `--strict-content` combinations.
 
 ### Exit criteria
 
@@ -295,4 +306,4 @@ Finalize long-term maintenance workflow and contribution guardrails.
 
 ## Immediate next action
 
-Start Phase 3 by decomposing `templates/app.js` into explicit state, routing, renderer, and shared UI utility modules while preserving current behavior.
+Continue Phase 5 by extending snapshot-like assertions for generated HTML fragments and adding focused integration checks around build orchestration paths.

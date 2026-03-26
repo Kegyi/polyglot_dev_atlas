@@ -4,8 +4,20 @@
     "<style>",
     "body{}",
     ".ui{}",
+    "id=\"runtimeWarning\"",
+    "id=\"themeToggle\"",
+    "id=\"compareToggle\"",
     "id=\"contentHost\"",
     "\"cpp\"",
     "\"Word Count\""
+  ],
+  "orderedSubstrings": [
+    "<style>",
+    "id=\"contentHost\"",
+    "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js\"",
+    "{\"cpp\": {\"label\": \"C++\", \"body\": \"<p>Sheet</p>\"}} {\"word_count\": {\"label\": \"Word Count\"}}",
+    "</script>",
+    "</body>",
+    "</html>"
   ]
 }
