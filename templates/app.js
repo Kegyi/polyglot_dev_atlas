@@ -7,6 +7,7 @@
     var DESIGN_PATTERNS = __DESIGN_PATTERNS_JSON__;
     var PRINCIPLES = __PRINCIPLES_JSON__;
     var COURSE_STEPS = __COURSE_STEPS_JSON__;
+    var ADAPTATION_COURSE = __ADAPTATION_COURSE_JSON__;
     var WORKFLOW = __WORKFLOW_JSON__;
     var INTERVIEW_GROUPS = __INTERVIEW_GROUPS_JSON__;
     var BASICS_GROUPS = __BASICS_GROUPS_JSON__;
@@ -408,7 +409,12 @@
         selectedCourse: Object.keys(COURSE_STEPS)[0] || '',
         selectedExercise: Object.keys(EXERCISES)[0] || '',
         selectedWorkflow: Object.keys(WORKFLOW)[0] || '',
-        sidebarCollapsed: false
+        sidebarCollapsed: false,
+        courseLevelCollapsed: false,
+        courseMode: false,
+        courseLevel: 0,
+        courseReturnState: null,
+        courseTopicCollapsed: {}
     };
 
     function normalizePaletteKey(paletteName) {
@@ -884,9 +890,13 @@
     function renderCompareButtons() {
         var toggle = document.getElementById('compareToggle');
         var swap = document.getElementById('swapBtn');
+        var course = document.getElementById('courseBtn');
         if (state.view === 'principles') {
             toggle.classList.add('hidden');
             swap.classList.add('hidden');
+            if (course) {
+                course.classList.remove('active');
+            }
             return;
         }
 
@@ -896,6 +906,56 @@
         toggle.classList.toggle('active', isCompare);
         toggle.setAttribute('aria-pressed', isCompare ? 'true' : 'false');
         swap.classList.toggle('hidden', !isCompare);
+
+        if (course) {
+            course.classList.toggle('active', !!state.courseMode);
+            course.setAttribute('aria-pressed', state.courseMode ? 'true' : 'false');
+            course.title = state.courseMode ? 'Exit course mode' : 'Start 7-level adaptation course';
+        }
+    }
+
+    function rememberPreCourseView() {
+        state.courseReturnState = {
+            view: state.view,
+            viewCategory: state.viewCategory,
+            selectedProblem: state.selectedProblem,
+            selectedInterview: state.selectedInterview,
+            selectedPattern: state.selectedPattern,
+            selectedBasic: state.selectedBasic,
+            selectedPrinciple: state.selectedPrinciple,
+            selectedCourse: state.selectedCourse,
+            selectedExercise: state.selectedExercise,
+            selectedWorkflow: state.selectedWorkflow
+        };
+    }
+
+    function restorePreCourseView() {
+        var snapshot = state.courseReturnState;
+        state.courseReturnState = null;
+        if (!snapshot) {
+            renderAll();
+            return;
+        }
+        state.view = snapshot.view;
+        state.viewCategory = snapshot.viewCategory;
+        state.selectedProblem = snapshot.selectedProblem;
+        state.selectedInterview = snapshot.selectedInterview;
+        state.selectedPattern = snapshot.selectedPattern;
+        state.selectedBasic = snapshot.selectedBasic;
+        state.selectedPrinciple = snapshot.selectedPrinciple;
+        state.selectedCourse = snapshot.selectedCourse;
+        state.selectedExercise = snapshot.selectedExercise;
+        state.selectedWorkflow = snapshot.selectedWorkflow;
+        renderAll();
+    }
+
+    function exitCourseToLearningBasics() {
+        state.courseMode = false;
+        state.courseLevel = 0;
+        state.courseReturnState = null;
+        state.viewCategory = 'learning';
+        state.view = 'basics';
+        renderAll();
     }
 
     function renderPaletteSelector() {
@@ -956,6 +1016,7 @@
         var expandBtn = document.getElementById('sidebarExpandBtn');
         var sidebarTitle = document.getElementById('sidebarTitle');
         var list = document.getElementById('sidebarList');
+        var sidebarHeader = document.getElementById('topicSidebarHeader');
 
         var needsSidebar = state.view && state.view !== 'sheets';
         if (!needsSidebar) {
@@ -969,6 +1030,33 @@
             sidebar.classList.add('hidden');
             expandBtn.classList.add('hidden');
             return;
+        }
+
+        if (state.courseMode) {
+            if (state.courseLevelCollapsed) {
+                sidebar.classList.add('hidden');
+                expandBtn.classList.remove('hidden');
+                expandBtn.title = 'Expand course levels';
+                expandBtn.setAttribute('aria-label', 'Expand course levels');
+            } else {
+                sidebar.classList.remove('hidden');
+                expandBtn.classList.add('hidden');
+            }
+            if (sidebarHeader) {
+                sidebarHeader.classList.add('hidden');
+            }
+            if (list) {
+                list.classList.add('hidden');
+                list.innerHTML = '';
+            }
+            return;
+        }
+
+        if (sidebarHeader) {
+            sidebarHeader.classList.remove('hidden');
+        }
+        if (list) {
+            list.classList.remove('hidden');
         }
 
         var entries = catalog.entries || {};
@@ -1605,6 +1693,95 @@
             + '</section>';
     }
 
+    function courseTopicCollapseKey(topicKey) {
+        return String(state.courseLevel) + ':' + String(topicKey || '');
+    }
+
+    function isCourseTopicCollapsed(topicKey, topicIndex) {
+        var key = courseTopicCollapseKey(topicKey);
+        if (Object.prototype.hasOwnProperty.call(state.courseTopicCollapsed, key)) {
+            return !!state.courseTopicCollapsed[key];
+        }
+        return topicIndex > 0;
+    }
+
+    function topicBodyGrid(entry) {
+        function modernKey(langKey) {
+            var base = (langKey === 'scala2' || langKey === 'scala3') ? 'scala' : langKey;
+            return base + '_modern';
+        }
+
+        if (state.compareCount === 1) {
+            var lang = state.selectedLangs[0];
+            var modernCode = (entry.codes && entry.codes[modernKey(lang)]) || null;
+            return ''
+                + '<div class="display-grid">'
+                + codePanel('Code: ' + (LANG_LABELS[lang] || lang), codeFor(entry, lang), null, lang, modernCode)
+                + '</div>';
+        }
+
+        var leftLang = state.selectedLangs[0];
+        var rightLang = state.selectedLangs[1];
+        var leftModern = (entry.codes && entry.codes[modernKey(leftLang)]) || null;
+        var rightModern = (entry.codes && entry.codes[modernKey(rightLang)]) || null;
+
+        return ''
+            + '<div class="display-grid compare">'
+            + codePanel('Left: ' + (LANG_LABELS[leftLang] || leftLang), codeFor(entry, leftLang), 0, leftLang, leftModern)
+            + codePanel('Right: ' + (LANG_LABELS[rightLang] || rightLang), codeFor(entry, rightLang), 1, rightLang, rightModern)
+            + '</div>';
+    }
+
+    function renderCourseTopicsView() {
+        var host = document.getElementById('contentHost');
+        var level = ADAPTATION_COURSE[state.courseLevel];
+        var entries = (VIEW_CONFIG.basics && VIEW_CONFIG.basics.entries) ? VIEW_CONFIG.basics.entries : {};
+
+        updateEntryMeta('', '', [], null, null, null, state.selectedLangs[0]);
+
+        if (!level) {
+            host.innerHTML = '<div class="display-grid"><section class="display-panel"><p class="empty-note">No course level configured.</p></section></div>';
+            return;
+        }
+
+        var keys = (level.viewItems || []).filter(function (key) {
+            return !!entries[key];
+        });
+
+        if (keys.length === 0) {
+            host.innerHTML = '<div class="display-grid"><section class="display-panel"><p class="empty-note">No basic topics are mapped to this course level yet.</p></section></div>';
+            return;
+        }
+
+        var html = keys.map(function (key, idx) {
+            var entry = entries[key];
+            var collapsed = isCourseTopicCollapsed(key, idx);
+            var descHtml = entry.description
+                ? '<p class="course-topic-desc">' + escapeHtml(entry.description) + '</p>'
+                : '';
+            var insightHtml = entry.adapterInsight
+                ? '<div class="course-topic-insight">' + renderAdapterInsight(entry.adapterInsight) + '</div>'
+                : '';
+            var compareHtml = renderCompareEntries(entry.compareEntries || []);
+
+            return ''
+                + '<section class="course-topic-section">'
+                + '  <button type="button" class="course-topic-toggle" data-topic-key="' + escapeHtml(key) + '" data-topic-index="' + idx + '" aria-expanded="' + (collapsed ? 'false' : 'true') + '">'
+                + '    <span class="course-topic-title">' + escapeHtml(entry.label || key) + '</span>'
+                + '    <span class="course-topic-caret">' + (collapsed ? '\u25BE' : '\u25B4') + '</span>'
+                + '  </button>'
+                + '  <div class="course-topic-body' + (collapsed ? ' hidden' : '') + '">'
+                +       descHtml
+                +       insightHtml
+                +       compareHtml
+                +       topicBodyGrid(entry)
+                + '  </div>'
+                + '</section>';
+        }).join('');
+
+        host.innerHTML = '<div class="course-topics-stack">' + html + '</div>';
+    }
+
     function applySyntaxHighlight() {
         if (!window.hljs || typeof window.hljs.highlightElement !== 'function') {
             return;
@@ -1623,6 +1800,10 @@
 
     function renderCodeView() {
         setEntryTitleLevel('');
+        if (state.courseMode) {
+            renderCourseTopicsView();
+            return;
+        }
         var host = document.getElementById('contentHost');
         var entry = currentEntry();
 
@@ -1763,6 +1944,13 @@
         renderCompareButtons();
         renderPaletteSelector();
         renderOfflineWarning();
+            // In course mode, hide only the Views controls — keep style/compare/course visible.
+            var viewsSelection = document.getElementById('viewsSelection');
+            if (viewsSelection) {
+                viewsSelection.classList.toggle('hidden', !!state.courseMode);
+        }
+        renderCourseLevelPanel();
+        renderCourseNavHeader();
         renderSidebar();
 
         if (state.view === 'sheets') {
@@ -1830,12 +2018,149 @@
         }
     });
 
+    document.getElementById('contentHost').addEventListener('click', function (event) {
+        var toggle = event.target.closest('.course-topic-toggle');
+        if (!toggle || !state.courseMode) {
+            return;
+        }
+        var topicKey = toggle.getAttribute('data-topic-key');
+        var topicIndex = Number(toggle.getAttribute('data-topic-index'));
+        if (!topicKey) {
+            return;
+        }
+        var collapseKey = courseTopicCollapseKey(topicKey);
+        var collapsed = isCourseTopicCollapsed(topicKey, isNaN(topicIndex) ? 0 : topicIndex);
+        state.courseTopicCollapsed[collapseKey] = !collapsed;
+        renderAll();
+    });
+
     document.getElementById('swapBtn').addEventListener('click', function () {
         var tmp = state.selectedLangs[0];
         state.selectedLangs[0] = state.selectedLangs[1];
         state.selectedLangs[1] = tmp;
         renderAll();
     });
+
+    document.getElementById('courseBtn').addEventListener('click', function () {
+        if (state.courseMode) {
+            // Toggle OFF: exit course mode
+            state.courseMode = false;
+            state.courseLevel = 0;
+            restorePreCourseView();
+            return;
+        }
+        // Toggle ON: enter course mode at level 1
+        rememberPreCourseView();
+        state.courseMode = true;
+        state.courseLevel = 0;
+        state.viewCategory = 'atlas';
+        navigateCourse(0);
+    });
+
+    document.getElementById('coursePrevBtn').addEventListener('click', function () {
+        if (state.courseMode && state.courseLevel > 0) {
+            navigateCourse(state.courseLevel - 1);
+        }
+    });
+
+    document.getElementById('courseNextBtn').addEventListener('click', function () {
+        if (state.courseMode && state.courseLevel < ADAPTATION_COURSE.length - 1) {
+            navigateCourse(state.courseLevel + 1);
+        }
+    });
+
+    document.getElementById('courseExitBtn').addEventListener('click', function () {
+        exitCourseToLearningBasics();
+    });
+
+    document.getElementById('courseLevelToggleBtn').addEventListener('click', function () {
+        state.courseLevelCollapsed = true;
+        renderSidebar();
+    });
+
+    function navigateCourse(levelIndex) {
+        if (!ADAPTATION_COURSE || levelIndex < 0 || levelIndex >= ADAPTATION_COURSE.length) {
+            return;
+        }
+        state.courseLevel = levelIndex;
+        var level = ADAPTATION_COURSE[levelIndex];
+        var viewItem = level.viewItems && level.viewItems[0] ? level.viewItems[0] : 'project_lifecycle';
+        state.selectedBasic = viewItem;
+        state.view = 'basics';
+        state.viewCategory = 'atlas';
+        renderAll();
+    }
+
+    window.nextCourseLevel = function () {
+        if (state.courseMode && state.courseLevel < ADAPTATION_COURSE.length - 1) {
+            navigateCourse(state.courseLevel + 1);
+        }
+    };
+
+    window.prevCourseLevel = function () {
+        if (state.courseMode && state.courseLevel > 0) {
+            navigateCourse(state.courseLevel - 1);
+        }
+    };
+
+    function renderCourseLevelPanel() {
+        var panel = document.getElementById('courseLevelPanel');
+        if (!panel) { return; }
+
+        if (!state.courseMode || !ADAPTATION_COURSE || ADAPTATION_COURSE.length === 0) {
+            panel.classList.add('hidden');
+            return;
+        }
+        panel.classList.remove('hidden');
+
+        var list = document.getElementById('courseLevelList');
+        if (!list) { return; }
+        var toggleBtn = document.getElementById('courseLevelToggleBtn');
+
+        if (toggleBtn) {
+            toggleBtn.innerHTML = '\u00AB';
+            toggleBtn.title = 'Collapse course levels';
+            toggleBtn.setAttribute('aria-label', 'Collapse course levels');
+        }
+
+        list.classList.remove('hidden');
+        list.innerHTML = '';
+
+        ADAPTATION_COURSE.forEach(function (lvl, idx) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'sidebar-item course-level-item' + (idx === state.courseLevel ? ' active' : '');
+            btn.textContent = 'L' + lvl.level + ': ' + lvl.title;
+            (function (capturedIdx) {
+                btn.addEventListener('click', function () {
+                    navigateCourse(capturedIdx);
+                });
+            }(idx));
+            list.appendChild(btn);
+        });
+    }
+
+    function renderCourseNavHeader() {
+        var header = document.getElementById('courseNavHeader');
+        if (!header) { return; }
+
+        if (!state.courseMode || !ADAPTATION_COURSE || ADAPTATION_COURSE.length === 0) {
+            header.classList.add('hidden');
+            return;
+        }
+        header.classList.remove('hidden');
+
+        var lvl = ADAPTATION_COURSE[state.courseLevel] || ADAPTATION_COURSE[0];
+        var titleEl = document.getElementById('courseNavTitle');
+        var descEl = document.getElementById('courseNavDesc');
+        var prevBtn = document.getElementById('coursePrevBtn');
+        var nextBtn = document.getElementById('courseNextBtn');
+
+        if (titleEl) { titleEl.textContent = 'L' + lvl.level + ': ' + lvl.title; }
+        if (descEl) { descEl.textContent = lvl.description || ''; }
+        if (prevBtn) { prevBtn.disabled = state.courseLevel <= 0; }
+        if (nextBtn) { nextBtn.disabled = state.courseLevel >= ADAPTATION_COURSE.length - 1; }
+    }
 
     document.getElementById('themeToggle').addEventListener('click', function () {
         applyTheme(state.theme === 'dark' ? 'light' : 'dark');
@@ -1868,6 +2193,11 @@
     });
 
     document.getElementById('sidebarExpandBtn').addEventListener('click', function () {
+        if (state.courseMode) {
+            state.courseLevelCollapsed = false;
+            renderSidebar();
+            return;
+        }
         state.sidebarCollapsed = false;
         try { window.localStorage.setItem(SIDEBAR_STORAGE_KEY, '0'); } catch (e) {}
         renderSidebar();

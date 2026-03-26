@@ -58,9 +58,13 @@ LANGS = [
 ]
 
 BASICS_GROUPS = [
+    {
+        "label": "Project Setup & Environment",
+        "keys": ["project_lifecycle", "command_line_args", "environment_variables"],
+    },
     {"label": "Control Flow", "keys": ["loops", "conditions", "recursion"]},
     {"label": "Functions & Errors", "keys": ["functions_and_errors", "exceptions_and_recovery"]},
-    {"label": "Data Structures", "keys": ["arrays_and_collections", "maps_and_sets", "strings"]},
+    {"label": "Data Structures", "keys": ["arrays_and_collections", "maps_and_sets", "strings", "collection_mappings"]},
     {
         "label": "OOP & Abstraction",
         "keys": ["classes_and_objects", "interfaces_and_polymorphism", "enums_and_constants"],
@@ -70,12 +74,12 @@ BASICS_GROUPS = [
     {
         "label": "System & Environment",
         "keys": [
-            "command_line_args",
-            "environment_variables",
             "dates_and_time",
             "nullable_optional_values",
             "type_system_comparison",
             "scala_migration",
+            "memory_management",
+            "concurrency_models",
         ],
     },
 ]
@@ -418,6 +422,16 @@ PRINCIPLES_GROUPS = [
             "immutability_first",
         ],
     },
+    {
+        "label": "Language Paradigms",
+        "keys": [
+            "memory_management",
+            "concurrency_models",
+            "structural_typing",
+            "nominal_typing",
+            "duck_typing",
+        ],
+    },
 ]
 
 PRINCIPLES = {
@@ -668,6 +682,118 @@ PRINCIPLES = {
             "Applying immutability dogmatically in hot paths without profiling.",
         ],
     },
+    "memory_management": {
+        "label": "Memory Management Model",
+        "description": "Understand how each language handles memory allocation, ownership, and deallocation.",
+        "sourceLinks": [{"label": "Memory safety", "url": "https://en.wikipedia.org/wiki/Memory_safety"}],
+        "points": [
+            "C++ exposes the cost model explicitly: stack (LIFO), heap (manual or smart pointers), and move semantics.",
+            "Go uses escape analysis: scalars often live on stack; pointers allow heap allocation but garbage collection is automatic.",
+            "Python uses reference counting plus a cycle detector for garbage collection.",
+            "TypeScript/JavaScript and Scala use full garbage collection (GC)—allocation is automatic.",
+        ],
+        "notes": [
+            "In C++, choose `std::unique_ptr` for exclusive ownership, `std::shared_ptr` for shared ownership, or manual `new`/`delete` for fine-grained control.",
+            "In Go, structs are value types by default; use pointers `&` only when you need indirection or mutability across boundaries.",
+            "Python's reference counting means circular references can leak—use `weakref` or rely on the cycle collector.",
+            "Languages with GC hide allocation details but require tuning GC pause interactions if latency matters.",
+        ],
+        "pitfalls": [
+            "C++: Forgetting to `delete` or using raw pointers where smart pointers fit better.",
+            "Go: Overusing pointers when value semantics would simplify code and avoid allocation.",
+            "Python: Creating reference cycles with `__del__` methods that aren't called promptly.",
+            "GC languages: Assuming GC is free—major collections can pause your program.",
+        ],
+    },
+    "concurrency_models": {
+        "label": "Concurrency Models",
+        "description": "Compare how each language handles parallel execution: threads, goroutines, async/await, or Futures.",
+        "sourceLinks": [{"label": "Concurrency", "url": "https://en.wikipedia.org/wiki/Concurrency_(computer_science)"}],
+        "points": [
+            "C++ uses OS threads with mutex/condition-variable synchronization or task-based `std::async` with Futures.",
+            "Go uses lightweight goroutines (M:N scheduling) coordinated via channels (CSP model).",
+            "Python has the Global Interpreter Lock (GIL): use `asyncio` for I/O concurrency or `multiprocessing` for CPU-bound work.",
+            "TypeScript/Node is single-threaded with an event loop; `async/await` suspends without blocking other tasks.",
+            "Scala uses Futures running on an ExecutionContext (typically thread pool) with monadic composition (`for`-yield).",
+        ],
+        "notes": [
+            "C++ threads map 1:1 to OS threads—context switching and memory overhead scales with thread count.",
+            "Go goroutines are user-space; millions can exist with low overhead, coordinated by the scheduler.",
+            "Python's GIL means only one Python bytecode runs per process at a time; use it for I/O, not CPU parallelism.",
+            "TypeScript event loop is deterministic and single-threaded; reasoning about state is easier but CPU work blocks everyone.",
+            "Scala Futures are lazy by default—use `scala.concurrent.ExecutionContext` to control threading.",
+        ],
+        "pitfalls": [
+            "C++: Creating too many threads—context switching overhead dominates. Use thread pools instead.",
+            "Go: Channel deadlocks from mismatched send/receive. Use `select` with `default` for non-blocking operations.",
+            "Python: Assuming threads give parallelism—the GIL serializes Python bytecode. Use multiprocessing or Cython where needed.",
+            "TypeScript: Blocking the event loop with long CPU work (e.g., in loops). Offload to workers or use `setImmediate`.",
+            "Scala: Blocking threads in Futures—the ExecutionContext may starve. Use `blocking { ... }` to signal intent.",
+        ],
+    },
+    "structural_typing": {
+        "label": "Structural Typing",
+        "description": "A type satisfies an interface if it has the required methods/fields, regardless of explicit declaration.",
+        "sourceLinks": [{"label": "Structural subtyping", "url": "https://en.wikipedia.org/wiki/Structural_type_system"}],
+        "points": [
+            "Go interfaces are implicitly satisfied: any type with matching method signatures implements the interface.",
+            "TypeScript uses structural compatibility: if two types have the same shape, they are assignable.",
+            "Python 3.8+ Protocol classes enable structural typing hints without inheritance.",
+            "Advantage: decoupled design; no need to declare intent upfront.",
+        ],
+        "notes": [
+            "Structural typing enables ad-hoc composition: old code can satisfy new interfaces without modification.",
+            "Works well for interfaces with a small method set (narrow contracts).",
+            "Refactoring method names affects all structural matches silently—tooling must catch mismatches.",
+        ],
+        "pitfalls": [
+            "Accidentally satisfying an interface when you didn't intend to.",
+            "Large interfaces become hard to reason about—implementations accidentally match too much.",
+            "Renaming a method silently breaks structural contracts; no compiler warning.",
+        ],
+    },
+    "nominal_typing": {
+        "label": "Nominal Typing",
+        "description": "A type satisfies an interface only if explicitly declared or inherited through its type hierarchy.",
+        "sourceLinks": [{"label": "Nominal type system", "url": "https://en.wikipedia.org/wiki/Nominal_type_system"}],
+        "points": [
+            "C++ uses nominal typing with virtual dispatch: you declare `class Dog : Animal` explicitly.",
+            "Scala uses nominal typing with traits: `class Dog extends Animal`.",
+            "Advantage: explicit intent; no accidental interface satisfaction.",
+            "Compiler enforces declarations—refactoring is safer.",
+        ],
+        "notes": [
+            "Nominal typing requires upfront design: you must anticipate all interfaces your type will implement.",
+            "Type hierarchies become rigid if not designed carefully—deep trees are hard to refactor.",
+            "Well-suited for closed, stable domains where interfaces are known upfront.",
+        ],
+        "pitfalls": [
+            "Deep inheritance hierarchies that become brittle.",
+            "Introducing new interfaces later requires modifying old type definitions.",
+            "Tight coupling between interfaces and implementations.",
+        ],
+    },
+    "duck_typing": {
+        "label": "Duck Typing",
+        "description": "If an object quacks like a duck, it is a duck—type checking happens at runtime via attribute/method access.",
+        "sourceLinks": [{"label": "Duck typing", "url": "https://en.wikipedia.org/wiki/Duck_typing"}],
+        "points": [
+            "Python embraces duck typing: no compile-time type checking; errors surface at runtime.",
+            "Advantage: extreme flexibility; code works with any object that has the required methods.",
+            "Type hints (PEP 484, `typing` module) add static analysis without enforcement.",
+            "No interfaces or base classes needed—just call the method and handle failures.",
+        ],
+        "notes": [
+            "Duck typing is powerful for exploration and dynamic scenarios (e.g., metaprogramming).",
+            "Type hints with tools like Mypy catch many errors before runtime without changing the language.",
+            "Testing becomes critical—types are not verified until code runs.",
+        ],
+        "pitfalls": [
+            "Runtime errors in production: typos or missing methods fail only when executed.",
+            "Hard to refactor: method names are strings; IDEs cannot reliably find usages.",
+            "Large codebases become hard to reason about without clear contracts.",
+        ],
+    },
 }
 
 # Grouped organization for courses
@@ -676,6 +802,52 @@ COURSE_STEPS_GROUPS = [
     {"label": "Phase 2 – Type System & Idioms", "keys": ["step_5_type_system_interfaces", "step_6_strings_pattern_matching"]},
     {"label": "Phase 3 – Concurrency & I/O",  "keys": ["step_7_concurrency_model", "step_8_io_serialization"]},
     {"label": "Phase 4 – Algorithms & Architecture", "keys": ["step_9_sorting_pipelines", "step_10_testability_di"]},
+]
+
+# Pro Adaptation Course — 7 Levels
+ADAPTATION_COURSE = [
+    {
+        "level": 1,
+        "title": "The Container (Project Anatomy)",
+        "description": "Learn how each language structures a project: build system, main entry point, dependencies.",
+        "viewItems": ["project_lifecycle", "command_line_args", "environment_variables", "file_paths_and_directories"],
+    },
+    {
+        "level": 2,
+        "title": "The Data (Types & Nulls)",
+        "description": "Understand fundamental types, null handling, and optional values.",
+        "viewItems": ["type_system_comparison", "nullable_optional_values", "arrays_and_collections", "maps_and_sets", "collection_mappings"],
+    },
+    {
+        "level": 3,
+        "title": "The Flow (Logic)",
+        "description": "Master control flow: conditionals, loops, and recursion.",
+        "viewItems": ["conditions", "loops", "recursion", "functions_and_errors"],
+    },
+    {
+        "level": 4,
+        "title": "The Ownership (Memory)",
+        "description": "Grasp how each language handles memory, allocation, and object lifetime.",
+        "viewItems": ["memory_management", "classes_and_objects", "enums_and_constants"],
+    },
+    {
+        "level": 5,
+        "title": "The Abstraction (Interfaces)",
+        "description": "Learn interfaces, polymorphism, and design patterns for extensibility.",
+        "viewItems": ["interfaces_and_polymorphism", "structural_typing", "nominal_typing", "duck_typing", "type_system_comparison"],
+    },
+    {
+        "level": 6,
+        "title": "The Error (Reliability)",
+        "description": "Handle errors elegantly and build for failure recovery.",
+        "viewItems": ["exceptions_and_recovery", "functions_and_errors", "json_and_serialization", "file_io"],
+    },
+    {
+        "level": 7,
+        "title": "The Scaling (Concurrency)",
+        "description": "Learn the concurrency models for each language and write parallel code.",
+        "viewItems": ["concurrency_models", "hashing_and_checksums", "sorting_and_searching", "random_numbers"],
+    },
 ]
 
 COURSE_STEPS = {
@@ -935,7 +1107,35 @@ BASICS_ENHANCEMENTS = {
             "go": "Bridge note: this entry focuses on Scala 2 -> 3 migration only.",
             "typescript": "Bridge note: this entry focuses on Scala 2 -> 3 migration only."
         }
-    }
+    },
+    "project_lifecycle": {
+        "label": "project_lifecycle",
+        "description": "Project structure, build system, and main entry points across languages.",
+        "adapterInsight": "Every language has a different philosophy: C++ is modular; Go is simplicity; Python is flexibility; TypeScript mirrors Node conventions; Scala bridges JVM tooling.",
+        "sourceLinks": [],
+        "codes": {
+            "cpp": "// CMakeLists.txt\ncmake_minimum_required(VERSION 3.15)\nproject(MyApp)\nadd_executable(main src/main.cpp)\n\n// src/main.cpp\nint main() { return 0; }\n\n// Build: mkdir build && cd build && cmake .. && make",
+            "python": "# pyproject.toml (modern PEP 517)\n[project]\nname = \"my_app\"\nversion = \"0.1.0\"\n\n# main.py\nif __name__ == \"__main__\":\n    print(\"Hello\")\n\n# Run: python main.py",
+            "go": "// go.mod\nmodule example.com/my_app\n\ngo 1.21\n\n// main.go\npackage main\n\nfunc main() {\n    println(\"Hello\")\n}\n\n// Run: go run main.go",
+            "typescript": "// package.json\n{\n  \"name\": \"my_app\",\n  \"type\": \"module\",\n  \"main\": \"dist/index.js\"\n}\n\n// tsconfig.json\n{ \"compilerOptions\": { \"target\": \"ES2020\" } }\n\n// index.ts\nconsole.log(\"Hello\")",
+            "scala2": "// build.sbt\nname := \"my_app\"\nversion := \"0.1.0\"\nscalaVersion := \"2.13.12\"\n\n// src/main/scala/Main.scala\nobject Main {\n  def main(args: Array[String]): Unit = println(\"Hello\")\n}",
+            "scala3": "// build.sbt\nname := \"my_app\"\nversion := \"0.1.0\"\nscalaVersion := \"3.3.0\"\n\n// src/main/scala/Main.scala\n@main def hello(): Unit = println(\"Hello\")"
+        }
+    },
+    "collection_mappings": {
+        "label": "collection_mappings",
+        "description": "Equivalent collection types across languages: the Rosetta Stone for data structures.",
+        "adapterInsight": "Use this table to quickly find the right data structure in your target language. Performance characteristics vary: dynamic arrays are fast for append; linked lists are fast for insertion; hash maps prioritize lookup speed.",
+        "sourceLinks": [],
+        "codes": {
+            "cpp": "// Common patterns\nstd::vector<int> v{1, 2, 3};\nstd::unordered_map<std::string, int> m{{\"a\", 1}};\nstd::set<int> s{3, 1, 2};\nstd::list<int> lst{1, 2, 3};\nstd::array<int, 3> arr{1, 2, 3};",
+            "python": "# Common patterns\nv = [1, 2, 3]\nm = {\"a\": 1}\ns = {3, 1, 2}\nfrom collections import deque\nq = deque([1, 2, 3])\narr = (1, 2, 3)  # immutable",
+            "go": "// Common patterns\nv := []int{1, 2, 3}\nm := map[string]int{\"a\": 1}\ns := map[int]struct{}{1: {}, 2: {}}\n// container/list for linked list\nimport \"container/list\"\nq := list.New()",
+            "typescript": "// Common patterns\nconst v: number[] = [1, 2, 3]\nconst m: Record<string, number> = { a: 1 }\nconst s = new Set<number>([1, 2, 3])\nconst tuple: [number, string] = [1, \"x\"]\n// Immutable: readonly number[]",
+            "scala2": "// Common patterns\nval v = Vector(1, 2, 3)\nval m = Map(\"a\" -> 1)\nval s = Set(3, 1, 2)\nval l = List(1, 2, 3)\nval q = scala.collection.immutable.Queue(1, 2, 3)",
+            "scala3": "// Common patterns\nval v = Vector(1, 2, 3)\nval m = Map(\"a\" -> 1)\nval s = Set(3, 1, 2)\nval l = List(1, 2, 3)"
+        }
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -1097,6 +1297,7 @@ def build():
         .replace("__DESIGN_PATTERNS_JSON__", safe_json(design_patterns))
         .replace("__PRINCIPLES_JSON__", safe_json(principles))
         .replace("__COURSE_STEPS_JSON__", safe_json(COURSE_STEPS))
+        .replace("__ADAPTATION_COURSE_JSON__", safe_json(ADAPTATION_COURSE))
         .replace("__WORKFLOW_JSON__", safe_json(WORKFLOW))
         .replace("__INTERVIEW_GROUPS_JSON__", safe_json(INTERVIEW_GROUPS))
         .replace("__BASICS_GROUPS_JSON__", safe_json(BASICS_GROUPS))
@@ -1128,10 +1329,12 @@ def build():
         '      <span class="row-title">Languages</span>\n',
         '      <nav class="chip-row" id="langNav" aria-label="Languages"></nav>\n',
         "    </div>\n",
-        '    <div class="top-row">\n',
-        '      <span class="row-title">Views</span>\n',
-        '      <nav class="chip-row" id="viewNav" aria-label="Views"></nav>\n',
-        '      <span class="spacer"></span>\n',
+        '    <div class="top-row" id="viewsRow">\n',
+            '      <div class="course-hide-views" id="viewsSelection">\n',
+            '        <span class="row-title">Views</span>\n',
+            '        <nav class="chip-row" id="viewNav" aria-label="Views"></nav>\n',
+            '        <span class="spacer"></span>\n',
+            '      </div>\n',
         '      <div class="chip-row compare-row">\n',
         '        <span class="row-title">Style</span>\n',
         '        <div class="palette-previews" id="palettePreviews" aria-label="Palette previews">\n',
@@ -1148,6 +1351,7 @@ def build():
         '        <button type="button" class="chip-btn subtle-btn theme-btn" id="themeToggle" aria-label="Switch to light theme" title="Switch to light theme">&#9728;</button>\n',
         '        <button type="button" class="chip-btn" id="compareToggle" aria-pressed="false">Compare</button>\n',
         '        <button type="button" class="chip-btn subtle-btn" id="swapBtn" title="Swap selected languages">Swap</button>\n',
+        '        <button type="button" class="chip-btn" id="courseBtn" title="Start 7-level pro adaptation course">📚 Course</button>\n',
         "      </div>\n",
         "    </div>\n",
         "  </div>\n",
@@ -1155,7 +1359,14 @@ def build():
         '    <section id="runtimeWarning" class="runtime-warning hidden" role="alert"></section>\n',
         '    <div class="catalog-layout" id="catalogLayout">\n',
         '      <aside class="catalog-sidebar hidden" id="catalogSidebar">\n',
-        '        <div class="sidebar-header">\n',
+        '        <div class="course-level-panel hidden" id="courseLevelPanel">\n',
+        '          <div class="sidebar-header course-level-header">\n',
+        '            <span class="sidebar-title" id="courseLevelTitle">Course Level</span>\n',
+        '            <button type="button" class="sidebar-toggle-btn" id="courseLevelToggleBtn" title="Collapse course levels" aria-label="Collapse course levels">\u00AB</button>\n',
+        '          </div>\n',
+        '          <div class="course-level-list" id="courseLevelList"></div>\n',
+        '        </div>\n',
+        '        <div class="sidebar-header" id="topicSidebarHeader">\n',
         '          <span class="sidebar-title" id="sidebarTitle">Items</span>\n',
         '          <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" title="Collapse sidebar" aria-label="Collapse sidebar">\u00AB</button>\n',
         '        </div>\n',
@@ -1163,6 +1374,15 @@ def build():
         '      </aside>\n',
         '      <button type="button" class="sidebar-expand-btn hidden" id="sidebarExpandBtn" title="Expand sidebar" aria-label="Expand sidebar">\u00BB</button>\n',
         '      <div class="catalog-main">\n',
+        '        <section id="courseNavHeader" class="course-nav-header hidden">\n',
+        '          <div class="course-nav-bar">\n',
+        '            <button type="button" id="coursePrevBtn" class="course-nav-btn">&#8249; Prev</button>\n',
+        '            <span id="courseNavTitle" class="course-nav-title"></span>\n',
+        '            <button type="button" id="courseNextBtn" class="course-nav-btn">Next &#8250;</button>\n',
+        '          </div>\n',
+        '          <p id="courseNavDesc" class="course-nav-desc"></p>\n',
+        '          <button type="button" id="courseExitBtn" class="course-nav-link">Go to Lang. Basic</button>\n',
+        '        </section>\n',
         '        <section id="entryMeta" class="entry-meta hidden">\n',
         '          <h2 id="entryTitle"></h2>\n',
         '          <p id="entryDesc"></p>\n',
