@@ -1,0 +1,31 @@
+{
+  "requiredSubstrings": [
+    "[BEGIN:sheets]",
+    "[BEGIN:home_html]",
+    "[BEGIN:problems]",
+    "[BEGIN:workflow_groups]",
+    "[BEGIN:lang_labels]",
+    "\"word_count\"",
+    "\"step_1\"",
+    "\"C++\""
+  ],
+  "forbiddenSubstrings": [
+    "__SHEETS_JSON__",
+    "__HOME_HTML_JSON__",
+    "__PROBLEMS_JSON__",
+    "__INTERVIEW_JSON__",
+    "__BASICS_JSON__",
+    "__DESIGN_PATTERNS_JSON__",
+    "__PRINCIPLES_JSON__",
+    "__COURSE_STEPS_JSON__",
+    "__ADAPTATION_COURSE_JSON__",
+    "__WORKFLOW_JSON__",
+    "__INTERVIEW_GROUPS_JSON__",
+    "__BASICS_GROUPS_JSON__",
+    "__DESIGN_PATTERNS_GROUPS_JSON__",
+    "__PRINCIPLES_GROUPS_JSON__",
+    "__COURSE_STEPS_GROUPS_JSON__",
+    "__WORKFLOW_GROUPS_JSON__",
+    "__LANG_LABELS_JSON__"
+  ]
+}

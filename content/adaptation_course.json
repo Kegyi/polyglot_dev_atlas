@@ -1,0 +1,80 @@
+[
+  {
+    "level": 1,
+    "title": "The Container (Project Anatomy)",
+    "description": "Learn how each language structures a project: build system, main entry point, dependencies.",
+    "viewItems": [
+      "project_lifecycle",
+      "command_line_args",
+      "environment_variables",
+      "file_paths_and_directories"
+    ]
+  },
+  {
+    "level": 2,
+    "title": "The Data (Types & Nulls)",
+    "description": "Understand fundamental types, null handling, and optional values.",
+    "viewItems": [
+      "type_system_comparison",
+      "nullable_optional_values",
+      "arrays_and_collections",
+      "maps_and_sets",
+      "collection_mappings"
+    ]
+  },
+  {
+    "level": 3,
+    "title": "The Flow (Logic)",
+    "description": "Master control flow: conditionals, loops, and recursion.",
+    "viewItems": [
+      "conditions",
+      "loops",
+      "recursion",
+      "functions_and_errors"
+    ]
+  },
+  {
+    "level": 4,
+    "title": "The Ownership (Memory)",
+    "description": "Grasp how each language handles memory, allocation, and object lifetime.",
+    "viewItems": [
+      "memory_management",
+      "classes_and_objects",
+      "enums_and_constants"
+    ]
+  },
+  {
+    "level": 5,
+    "title": "The Abstraction (Interfaces)",
+    "description": "Learn interfaces, polymorphism, and design patterns for extensibility.",
+    "viewItems": [
+      "interfaces_and_polymorphism",
+      "structural_typing",
+      "nominal_typing",
+      "duck_typing",
+      "type_system_comparison"
+    ]
+  },
+  {
+    "level": 6,
+    "title": "The Error (Reliability)",
+    "description": "Handle errors elegantly and build for failure recovery.",
+    "viewItems": [
+      "exceptions_and_recovery",
+      "functions_and_errors",
+      "json_and_serialization",
+      "file_io"
+    ]
+  },
+  {
+    "level": 7,
+    "title": "The Scaling (Concurrency)",
+    "description": "Learn the concurrency models for each language and write parallel code.",
+    "viewItems": [
+      "concurrency_models",
+      "hashing_and_checksums",
+      "sorting_and_searching",
+      "random_numbers"
+    ]
+  }
+]

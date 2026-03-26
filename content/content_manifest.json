@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "files": [
+    "principles.json",
+    "modern_approach_notes.json",
+    "course_steps.json",
+    "basics_enhancements.json",
+    "adapter_insights.json",
+    "adaptation_course.json",
+    "workflow.json",
+    "basics_groups.json",
+    "interview_groups.json",
+    "design_patterns_groups.json",
+    "principles_groups.json",
+    "course_steps_groups.json",
+    "workflow_groups.json"
+  ]
+}

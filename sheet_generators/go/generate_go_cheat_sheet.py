@@ -1,7 +1,17 @@
-﻿import html
-import re
-import os
+﻿import os
+import sys
 import urllib.parse
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
+
+from sheet_generators.shared_renderer import (
+    build_content_html,
+    render_section_table,
+    render_sheet_html,
+    write_sheet_output,
+)
 
 # --- DATA SECTION: Add or update keywords here ---
 KEYWORDS_DATA = [
@@ -133,58 +143,11 @@ def build_doc_url(item):
 
 
 def generate_table(section):
-    rows = []
-    for cat in section['categories']:
-        rows.append(f'<tr class="category-label"><td colspan="4">{html.escape(cat["label"])}</td></tr>')
-        for item in cat['items']:
-            url = build_doc_url(item)
-            header_class = 'header-note' if item.get('head', '') not in ('Built-in', '') else ''
-            desc_text = item.get('desc', '')
-            dep_match = re.search(r"\([^)]*deprecated[^)]*\)", desc_text, re.I)
-            deprecated_html = ''
-            if dep_match:
-                dep_text = dep_match.group(0).strip()
-                desc_text = desc_text.replace(dep_match.group(0), '').strip()
-                deprecated_html = f' <span class="header-note">{html.escape(dep_text)}</span>'
-            version_html = f' <span class="version-tag">(since {item.get("ver", "")})</span>' if item.get('ver') else ''
-            desc_escaped = html.escape(desc_text)
-
-            row = f"""
-            <tr class="{html.escape(item.get('cat',''))}">
-                <td><a href="{url}" target="_blank">{html.escape(item['kw'])}</a></td>
-                <td>{desc_escaped}{deprecated_html}{version_html}</td>
-                <td><span class="{header_class}">{html.escape(item.get('head',''))}</span></td>
-                <td><code>{html.escape(item.get('code',''))}</code></td>
-            </tr>
-            """
-            rows.append(row)
-
-    return f"""
-    <h2>{html.escape(section['section'])}</h2>
-    <table>
-        <thead>
-            <tr>
-                <th style="width: 18%;">Item</th>
-                <th style="width: 42%;">Description & Version</th>
-                <th style="width: 15%;">Context</th>
-                <th style="width: 25%;">Snippet</th>
-            </tr>
-        </thead>
-        <tbody>
-            {''.join(rows)}
-        </tbody>
-    </table>
-    """
+    return render_section_table(section, build_doc_url)
 
 
 def main():
-    content_blocks = []
-    for section in KEYWORDS_DATA:
-        if section.get('is_advanced'):
-            content_blocks.append('<div class="separator"><span>Advanced & Concurrency</span></div>')
-        content_blocks.append(generate_table(section))
-
-    content_html = ''.join(content_blocks)
+    content_html = build_content_html(KEYWORDS_DATA, generate_table, 'Advanced & Concurrency')
     title = 'Go Polyglot Dev Atlas'
     legend_html = '''<div class="legend-row">
         <div class="legend-item"><div class="color-box syntax"></div> Syntax</div>
@@ -192,16 +155,8 @@ def main():
         <div class="legend-item"><div class="color-box module"></div> Stdlib & Tools</div>
     </div>'''
 
-    tpl_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'sheet_template.html'))
-    with open(tpl_path, 'r', encoding='utf-8') as tplf:
-        tpl = tplf.read()
-    final_html = tpl.replace('__TITLE__', title).replace('__LEGEND__', legend_html).replace('__CONTENT__', content_html)
-
-    out_dir = os.path.dirname(__file__)
-    out_path = os.path.join(out_dir, 'go_cheat_sheet.html')
-    with open(out_path, 'w', encoding='utf-8') as f:
-        f.write(final_html)
-    print(f"Successfully generated {out_path}")
+    final_html = render_sheet_html(__file__, title, legend_html, content_html)
+    write_sheet_output(__file__, 'go_cheat_sheet.html', final_html)
 
 
 if __name__ == '__main__':

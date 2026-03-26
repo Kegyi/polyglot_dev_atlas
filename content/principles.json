@@ -1,0 +1,451 @@
+{
+  "single_responsibility": {
+    "label": "Single Responsibility Principle (SRP)",
+    "description": "A module should have one reason to change. Keep unrelated responsibilities in separate units.",
+    "sourceLinks": [
+      {
+        "label": "SOLID overview",
+        "url": "https://en.wikipedia.org/wiki/SOLID"
+      }
+    ],
+    "points": [
+      "Split business logic, persistence, and presentation concerns.",
+      "Smaller focused units are easier to test and refactor.",
+      "Watch for classes that keep growing in unrelated directions."
+    ],
+    "notes": [
+      "A practical signal of SRP drift is when one change request touches unrelated methods in the same class.",
+      "If you cannot explain a module's purpose in one sentence, it probably has mixed responsibilities."
+    ],
+    "pitfalls": [
+      "Fragmenting code into too many tiny files with unclear ownership.",
+      "Confusing utility extraction with true responsibility boundaries.",
+      "Splitting by technical layer only and ignoring domain cohesion."
+    ]
+  },
+  "open_closed": {
+    "label": "Open/Closed Principle (OCP)",
+    "description": "Software entities should be open for extension, closed for modification.",
+    "sourceLinks": [
+      {
+        "label": "SOLID overview",
+        "url": "https://en.wikipedia.org/wiki/SOLID"
+      }
+    ],
+    "points": [
+      "Prefer plugging in new behavior via interfaces or composition.",
+      "Avoid changing stable, already-tested code for every new variant.",
+      "Use extension points where change is expected."
+    ],
+    "notes": [
+      "OCP works best when variability is known at seams like pricing rules, providers, or transport adapters.",
+      "Start concrete, then extract an extension point after the second real variation appears."
+    ],
+    "pitfalls": [
+      "Introducing abstraction layers before there is actual variation.",
+      "Creating extension hooks that are too generic to be safe.",
+      "Treating OCP as never modify existing code under any condition."
+    ]
+  },
+  "liskov_substitution": {
+    "label": "Liskov Substitution Principle (LSP)",
+    "description": "Subtypes must be substitutable for their base types without surprising behavior changes.",
+    "sourceLinks": [
+      {
+        "label": "SOLID overview",
+        "url": "https://en.wikipedia.org/wiki/SOLID"
+      }
+    ],
+    "points": [
+      "Derived types should honor base contracts and expectations.",
+      "Do not strengthen preconditions or weaken postconditions.",
+      "If substitution breaks, your abstraction is likely wrong."
+    ],
+    "notes": [
+      "Document contracts explicitly, especially edge-case behavior and exception semantics.",
+      "Favor composition if subtype behavior would need special-case checks by callers."
+    ],
+    "pitfalls": [
+      "Overriding methods with narrower accepted input ranges.",
+      "Throwing new runtime errors where base type never did.",
+      "Using inheritance for code reuse when behavioral contracts differ."
+    ]
+  },
+  "interface_segregation": {
+    "label": "Interface Segregation Principle (ISP)",
+    "description": "Clients should not depend on methods they do not use.",
+    "sourceLinks": [
+      {
+        "label": "SOLID overview",
+        "url": "https://en.wikipedia.org/wiki/SOLID"
+      }
+    ],
+    "points": [
+      "Prefer smaller, role-focused interfaces over one giant interface.",
+      "Reduces accidental coupling and implementation burden.",
+      "Improves testability with narrower mocks/stubs."
+    ],
+    "notes": [
+      "Group methods by usage role, not by domain noun alone.",
+      "If most implementations throw or no-op on an interface method, split the interface."
+    ],
+    "pitfalls": [
+      "Creating extremely granular interfaces that become hard to navigate.",
+      "Duplicating near-identical interfaces across modules.",
+      "Breaking cohesion by splitting methods that belong together."
+    ]
+  },
+  "dependency_inversion": {
+    "label": "Dependency Inversion Principle (DIP)",
+    "description": "High-level modules should depend on abstractions, not concrete details.",
+    "sourceLinks": [
+      {
+        "label": "SOLID overview",
+        "url": "https://en.wikipedia.org/wiki/SOLID"
+      }
+    ],
+    "points": [
+      "Inject dependencies at boundaries instead of hard-coding them.",
+      "Keep infrastructure replaceable (DB, cache, transport).",
+      "Makes core logic portable and easier to test."
+    ],
+    "notes": [
+      "Dependency inversion is most valuable where infrastructure volatility is high.",
+      "Keep abstraction ownership close to the high-level policy that consumes it."
+    ],
+    "pitfalls": [
+      "Using DI containers for trivial modules where simple wiring is enough.",
+      "Abstracting everything, including stable concrete dependencies.",
+      "Leaking framework-specific types into domain interfaces."
+    ]
+  },
+  "composition_over_inheritance": {
+    "label": "Composition over Inheritance",
+    "description": "Favor assembling behavior from components instead of deep inheritance trees.",
+    "sourceLinks": [
+      {
+        "label": "Design principle reference",
+        "url": "https://en.wikipedia.org/wiki/Composition_over_inheritance"
+      }
+    ],
+    "points": [
+      "Composition keeps behavior explicit and flexible at runtime.",
+      "Avoids fragile base-class problems.",
+      "Works especially well with strategy and decorator patterns."
+    ],
+    "notes": [
+      "Use small collaborating objects when behavior mixes vary per context.",
+      "Prefer inheritance only when there is a stable behavioral is-a relationship."
+    ],
+    "pitfalls": [
+      "Introducing excessive indirection for straightforward type hierarchies.",
+      "Hiding composition wiring in magic factories or globals.",
+      "Ignoring performance impact of over-layered delegation."
+    ]
+  },
+  "dry": {
+    "label": "DRY (Don't Repeat Yourself)",
+    "description": "Each piece of knowledge should have a single, authoritative representation.",
+    "sourceLinks": [
+      {
+        "label": "The Pragmatic Programmer (DRY)",
+        "url": "https://en.wikipedia.org/wiki/Don%27t_repeat_yourself"
+      }
+    ],
+    "points": [
+      "Remove duplicated business rules before they diverge.",
+      "Prefer shared abstractions only when duplication is meaningful.",
+      "Do not over-abstract too early; wait for stable repetition."
+    ],
+    "notes": [
+      "Duplicate policy logic is more dangerous than duplicate plumbing code.",
+      "A good DRY refactor should reduce both code and cognitive load."
+    ],
+    "pitfalls": [
+      "Merging coincidental similarity that later diverges.",
+      "Optimizing for zero duplication at the cost of readability.",
+      "Creating shared helpers that become dumping grounds."
+    ]
+  },
+  "kiss": {
+    "label": "KISS (Keep It Simple, Stupid)",
+    "description": "Prefer the simplest solution that satisfies current requirements.",
+    "sourceLinks": [
+      {
+        "label": "KISS principle",
+        "url": "https://en.wikipedia.org/wiki/KISS_principle"
+      }
+    ],
+    "points": [
+      "Simple code is easier to debug, change, and explain.",
+      "Complexity should be justified by measurable value.",
+      "Choose readability over cleverness for team code."
+    ],
+    "notes": [
+      "KISS applies to API shape, naming, and operational flow, not just code length.",
+      "When two options work, prefer the one new team members can reason about quickly."
+    ],
+    "pitfalls": [
+      "Interpreting simplicity as avoiding necessary design structure.",
+      "Choosing short code over clear code.",
+      "Ignoring operational complexity while simplifying local code."
+    ]
+  },
+  "yagni": {
+    "label": "YAGNI (You Aren't Gonna Need It)",
+    "description": "Do not implement speculative features before they are required.",
+    "sourceLinks": [
+      {
+        "label": "YAGNI principle",
+        "url": "https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it"
+      }
+    ],
+    "points": [
+      "Build for current use-cases and adapt incrementally.",
+      "Premature extensibility increases maintenance cost.",
+      "Treat future requirements as hypotheses, not facts."
+    ],
+    "notes": [
+      "Capture deferred ideas in lightweight notes so they can be revisited intentionally.",
+      "YAGNI does not mean ignoring obvious nearby needs already in active planning."
+    ],
+    "pitfalls": [
+      "Using YAGNI to reject legitimate near-term requirements.",
+      "Skipping essential extension points at stable boundaries.",
+      "Accumulating debt by repeatedly shipping ad hoc one-offs."
+    ]
+  },
+  "law_of_demeter": {
+    "label": "Law of Demeter",
+    "description": "A unit should talk only to its close collaborators, not to distant objects.",
+    "sourceLinks": [
+      {
+        "label": "Law of Demeter",
+        "url": "https://en.wikipedia.org/wiki/Law_of_Demeter"
+      }
+    ],
+    "points": [
+      "Avoid long call chains across object graphs.",
+      "Expose intent-revealing methods instead of internals.",
+      "Reduces ripple effects from internal structure changes."
+    ],
+    "notes": [
+      "Good Demeter boundaries often align with aggregate/domain boundaries.",
+      "Replace chained access with task-level methods that express intent."
+    ],
+    "pitfalls": [
+      "Adding pass-through methods everywhere without improving design.",
+      "Masking poor boundaries behind facade-like wrappers.",
+      "Treating every nested access as a violation regardless of context."
+    ]
+  },
+  "separation_of_concerns": {
+    "label": "Separation of Concerns",
+    "description": "Organize software so each part addresses a distinct concern.",
+    "sourceLinks": [
+      {
+        "label": "Separation of concerns",
+        "url": "https://en.wikipedia.org/wiki/Separation_of_concerns"
+      }
+    ],
+    "points": [
+      "Keep domain logic independent from delivery mechanism.",
+      "Use boundaries (layers/modules) to contain change.",
+      "Improves parallel development and maintainability."
+    ],
+    "notes": [
+      "Strong boundaries reduce merge conflicts and clarify team ownership.",
+      "Define boundary contracts explicitly to avoid leak-back coupling."
+    ],
+    "pitfalls": [
+      "Over-layering the architecture without practical benefit.",
+      "Leaking concerns through shared mutable models.",
+      "Designing boundaries that match org charts rather than domain flows."
+    ]
+  },
+  "fail_fast": {
+    "label": "Fail Fast",
+    "description": "Detect invalid state early and stop immediately to avoid corrupted downstream behavior.",
+    "sourceLinks": [
+      {
+        "label": "Fail-fast",
+        "url": "https://en.wikipedia.org/wiki/Fail-fast_system"
+      }
+    ],
+    "points": [
+      "Validate inputs and assumptions at boundaries.",
+      "Surface precise errors close to root causes.",
+      "Prevents subtle latent failures and bad data spread."
+    ],
+    "notes": [
+      "Fail-fast is strongest when paired with actionable error messages and tracing.",
+      "Detecting bad state early saves debugging cost later in the pipeline."
+    ],
+    "pitfalls": [
+      "Failing deep inside internals with vague error messages.",
+      "Turning every recoverable condition into a hard crash.",
+      "Skipping observability, making failures hard to diagnose."
+    ]
+  },
+  "immutability_first": {
+    "label": "Immutability First",
+    "description": "Prefer immutable data and explicit state transitions where practical.",
+    "sourceLinks": [
+      {
+        "label": "Immutable object",
+        "url": "https://en.wikipedia.org/wiki/Immutable_object"
+      }
+    ],
+    "points": [
+      "Reduces shared-state bugs and race conditions.",
+      "Makes reasoning, testing, and rollback easier.",
+      "Use controlled mutation only where performance requires it."
+    ],
+    "notes": [
+      "Immutability is especially valuable at API boundaries and cross-thread handoff points.",
+      "Prefer immutable defaults, then introduce measured mutation where profiling justifies it."
+    ],
+    "pitfalls": [
+      "Copying large structures naively and harming performance.",
+      "Using immutable shells around hidden mutable internals.",
+      "Applying immutability dogmatically in hot paths without profiling."
+    ]
+  },
+  "memory_management": {
+    "label": "Memory Management Model",
+    "description": "Understand how each language handles memory allocation, ownership, and deallocation.",
+    "sourceLinks": [
+      {
+        "label": "Memory safety",
+        "url": "https://en.wikipedia.org/wiki/Memory_safety"
+      }
+    ],
+    "points": [
+      "C++ exposes the cost model explicitly: stack (LIFO), heap (manual or smart pointers), and move semantics.",
+      "Go uses escape analysis: scalars often live on stack; pointers allow heap allocation but garbage collection is automatic.",
+      "Python uses reference counting plus a cycle detector for garbage collection.",
+      "TypeScript/JavaScript and Scala use full garbage collection (GC)—allocation is automatic."
+    ],
+    "notes": [
+      "In C++, choose `std::unique_ptr` for exclusive ownership, `std::shared_ptr` for shared ownership, or manual `new`/`delete` for fine-grained control.",
+      "In Go, structs are value types by default; use pointers `&` only when you need indirection or mutability across boundaries.",
+      "Python's reference counting means circular references can leak—use `weakref` or rely on the cycle collector.",
+      "Languages with GC hide allocation details but require tuning GC pause interactions if latency matters."
+    ],
+    "pitfalls": [
+      "C++: Forgetting to `delete` or using raw pointers where smart pointers fit better.",
+      "Go: Overusing pointers when value semantics would simplify code and avoid allocation.",
+      "Python: Creating reference cycles with `__del__` methods that aren't called promptly.",
+      "GC languages: Assuming GC is free—major collections can pause your program."
+    ]
+  },
+  "concurrency_models": {
+    "label": "Concurrency Models",
+    "description": "Compare how each language handles parallel execution: threads, goroutines, async/await, or Futures.",
+    "sourceLinks": [
+      {
+        "label": "Concurrency",
+        "url": "https://en.wikipedia.org/wiki/Concurrency_(computer_science)"
+      }
+    ],
+    "points": [
+      "C++ uses OS threads with mutex/condition-variable synchronization or task-based `std::async` with Futures.",
+      "Go uses lightweight goroutines (M:N scheduling) coordinated via channels (CSP model).",
+      "Python has the Global Interpreter Lock (GIL): use `asyncio` for I/O concurrency or `multiprocessing` for CPU-bound work.",
+      "TypeScript/Node is single-threaded with an event loop; `async/await` suspends without blocking other tasks.",
+      "Scala uses Futures running on an ExecutionContext (typically thread pool) with monadic composition (`for`-yield)."
+    ],
+    "notes": [
+      "C++ threads map 1:1 to OS threads—context switching and memory overhead scales with thread count.",
+      "Go goroutines are user-space; millions can exist with low overhead, coordinated by the scheduler.",
+      "Python's GIL means only one Python bytecode runs per process at a time; use it for I/O, not CPU parallelism.",
+      "TypeScript event loop is deterministic and single-threaded; reasoning about state is easier but CPU work blocks everyone.",
+      "Scala Futures are lazy by default—use `scala.concurrent.ExecutionContext` to control threading."
+    ],
+    "pitfalls": [
+      "C++: Creating too many threads—context switching overhead dominates. Use thread pools instead.",
+      "Go: Channel deadlocks from mismatched send/receive. Use `select` with `default` for non-blocking operations.",
+      "Python: Assuming threads give parallelism—the GIL serializes Python bytecode. Use multiprocessing or Cython where needed.",
+      "TypeScript: Blocking the event loop with long CPU work (e.g., in loops). Offload to workers or use `setImmediate`.",
+      "Scala: Blocking threads in Futures—the ExecutionContext may starve. Use `blocking { ... }` to signal intent."
+    ]
+  },
+  "structural_typing": {
+    "label": "Structural Typing",
+    "description": "A type satisfies an interface if it has the required methods/fields, regardless of explicit declaration.",
+    "sourceLinks": [
+      {
+        "label": "Structural subtyping",
+        "url": "https://en.wikipedia.org/wiki/Structural_type_system"
+      }
+    ],
+    "points": [
+      "Go interfaces are implicitly satisfied: any type with matching method signatures implements the interface.",
+      "TypeScript uses structural compatibility: if two types have the same shape, they are assignable.",
+      "Python 3.8+ Protocol classes enable structural typing hints without inheritance.",
+      "Advantage: decoupled design; no need to declare intent upfront."
+    ],
+    "notes": [
+      "Structural typing enables ad-hoc composition: old code can satisfy new interfaces without modification.",
+      "Works well for interfaces with a small method set (narrow contracts).",
+      "Refactoring method names affects all structural matches silently—tooling must catch mismatches."
+    ],
+    "pitfalls": [
+      "Accidentally satisfying an interface when you didn't intend to.",
+      "Large interfaces become hard to reason about—implementations accidentally match too much.",
+      "Renaming a method silently breaks structural contracts; no compiler warning."
+    ]
+  },
+  "nominal_typing": {
+    "label": "Nominal Typing",
+    "description": "A type satisfies an interface only if explicitly declared or inherited through its type hierarchy.",
+    "sourceLinks": [
+      {
+        "label": "Nominal type system",
+        "url": "https://en.wikipedia.org/wiki/Nominal_type_system"
+      }
+    ],
+    "points": [
+      "C++ uses nominal typing with virtual dispatch: you declare `class Dog : Animal` explicitly.",
+      "Scala uses nominal typing with traits: `class Dog extends Animal`.",
+      "Advantage: explicit intent; no accidental interface satisfaction.",
+      "Compiler enforces declarations—refactoring is safer."
+    ],
+    "notes": [
+      "Nominal typing requires upfront design: you must anticipate all interfaces your type will implement.",
+      "Type hierarchies become rigid if not designed carefully—deep trees are hard to refactor.",
+      "Well-suited for closed, stable domains where interfaces are known upfront."
+    ],
+    "pitfalls": [
+      "Deep inheritance hierarchies that become brittle.",
+      "Introducing new interfaces later requires modifying old type definitions.",
+      "Tight coupling between interfaces and implementations."
+    ]
+  },
+  "duck_typing": {
+    "label": "Duck Typing",
+    "description": "If an object quacks like a duck, it is a duck—type checking happens at runtime via attribute/method access.",
+    "sourceLinks": [
+      {
+        "label": "Duck typing",
+        "url": "https://en.wikipedia.org/wiki/Duck_typing"
+      }
+    ],
+    "points": [
+      "Python embraces duck typing: no compile-time type checking; errors surface at runtime.",
+      "Advantage: extreme flexibility; code works with any object that has the required methods.",
+      "Type hints (PEP 484, `typing` module) add static analysis without enforcement.",
+      "No interfaces or base classes needed—just call the method and handle failures."
+    ],
+    "notes": [
+      "Duck typing is powerful for exploration and dynamic scenarios (e.g., metaprogramming).",
+      "Type hints with tools like Mypy catch many errors before runtime without changing the language.",
+      "Testing becomes critical—types are not verified until code runs."
+    ],
+    "pitfalls": [
+      "Runtime errors in production: typos or missing methods fail only when executed.",
+      "Hard to refactor: method names are strings; IDEs cannot reliably find usages.",
+      "Large codebases become hard to reason about without clear contracts."
+    ]
+  }
+}

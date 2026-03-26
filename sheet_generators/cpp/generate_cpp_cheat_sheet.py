@@ -1,6 +1,16 @@
-﻿import html
-import os
-import re
+﻿import os
+import sys
+
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
+
+from sheet_generators.shared_renderer import (
+    build_content_html,
+    render_section_table,
+    render_sheet_html,
+    write_sheet_output,
+)
 
 # --- DATA SECTION: Add or update keywords here ---
 # Categories: type, logic, storage, oop, memory, modern, template, system
@@ -237,69 +247,26 @@ KEYWORDS_DATA = [
 # Sheet HTML is now rendered from the shared template file `sheet_template.html`.
 # This keeps styling and common layout in one place and avoids duplication.
 
+def build_doc_url(item):
+    if item['head'] == "Preprocessor":
+        return f"https://en.cppreference.com/w/cpp/preprocessor/{item['kw']}"
+    if "std::" in item['kw']:
+        return f"https://en.cppreference.com/w/cpp/memory/{item['kw'].split('::')[1]}"
+    return f"https://en.cppreference.com/w/cpp/keyword/{item['kw'].replace(' ', '_')}"
+
+
 def generate_table(section):
-    rows = []
-    for cat in section['categories']:
-        # Category Header Row
-        rows.append(f'<tr class="category-label"><td colspan="4">{cat["label"]}</td></tr>')
-        
-        for item in cat['items']:
-            # SMART URL LOGIC
-            if item['head'] == "Preprocessor":
-                # Preprocessor links look like: cpp/preprocessor/replace
-                url = f"https://en.cppreference.com/w/cpp/preprocessor/{item['kw']}"
-            elif "std::" in item['kw']:
-                 url = f"https://en.cppreference.com/w/cpp/memory/{item['kw'].split('::')[1]}"
-            else:
-                url = f"https://en.cppreference.com/w/cpp/keyword/{item['kw'].replace(' ', '_')}"
-            header_class = "header-note" if item.get('head', '') != "Built-in" else ""
-            # detect deprecation notes in the description, e.g. "(deprecated in C++17)"
-            desc_text = item.get('desc', '')
-            dep_match = re.search(r"\([^)]*deprecated[^)]*\)", desc_text, re.I)
-            deprecated_html = ''
-            if dep_match:
-                dep_text = dep_match.group(0).strip()
-                # remove the deprecation note from the description to avoid duplication
-                desc_text = desc_text.replace(dep_match.group(0), '').strip()
-                deprecated_html = f' <span class="deprecated-tag">{html.escape(dep_text)}</span>'
-
-            version_html = f' <span class="version-tag">(since {item.get("ver", "")})</span>' if item.get('ver') else ''
-            desc_escaped = html.escape(desc_text)
-
-            row = f"""
-            <tr class="{item.get('cat','')}">
-                <td><a href="{url}" target="_blank">{item['kw']}</a></td>
-                <td>{desc_escaped}{deprecated_html}{version_html}</td>
-                <td><span class="{header_class}">{html.escape(item.get('head',''))}</span></td>
-                <td><code>{html.escape(item.get('code',''))}</code></td>
-            </tr>
-            """
-            rows.append(row)
-            
-    return f"""
-    <h2>{section['section']}</h2>
-    <table>
-        <thead>
-            <tr>
-                <th style="width: 15%;">Keyword</th>
-                <th style="width: 30%;">Description & Version</th>
-                <th style="width: 15%;">Header</th>
-                <th style="width: 40%;">Snippet</th>
-            </tr>
-        </thead>
-        <tbody>
-            {"".join(rows)}
-        </tbody>
-    </table>
-    """
+    return render_section_table(
+        section,
+        build_doc_url,
+        item_header="Keyword",
+        context_header="Header",
+        col_widths=("15%", "30%", "15%", "40%"),
+        deprecated_class="deprecated-tag",
+    )
 
 def main():
-    content_blocks = []
-    for section in KEYWORDS_DATA:
-        if section.get('is_advanced'):
-            content_blocks.append('<div class="separator"><span>Advanced & Modern</span></div>')
-        content_blocks.append(generate_table(section))
-    content_html = "".join(content_blocks)
+    content_html = build_content_html(KEYWORDS_DATA, generate_table, 'Advanced & Modern')
     title = 'C++ Polyglot Dev Atlas'
     legend_html = '''<div class="legend-row">
                 <div class="legend-item"><div class="color-box type"></div> Data Types</div>
@@ -313,16 +280,8 @@ def main():
                 <div class="legend-item"><div class="color-box system"></div> System / Coroutines</div>
         </div>'''
 
-    tpl_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'sheet_template.html'))
-    with open(tpl_path, 'r', encoding='utf-8') as tplf:
-        tpl = tplf.read()
-    final_html = tpl.replace('__TITLE__', title).replace('__LEGEND__', legend_html).replace('__CONTENT__', content_html)
-
-    out_dir = os.path.dirname(__file__)
-    out_path = os.path.join(out_dir, 'cpp_cheat_sheet.html')
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write(final_html)
-    print(f"Successfully generated {out_path}")
+    final_html = render_sheet_html(__file__, title, legend_html, content_html)
+    write_sheet_output(__file__, 'cpp_cheat_sheet.html', final_html)
 
 if __name__ == '__main__':
     main()

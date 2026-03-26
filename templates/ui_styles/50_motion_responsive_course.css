@@ -1,0 +1,482 @@
+    @keyframes compareStateOff {
+        0%, 44% { opacity: 1; }
+        50%, 100% { opacity: 0; }
+    }
+
+    @keyframes compareStateOn {
+        0%, 44% { opacity: 0; }
+        50%, 100% { opacity: 1; }
+    }
+
+    @keyframes movingChipGuideRight {
+        0%, 100% { transform: translateX(0); }
+        50% {
+            transform: translateX(14px);
+            background: var(--chip-active2-bg);
+            color: var(--chip-active2-fg);
+        }
+    }
+
+    @keyframes movingChipGuideLeft {
+        0%, 100% { transform: translateX(0); }
+        50% {
+            transform: translateX(-14px);
+            background: var(--chip-active-bg);
+            color: var(--chip-active-fg);
+        }
+    }
+
+    @keyframes panelLabelOld {
+        0%, 48% { opacity: 1; transform: translateX(0); }
+        62%, 100% { opacity: 0; transform: translateX(-8px); }
+    }
+
+    @keyframes panelLabelNew {
+        0%, 48% { opacity: 0; transform: translateX(8px); }
+        62%, 100% { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes panelLabelOldLeft {
+        0%, 48% { opacity: 1; transform: translateX(0); }
+        62%, 100% { opacity: 0; transform: translateX(8px); }
+    }
+
+    @keyframes panelLabelNewLeft {
+        0%, 48% { opacity: 0; transform: translateX(-8px); }
+        62%, 100% { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes swapSideLabelOld {
+        0%, 56% { opacity: 1; transform: translateY(0); }
+        72%, 100% { opacity: 0; transform: translateY(-6px); }
+    }
+
+    @keyframes swapSideLabelNew {
+        0%, 56% { opacity: 0; transform: translateY(6px); }
+        72%, 100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes chipDisplaceRight {
+        0%, 42% { background: var(--chip-active2-bg); color: var(--chip-active2-fg); }
+        56%, 100% { background: color-mix(in srgb, var(--panel-title-bg) 74%, transparent); color: var(--panel-title-fg); }
+    }
+
+    @keyframes chipDisplaceLeft {
+        0%, 42% { background: var(--chip-active-bg); color: var(--chip-active-fg); }
+        56%, 100% { background: color-mix(in srgb, var(--panel-title-bg) 74%, transparent); color: var(--panel-title-fg); }
+    }
+
+    @keyframes selectionSwapAppear {
+        0%, 44% { opacity: 0; }
+        50%, 100% { opacity: 1; }
+    }
+
+    @keyframes swapBtnClick {
+        0%, 55% { transform: scale(1); background: color-mix(in srgb, var(--panel-title-bg) 78%, transparent); color: var(--panel-title-fg); box-shadow: none; }
+        60% { transform: scale(0.84); background: var(--chip-active-bg); color: var(--chip-active-fg); box-shadow: 0 0 0 8px color-mix(in srgb, var(--chip-active-bg) 45%, transparent); }
+        68%, 100% { transform: scale(1); background: color-mix(in srgb, var(--panel-title-bg) 78%, transparent); color: var(--panel-title-fg); box-shadow: none; }
+    }
+
+    @keyframes viewsetLabelFlashAtlas {
+        0%, 33% {
+            background: var(--chip-active-bg);
+            color: var(--chip-active-fg);
+            border-color: color-mix(in srgb, var(--chip-active-bg) 70%, #000000 8%);
+        }
+        37%, 43% {
+            background: var(--chip-active2-bg);
+            color: var(--chip-active2-fg);
+            border-color: color-mix(in srgb, var(--chip-active2-bg) 70%, #000000 8%);
+        }
+        47%, 100% {
+            background: var(--chip-active-bg);
+            color: var(--chip-active-fg);
+            border-color: color-mix(in srgb, var(--chip-active-bg) 70%, #000000 8%);
+        }
+    }
+
+    @keyframes viewsetLabelFlashLearning {
+        0%, 84% {
+            background: var(--chip-active-bg);
+            color: var(--chip-active-fg);
+            border-color: color-mix(in srgb, var(--chip-active-bg) 70%, #000000 8%);
+        }
+        88%, 94% {
+            background: var(--chip-active2-bg);
+            color: var(--chip-active2-fg);
+            border-color: color-mix(in srgb, var(--chip-active2-bg) 70%, #000000 8%);
+        }
+        97%, 100% {
+            background: var(--chip-active-bg);
+            color: var(--chip-active-fg);
+            border-color: color-mix(in srgb, var(--chip-active-bg) 70%, #000000 8%);
+        }
+    }
+
+    .usage-viewset-demo {
+        position: relative;
+        overflow: hidden;
+        min-height: 130px;
+    }
+
+    .usage-viewset-state {
+        position: absolute;
+        inset: 8px;
+        display: grid;
+        gap: 6px;
+        align-content: start;
+        opacity: 0;
+    }
+
+    .usage-viewset-state.state-atlas {
+        animation: compareStateOff 4.2s ease-in-out infinite;
+    }
+
+    .usage-viewset-state.state-learning {
+        animation: compareStateOn 4.2s ease-in-out infinite;
+    }
+
+    .viewset-tag {
+        display: inline-flex;
+        width: fit-content;
+        border-radius: 999px;
+        padding: 4px 9px;
+        font-size: 0.78rem;
+        font-weight: 800;
+    }
+
+    .viewset-tag.atlas {
+        background: var(--chip-active-bg);
+        color: var(--chip-active-fg);
+    }
+
+    .viewset-tag.learning {
+        background: var(--chip-active2-bg);
+        color: var(--chip-active2-fg);
+    }
+
+    .viewset-view-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        align-items: center;
+    }
+
+    .viewset-stage-label {
+        display: inline-flex;
+        width: fit-content;
+        border-radius: 999px;
+        padding: 4px 8px;
+        font-size: 0.74rem;
+        font-weight: 800;
+        border: 1px solid color-mix(in srgb, var(--chip-active-bg) 70%, #000000 8%);
+        background: var(--chip-active-bg);
+        color: var(--chip-active-fg);
+    }
+
+    .viewset-stage-label.atlas {
+        animation: viewsetLabelFlashAtlas 4.2s ease-in-out infinite;
+    }
+
+    .viewset-stage-label.learning {
+        animation: viewsetLabelFlashLearning 4.2s ease-in-out infinite;
+    }
+
+    .viewset-view-chip {
+        font-size: 0.72rem;
+        padding: 2px 7px;
+        border-radius: 5px;
+        background: color-mix(in srgb, var(--card-bg) 80%, transparent);
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 60%, transparent);
+        color: var(--sheet-td-fg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .usage-step-number,
+        .usage-chip.is-moving-left,
+        .usage-chip.is-moving-right,
+        .target-right .usage-chip.is-right,
+        .target-left .usage-chip.is-left,
+        .usage-panel-dynamic .label-old,
+        .usage-panel-dynamic .label-new,
+        .swap-btn,
+        .swap-side .swap-label-old,
+        .swap-side .swap-label-new,
+        .viewset-stage-label.atlas,
+        .viewset-stage-label.learning,
+        .usage-compare-state.state-off,
+        .usage-compare-state.state-on,
+        .usage-viewset-state.state-atlas,
+        .usage-viewset-state.state-learning {
+            animation: none !important;
+        }
+
+        .usage-compare-state.state-off,
+        .usage-viewset-state.state-atlas {
+            opacity: 1;
+        }
+
+        .usage-compare-state.state-on,
+        .usage-viewset-state.state-learning,
+        .usage-panel-dynamic .label-new {
+            opacity: 0;
+        }
+    }
+
+    .lang-feature-grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        margin-bottom: 8px;
+    }
+
+    .lang-feature-card {
+        border: 1px solid var(--panel-title-border);
+        border-radius: 10px;
+        padding: 12px;
+        background: color-mix(in srgb, var(--card-bg) 92%, var(--panel-title-bg) 8%);
+        box-shadow: var(--meta-shadow);
+    }
+
+    .lang-feature-lang {
+        margin: 0 0 8px;
+        color: var(--panel-title-fg);
+        font-size: var(--title-main-size);
+        font-weight: var(--title-main-weight);
+        letter-spacing: var(--title-letter-spacing);
+        line-height: 1.3;
+    }
+
+    .lang-feature-intro {
+        margin: 0 0 10px;
+        color: var(--sheet-td-fg);
+        line-height: 1.5;
+    }
+
+    .lang-feature-section {
+        margin-top: 8px;
+    }
+
+    .lang-feature-heading {
+        margin: 0 0 6px;
+        color: var(--sheet-title-fg);
+        font-size: var(--title-sub-size);
+        font-weight: var(--title-sub-weight);
+        letter-spacing: var(--title-letter-spacing);
+        line-height: 1.3;
+    }
+
+    .lang-feature-section ul {
+        margin: 0 0 6px 18px;
+    }
+
+    .lang-feature-snippet {
+        margin-top: 10px;
+        padding: 8px 9px;
+        border: 1px solid color-mix(in srgb, var(--panel-title-border) 70%, transparent);
+        border-radius: 8px;
+        background: color-mix(in srgb, var(--panel-title-bg) 38%, transparent);
+    }
+
+    .lang-feature-snippet p {
+        margin: 0 0 8px;
+        color: var(--sheet-muted-fg);
+    }
+
+    .doc-table-wrap + h2 {
+        margin-top: 30px;
+    }
+
+    .doc-table-wrap + h2 + p strong {
+        font-weight: 700;
+        color: var(--sheet-title-fg);
+        background: color-mix(in srgb, var(--chip-active-bg) 22%, transparent);
+        border-radius: 4px;
+        padding: 0 4px;
+    }
+
+    .home-code-block {
+        border-radius: 8px;
+        margin-top: 4px;
+        max-height: 280px;
+        white-space: pre-wrap;
+    }
+
+    .doc-table-wrap {
+        overflow-x: auto;
+        margin: 12px 0 16px;
+    }
+
+    .doc-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: auto;
+        background: var(--sheet-table-bg);
+        box-shadow: var(--sheet-table-shadow);
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .doc-table th,
+    .doc-table td {
+        border-bottom: 1px solid var(--sheet-td-border);
+        padding: 10px 12px;
+        text-align: left;
+        vertical-align: top;
+        color: var(--sheet-td-fg);
+        font-size: 0.92em;
+    }
+
+    .doc-table th {
+        background: var(--sheet-th-bg);
+        color: var(--sheet-th-fg);
+        text-transform: none;
+        font-size: 0.9em;
+    }
+
+    code.no-equiv {
+        background: rgba(200, 30, 40, 0.12);
+        color: #c41e3a;
+        font-weight: 700;
+        font-size: 1em;
+        border: 1px solid rgba(200, 30, 40, 0.30);
+        border-radius: 4px;
+        padding: 1px 6px;
+    }
+
+    .partial-label {
+        display: inline-block;
+        color: #a85e00;
+        font-weight: 700;
+        font-style: italic;
+        font-size: 0.82em;
+        background: rgba(200, 120, 0, 0.12);
+        border: 1px solid rgba(200, 120, 0, 0.30);
+        border-radius: 4px;
+        padding: 1px 5px;
+        margin-right: 4px;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .legend-row {
+        top: var(--sticky-offset) !important;
+    }
+
+    @media (max-width: 1160px) {
+        .display-grid.compare {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 860px) {
+        .chip-btn {
+            padding: 7px 10px;
+            font-size: 0.85rem;
+        }
+
+        .palette-preview-btn {
+            width: 34px;
+            height: 34px;
+        }
+
+        .palette-previews {
+            max-width: min(62vw, 320px);
+        }
+
+        .catalog-layout {
+            flex-direction: column;
+        }
+
+        .catalog-sidebar {
+            position: static;
+            width: 100%;
+            flex: 0 0 auto;
+            max-height: 220px;
+        }
+
+        .sidebar-expand-btn {
+            position: static;
+            width: 100%;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .catalog-main {
+            width: 100%;
+        }
+
+        .main-content {
+            padding: 10px;
+        }
+
+        .panel-body {
+            padding: 10px;
+        }
+    }
+
+    /* -- Course mode: level panel (inside sidebar, above topic list) -- */
+    .course-level-panel {
+        flex: 0 0 auto;
+        border-bottom: 2px solid var(--chip-active-bg);
+    }
+
+    .course-level-item {
+        font-size: 0.83rem;
+        padding: 7px 12px;
+    }
+
+    /* -- Course mode: nav header (above content area) -- */
+    .course-nav-header {
+        background: var(--card-bg);
+        border: 1px solid var(--panel-title-border);
+        border-left: 3px solid var(--chip-active-bg);
+        border-radius: 8px;
+        padding: 10px 14px 8px;
+        margin-bottom: 10px;
+    }
+
+    .course-nav-bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .course-nav-btn {
+        flex: 0 0 auto;
+        border: 1px solid var(--panel-title-border);
+        background: var(--panel-title-bg);
+        color: var(--panel-title-fg);
+        cursor: pointer;
+        font-size: 0.85rem;
+        padding: 4px 14px;
+        border-radius: 5px;
+        font-weight: 600;
+        transition: background 0.1s ease;
+    }
+
+    .course-nav-btn:hover:not(:disabled) {
+        background: var(--panel-title-hover-bg);
+    }
+
+    .course-nav-btn:disabled {
+        opacity: 0.3;
+        cursor: default;
+    }
+
+    .course-nav-title {
+        flex: 1 1 auto;
+        text-align: center;
+        font-weight: 700;
+        font-size: calc(0.95rem * 1.5);
+        color: var(--panel-title-active-fg);
+        letter-spacing: 0.02em;
+    }
+
+    .course-nav-desc {
+        margin: 6px 0 0;
+        font-size: 0.83rem;
+        color: var(--sheet-muted-fg);
+        line-height: 1.5;
+    }

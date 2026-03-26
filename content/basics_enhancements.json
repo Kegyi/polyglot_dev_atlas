@@ -1,0 +1,101 @@
+{
+  "nullable_optional_values": {
+    "adapterInsight": {
+      "title": "Null / Optional Rosetta",
+      "headers": [
+        "Language",
+        "Null Token",
+        "Preferred Optional",
+        "Mini Pattern"
+      ],
+      "rows": [
+        [
+          "C++",
+          "nullptr",
+          "std::optional<T>",
+          "std::optional<int> age = std::nullopt;"
+        ],
+        [
+          "Python",
+          "None",
+          "None + typing.Optional",
+          "age: int | None = None"
+        ],
+        [
+          "Go",
+          "nil",
+          "(T, error) / nil pointer",
+          "var p *User = nil"
+        ],
+        [
+          "TypeScript",
+          "null / undefined",
+          "union types",
+          "let age: number | null = null"
+        ],
+        [
+          "Scala",
+          "null (interop)",
+          "Option[T] (Some/None)",
+          "val age: Option[Int] = None"
+        ]
+      ]
+    }
+  },
+  "type_system_comparison": {
+    "label": "type_system_comparison",
+    "description": "Type system snapshot across languages used in this atlas.",
+    "adapterInsight": "Use this as a context switch cheat: nominal vs structural typing, and static vs dynamic guarantees, changes how you design APIs and tests.",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "// C++: static + nominal + compile-time evaluation\nconstexpr int a = 2;      // compile-time constant\nstruct UserId { int v; }; // nominal wrapper type\n// UserId is not interchangeable with int by default",
+      "python": "# Python: dynamic duck typing (hints are optional)\ndef twice(x):\n    return x * 2           # works for int, str, list, ...\nname: str = \"Ada\"        # type hint for tools, not hard runtime enforcement",
+      "go": "// Go: static + structural interfaces\ntype Reader interface { Read([]byte) (int, error) }\ntype File struct{}\nfunc (File) Read([]byte) (int, error) { return 0, nil } // File satisfies Reader implicitly",
+      "typescript": "// TypeScript: static structural types, JS runtime\ntype HasId = { id: number }\nconst u = { id: 1, name: \"Ada\" }\nconst x: HasId = u         // allowed by structure (extra fields are fine)",
+      "scala2": "// Scala 2: static strong typing with inference + implicits\nval n = 2                  // inferred Int\ntrait Show[T] { def show(v: T): String }\nimplicit val showInt: Show[Int] = (v: Int) => v.toString",
+      "scala3": "// Scala 3: static strong typing with givens/using\nval n = 2                  // inferred Int\ntrait Show[T]:\n  def show(v: T): String\ngiven Show[Int] with\n  def show(v: Int): String = v.toString"
+    }
+  },
+  "scala_migration": {
+    "label": "scala_migration",
+    "description": "Scala 2 to Scala 3 bridge: the most visible syntax and abstraction shifts.",
+    "adapterInsight": "Treat Scala 3 as an ergonomic evolution: same core FP/OOP model, but cleaner syntax and clearer contextual abstractions.",
+    "sourceLinks": [],
+    "codes": {
+      "scala2": "implicit val ec: ExecutionContext = ExecutionContext.global\n\ntrait Repo(name: String)\n\nval x = {\n  val a = 1\n  a + 1\n}",
+      "scala3": "given ExecutionContext = ExecutionContext.global\n\ntrait Repo(name: String)\n\nval x =\n  val a = 1\n  a + 1",
+      "cpp": "Bridge note: this entry focuses on Scala 2 -> 3 migration only.",
+      "python": "Bridge note: this entry focuses on Scala 2 -> 3 migration only.",
+      "go": "Bridge note: this entry focuses on Scala 2 -> 3 migration only.",
+      "typescript": "Bridge note: this entry focuses on Scala 2 -> 3 migration only."
+    }
+  },
+  "project_lifecycle": {
+    "label": "project_lifecycle",
+    "description": "Project structure, build system, and main entry points across languages.",
+    "adapterInsight": "Every language has a different philosophy: C++ is modular; Go is simplicity; Python is flexibility; TypeScript mirrors Node conventions; Scala bridges JVM tooling.",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "// CMakeLists.txt\ncmake_minimum_required(VERSION 3.15)\nproject(MyApp)\nadd_executable(main src/main.cpp)\n\n// src/main.cpp\nint main() { return 0; }\n\n// Build: mkdir build && cd build && cmake .. && make",
+      "python": "# pyproject.toml (modern PEP 517)\n[project]\nname = \"my_app\"\nversion = \"0.1.0\"\n\n# main.py\nif __name__ == \"__main__\":\n    print(\"Hello\")\n\n# Run: python main.py",
+      "go": "// go.mod\nmodule example.com/my_app\n\ngo 1.21\n\n// main.go\npackage main\n\nfunc main() {\n    println(\"Hello\")\n}\n\n// Run: go run main.go",
+      "typescript": "// package.json\n{\n  \"name\": \"my_app\",\n  \"type\": \"module\",\n  \"main\": \"dist/index.js\"\n}\n\n// tsconfig.json\n{ \"compilerOptions\": { \"target\": \"ES2020\" } }\n\n// index.ts\nconsole.log(\"Hello\")",
+      "scala2": "// build.sbt\nname := \"my_app\"\nversion := \"0.1.0\"\nscalaVersion := \"2.13.12\"\n\n// src/main/scala/Main.scala\nobject Main {\n  def main(args: Array[String]): Unit = println(\"Hello\")\n}",
+      "scala3": "// build.sbt\nname := \"my_app\"\nversion := \"0.1.0\"\nscalaVersion := \"3.3.0\"\n\n// src/main/scala/Main.scala\n@main def hello(): Unit = println(\"Hello\")"
+    }
+  },
+  "collection_mappings": {
+    "label": "collection_mappings",
+    "description": "Equivalent collection types across languages: the Rosetta Stone for data structures.",
+    "adapterInsight": "Use this table to quickly find the right data structure in your target language. Performance characteristics vary: dynamic arrays are fast for append; linked lists are fast for insertion; hash maps prioritize lookup speed.",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "// Common patterns\nstd::vector<int> v{1, 2, 3};\nstd::unordered_map<std::string, int> m{{\"a\", 1}};\nstd::set<int> s{3, 1, 2};\nstd::list<int> lst{1, 2, 3};\nstd::array<int, 3> arr{1, 2, 3};",
+      "python": "# Common patterns\nv = [1, 2, 3]\nm = {\"a\": 1}\ns = {3, 1, 2}\nfrom collections import deque\nq = deque([1, 2, 3])\narr = (1, 2, 3)  # immutable",
+      "go": "// Common patterns\nv := []int{1, 2, 3}\nm := map[string]int{\"a\": 1}\ns := map[int]struct{}{1: {}, 2: {}}\n// container/list for linked list\nimport \"container/list\"\nq := list.New()",
+      "typescript": "// Common patterns\nconst v: number[] = [1, 2, 3]\nconst m: Record<string, number> = { a: 1 }\nconst s = new Set<number>([1, 2, 3])\nconst tuple: [number, string] = [1, \"x\"]\n// Immutable: readonly number[]",
+      "scala2": "// Common patterns\nval v = Vector(1, 2, 3)\nval m = Map(\"a\" -> 1)\nval s = Set(3, 1, 2)\nval l = List(1, 2, 3)\nval q = scala.collection.immutable.Queue(1, 2, 3)",
+      "scala3": "// Common patterns\nval v = Vector(1, 2, 3)\nval m = Map(\"a\" -> 1)\nval s = Set(3, 1, 2)\nval l = List(1, 2, 3)"
+    }
+  }
+}

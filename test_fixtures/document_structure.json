@@ -1,0 +1,14 @@
+{
+  "requiredSubstrings": [
+    "<title>Polyglot Dev Atlas</title>",
+    "id=\"langNav\"",
+    "id=\"contentHost\"",
+    "id=\"compareToggle\"",
+    "id=\"runtimeWarning\""
+  ],
+  "orderedSubstrings": [
+    "id=\"langNav\"",
+    "id=\"contentHost\"",
+    "console.log('x');"
+  ]
+}

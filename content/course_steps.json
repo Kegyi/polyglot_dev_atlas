@@ -1,0 +1,177 @@
+{
+  "step_1_memory_layout": {
+    "label": "Step 1: Memory Layout & References",
+    "description": "Understand how languages represent objects in memory and expose references/pointers differently.",
+    "compareEntries": [
+      "classes_and_objects"
+    ],
+    "adapterInsight": "Notice how C++ requires explicit `new`/`delete` or smart pointers, Go uses value semantics by default with optional pointers, and Python hides allocation entirely. TypeScript inherits from JavaScript's garbage collection.",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "// Common baseline\nint stack = 7;\nint* p = &stack;                  // explicit address/reference\nstd::unique_ptr<int> sp = std::make_unique<int>(42);\n\n// Additional ownership models\nint* raw = new int(10);           // manual ownership\ndelete raw;\nstd::shared_ptr<int> shared = std::make_shared<int>(9);\n\n// Additional memory-layout cues\nstruct Node { int x; double y; };\nNode n{1, 2.0};                   // value on stack by default",
+      "python": "# Common baseline\nx = [1, 2, 3]\ny = x                             # same object reference\ny.append(4)\n\n# Additional identity/reference cues\na = {\"v\": 1}\nb = dict(a)                       # shallow copy\nassert a is not b                 # different object identity\n\n# Additional mutability cues\ncoords = (1, 2)                   # immutable tuple\nitems = [1, 2]                    # mutable list",
+      "go": "// Common baseline\nv := 7\np := &v                           // pointer to value\n*p = 9\n\n// Additional value vs reference-like behavior\ntype User struct { Score int }\nu := User{Score: 1}               // copied by value\nup := &u; up.Score = 2            // mutate through pointer\n\n// Additional allocation cues\nb := make([]int, 0, 4)            // runtime-managed backing array",
+      "typescript": "// Common baseline\nconst user = { score: 1 }\nconst alias = user                 // same object reference\nalias.score = 2\n\n// Additional primitive vs object behavior\nlet a = 1; let b = a; b = 2        // primitive copy\nconst left = { v: 1 }\nconst right = { ...left }          // shallow copy object\n\n// Additional mutability cues\nconst arr = [1, 2]; arr.push(3)    // mutable object via const binding",
+      "scala2": "// Common baseline\nval a = List(1, 2, 3)\nval b = a                           // same immutable value\n\n// Additional immutability/mutability split\nval im = Vector(1, 2, 3)\nval im2 = im :+ 4                   // returns new value\nval mut = scala.collection.mutable.ArrayBuffer(1, 2)\nmut += 3\n\n// Additional reference cue\ncase class Box(var x: Int)",
+      "scala3": "// Common baseline\nval a = List(1, 2, 3)\nval b = a                           // same immutable value\n\n// Additional immutability/mutability split\nval im = Vector(1, 2, 3)\nval im2 = im :+ 4                   // returns new value\nval mut = scala.collection.mutable.ArrayBuffer(1, 2)\nmut += 3\n\n// Additional reference cue\ncase class Box(var x: Int)"
+    }
+  },
+  "step_2_collections_generics": {
+    "label": "Step 2: Collections & Generics",
+    "description": "Learn how each language optimizes arrays, maps, and expresses generic (parameterized) types.",
+    "compareEntries": [
+      "arrays_and_collections",
+      "maps_and_sets",
+      "iterator"
+    ],
+    "adapterInsight": "Compare C++ templates vs Python's duck typing vs TypeScript's generics. See how Go's `interface{}` differs from Java's `Object`-based erasure. Scala uses type classes for ad-hoc polymorphism. Trade-off lens: ordered/tree containers give stable order and typically O(log n) updates; unordered/hash containers prioritize average O(1) lookup; queue/stack families optimize access pattern (FIFO/LIFO) over random access.",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "// Common baseline\nstd::vector<int> nums{1, 2, 3};\nstd::unordered_map<std::string, int> freq{{\"a\", 1}};\ntemplate <typename T> T first(const std::vector<T>& v) { return v[0]; }\n\n// Ordered / tree-based\nstd::map<std::string, int> ordered;\nstd::set<int> uniq{3, 1, 2};\n\n// Unordered / hash-based\nstd::unordered_map<std::string, int> fastFreq;\nstd::unordered_set<int> fastSet{1, 2, 3};\n\n// Queue / stack / sequence extras\nstd::array<int, 3> fixed{1, 2, 3};\nstd::list<int> linked{1, 2, 3};\nstd::queue<int> q; q.push(10);\nstd::stack<int> st; st.push(42);",
+      "python": "# Common baseline\nnums: list[int] = [1, 2, 3]\nfreq: dict[str, int] = {\"a\": 1}\ndef first(v): return v[0]\n\n# Ordered-ish / sorted usage\nrecords = [{\"k\": 2}, {\"k\": 1}]\nrecords_sorted = sorted(records, key=lambda x: x[\"k\"])\n\n# Unordered / hash-based\nunique = {1, 2, 3}\nindex = {\"alice\": 0, \"bob\": 1}\n\n# Queue / stack / utility containers\nfrom collections import deque, Counter, defaultdict\nq = deque([1, 2, 3])\nstack = [1, 2, 3]; stack.append(4); stack.pop()\ncnt = Counter([\"a\", \"b\", \"a\"])\ngroups = defaultdict(list)",
+      "go": "// Common baseline\nnums := []int{1, 2, 3}\nfreq := map[string]int{\"a\": 1}\nfunc First[T any](v []T) T { return v[0] }\n\n// Ordered / sorted view\nkeys := []string{\"b\", \"a\"}\nsort.Strings(keys) // iterate maps in sorted key order\n\n// Unordered / hash-based\nset := map[int]struct{}{1: {}, 2: {}}\nindex := map[string]int{\"alice\": 0}\n\n// Queue / stack / fixed-size\narr := [3]int{1, 2, 3}\nq := []int{}; q = append(q, 10); q = q[1:]\nst := []int{}; st = append(st, 42); st = st[:len(st)-1]",
+      "typescript": "// Common baseline\nconst nums: number[] = [1, 2, 3]\nconst freq: Record<string, number> = { a: 1 }\nfunction first<T>(v: T[]): T { return v[0] }\n\n// Ordered / insertion-ordered maps\nconst ordered = new Map<string, number>()\nordered.set(\"b\", 2); ordered.set(\"a\", 1)\n\n// Unordered/hash-like object index\nconst index: Record<string, number> = { alice: 0, bob: 1 }\nconst unique = new Set<number>([1, 2, 3])\n\n// Queue / stack / tuple extras\nconst tuple: [number, string] = [1, \"x\"]\nconst queue: number[] = []; queue.push(1); queue.shift()\nconst stack: number[] = []; stack.push(1); stack.pop()",
+      "scala2": "// Common baseline\nval nums: Vector[Int] = Vector(1, 2, 3)\nval freq: Map[String, Int] = Map(\"a\" -> 1)\ndef first[T](v: Vector[T]): T = v.head\n\n// Ordered / sorted\nval sortedMap = scala.collection.immutable.SortedMap(\"b\" -> 2, \"a\" -> 1)\nval sortedSet = scala.collection.immutable.SortedSet(3, 1, 2)\n\n// Hash-based defaults\nval hashMap = scala.collection.immutable.HashMap(\"a\" -> 1)\nval hashSet = scala.collection.immutable.HashSet(1, 2, 3)\n\n// Queue / stack / sequence extras\nval linked: List[Int] = List(1, 2, 3)\nval queue = scala.collection.immutable.Queue(1, 2, 3)\nval arr: Array[Int] = Array(1, 2, 3)",
+      "scala3": "// Common baseline\nval nums: Vector[Int] = Vector(1, 2, 3)\nval freq: Map[String, Int] = Map(\"a\" -> 1)\ndef first[T](v: Vector[T]): T = v.head\n\n// Ordered / sorted\nval sortedMap = scala.collection.immutable.SortedMap(\"b\" -> 2, \"a\" -> 1)\nval sortedSet = scala.collection.immutable.SortedSet(3, 1, 2)\n\n// Hash-based defaults\nval hashMap = scala.collection.immutable.HashMap(\"a\" -> 1)\nval hashSet = scala.collection.immutable.HashSet(1, 2, 3)\n\n// Queue / stack / sequence extras\nval linked: List[Int] = List(1, 2, 3)\nval queue = scala.collection.immutable.Queue(1, 2, 3)\nval arr: Array[Int] = Array(1, 2, 3)"
+    }
+  },
+  "step_3_function_paradigm": {
+    "label": "Step 3: The Function Paradigm",
+    "description": "Learn how languages treat functions: as first-class values, callable objects, or structured procedures.",
+    "compareEntries": [
+      "functions_and_errors",
+      "strategy"
+    ],
+    "adapterInsight": "In Scala and TypeScript, functions are first-class. In C++, use `std::function`. In Go, functions are values passed as interface{}. Understand closures and how each captures environment.",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "// Common baseline\nint offset = 2;\nstd::function<int(int)> add = [offset](int x) { return x + offset; };\nint y = add(5);\n\n// Additional higher-order use\nauto apply = [](int v, const std::function<int(int)>& f) { return f(v); };\nint z = apply(10, add);\n\n// Additional strategy-style dispatch\nstd::function<int(int, int)> op = [](int a, int b) { return a + b; };",
+      "python": "# Common baseline\noffset = 2\nadd = lambda x: x + offset\ny = add(5)\n\n# Additional higher-order use\ndef apply(v, f):\n    return f(v)\nz = apply(10, add)\n\n# Additional strategy-style dispatch\nops = {\"add\": lambda a, b: a + b, \"mul\": lambda a, b: a * b}",
+      "go": "// Common baseline\noffset := 2\nadd := func(x int) int { return x + offset }\ny := add(5)\n\n// Additional higher-order use\napply := func(v int, f func(int) int) int { return f(v) }\nz := apply(10, add)\n\n// Additional strategy-style dispatch\nops := map[string]func(int, int) int{\"add\": func(a, b int) int { return a + b }}",
+      "typescript": "// Common baseline\nconst offset = 2\nconst add = (x: number) => x + offset\nconst y = add(5)\n\n// Additional higher-order use\nconst apply = (v: number, f: (n: number) => number) => f(v)\nconst z = apply(10, add)\n\n// Additional strategy-style dispatch\nconst ops: Record<string, (a: number, b: number) => number> = { add: (a, b) => a + b }",
+      "scala2": "// Common baseline\nval offset = 2\nval add: Int => Int = x => x + offset\nval y = add(5)\n\n// Additional higher-order use\ndef apply(v: Int, f: Int => Int): Int = f(v)\nval z = apply(10, add)\n\n// Additional strategy-style dispatch\nval ops: Map[String, (Int, Int) => Int] = Map(\"add\" -> ((a, b) => a + b))",
+      "scala3": "// Common baseline\nval offset = 2\nval add: Int => Int = x => x + offset\nval y = add(5)\n\n// Additional higher-order use\ndef apply(v: Int, f: Int => Int): Int = f(v)\nval z = apply(10, add)\n\n// Additional strategy-style dispatch\nval ops: Map[String, (Int, Int) => Int] = Map(\"add\" -> ((a, b) => a + b))"
+    }
+  },
+  "step_4_error_philosophies": {
+    "label": "Step 4: Error Philosophies",
+    "description": "Compare how languages handle errors: exceptions, error returns, type-driven approaches, or panics.",
+    "compareEntries": [
+      "exceptions_and_recovery"
+    ],
+    "adapterInsight": "Go and C++23 treat errors as values. Python, TypeScript, and Scala 2 use exceptions. Scala 3 uses Option/Either for type-safe error handling. Pick the right pattern for your context.",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "// Common baseline (value-style)\nstd::optional<int> parse(std::string s) { /* ... */ }\nauto v = parse(\"42\");\nif (!v) { /* handle missing/error */ }\n\n// Additional exception-style\ntry {\n    int n = std::stoi(\"bad\");\n} catch (const std::exception& ex) {\n    /* handle */\n}",
+      "python": "# Common baseline (exception-style)\ntry:\n    v = int(text)\nexcept ValueError:\n    v = None\n\n# Additional value-style fallback\ndef parse_int(s: str) -> int | None:\n    return int(s) if s.isdigit() else None",
+      "go": "// Common baseline (error return)\nv, err := strconv.Atoi(text)\nif err != nil {\n    // handle error path\n}\n\n// Additional panic/recover boundary (rare)\nfunc safeRun(fn func()) (err error) {\n    defer func() { if r := recover(); r != nil { err = fmt.Errorf(\"panic: %v\", r) } }()\n    fn(); return nil\n}",
+      "typescript": "// Common baseline (union result)\nfunction parse(text: string): number | null {\n  const n = Number(text)\n  return Number.isNaN(n) ? null : n\n}\n\n// Additional exception-style\ntry {\n  const n = JSON.parse(payload)\n} catch (e) {\n  // handle parse failure\n}",
+      "scala2": "// Common baseline (Try/Option)\nval parsed = scala.util.Try(text.toInt).toOption\nparsed.getOrElse(0)\n\n// Additional Either modeling\nval e: Either[String, Int] = parsed.toRight(\"invalid\")",
+      "scala3": "// Common baseline (Either)\nval parsed: Either[String, Int] =\n  text.toIntOption.toRight(\"invalid int\")\n\n// Additional exception bridge\nimport scala.util.Try\nval t = Try(text.toInt).toEither.left.map(_.getMessage)"
+    }
+  },
+  "step_5_type_system_interfaces": {
+    "label": "Step 5: Type System & Interfaces",
+    "description": "Understand how each language defines contracts between types: nominal vs structural typing, traits, interfaces, and type classes.",
+    "compareEntries": [
+      "interfaces_and_polymorphism",
+      "type_system_comparison"
+    ],
+    "adapterInsight": "C++ uses virtual dispatch (nominal) and concepts (structural, compile-time). Go interfaces are structural — any type satisfying the method set qualifies implicitly. TypeScript is also structural. Scala uses traits with explicit `extends` (nominal) but type classes (`given`/`using`) for ad-hoc structural polymorphism. Python uses duck typing at runtime.",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "// Nominal + virtual dispatch\nstruct Animal { virtual std::string speak() const = 0; };\nstruct Dog : Animal { std::string speak() const override { return \"woof\"; } };\n\n// Structural / concepts (C++20)\ntemplate <typename T>\nconcept Speakable = requires(T t) { { t.speak() } -> std::convertible_to<std::string>; };\n\ntemplate <Speakable T> void greet(T& a) { std::cout << a.speak(); }",
+      "python": "# Duck typing — no declaration needed\nclass Dog:\n    def speak(self) -> str: return \"woof\"\n\ndef greet(animal) -> None:\n    print(animal.speak())   # works for anything with speak()\n\n# Structural hint with Protocol (Python 3.8+)\nfrom typing import Protocol\nclass Speakable(Protocol):\n    def speak(self) -> str: ...",
+      "go": "// Structural: implicit interface satisfaction\ntype Speakable interface { Speak() string }\n\ntype Dog struct{}\nfunc (Dog) Speak() string { return \"woof\" }\n\nfunc Greet(a Speakable) { fmt.Println(a.Speak()) }\n// Dog satisfies Speakable without 'implements' keyword",
+      "typescript": "// Structural: compatible shape satisfies the interface\ninterface Speakable { speak(): string }\n\nclass Dog { speak() { return 'woof' } }\n\nfunction greet(a: Speakable) { console.log(a.speak()) }\ngreet(new Dog())   // OK — shape matches\n\n// Generic constraint\nfunction first<T extends { id: number }>(arr: T[]): T { return arr[0] }",
+      "scala2": "// Nominal with traits\ntrait Speakable { def speak(): String }\nclass Dog extends Speakable { def speak() = \"woof\" }\n\n// Type class (ad-hoc polymorphism)\ntrait Show[A] { def show(a: A): String }\nimplicit val showDog: Show[Dog] = (d: Dog) => s\"Dog(${d.speak()})\"",
+      "scala3": "// Nominal with traits\ntrait Speakable:\n  def speak(): String\nclass Dog extends Speakable:\n  def speak() = \"woof\"\n\n// Type class with givens\ntrait Show[A]:\n  def show(a: A): String\ngiven Show[Dog] with\n  def show(d: Dog) = s\"Dog(${d.speak()})\""
+    }
+  },
+  "step_6_strings_pattern_matching": {
+    "label": "Step 6: Strings & Pattern Matching",
+    "description": "Explore string ergonomics and how each language expresses branching on values or structure — from switch/case to destructuring match expressions.",
+    "compareEntries": [
+      "strings",
+      "conditions"
+    ],
+    "adapterInsight": "C++ strings are mutable byte arrays; formatting requires `std::format` (C++20) or `snprintf`. Python and Go treat strings as immutable UTF-8 sequences. TypeScript template literals are concise. Scala/Kotlin pattern matching is exhaustive and works on case classes. Python 3.10+ `match` brings structural matching.",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "// String basics\nstd::string name = \"Alice\";\nstd::string greeting = \"Hello, \" + name + \"!\";\nstd::string upper = name; std::transform(upper.begin(), upper.end(), upper.begin(), ::toupper);\n\n// Pattern-style branching\nint code = 2;\nswitch (code) {\n  case 1: std::cout << \"one\"; break;\n  case 2: std::cout << \"two\"; break;\n  default: std::cout << \"other\"; break;\n}",
+      "python": "# String basics\nname = \"Alice\"\ngreeting = f\"Hello, {name}!\"\nupper = name.upper()\n\n# Pattern matching (Python 3.10+)\nmatch code:\n    case 1: print(\"one\")\n    case 2: print(\"two\")\n    case _: print(\"other\")\n\n# Structural match\nmatch point:\n    case (0, 0): print(\"origin\")\n    case (x, 0): print(f\"on x-axis at {x}\")",
+      "go": "// String basics\nname := \"Alice\"\ngreeting := fmt.Sprintf(\"Hello, %s!\", name)\nupper := strings.ToUpper(name)\n\n// Switch (no fallthrough by default)\nswitch code {\ncase 1: fmt.Println(\"one\")\ncase 2: fmt.Println(\"two\")\ndefault: fmt.Println(\"other\")\n}\n\n// Type switch\nswitch v := x.(type) {\ncase int: fmt.Println(\"int\", v)\ncase string: fmt.Println(\"string\", v)\n}",
+      "typescript": "// String basics\nconst name = 'Alice'\nconst greeting = `Hello, ${name}!`\nconst upper = name.toUpperCase()\n\n// Switch\nswitch (code) {\n  case 1: console.log('one'); break\n  case 2: console.log('two'); break\n  default: console.log('other')\n}\n\n// Discriminated union narrowing\ntype Shape = { kind: 'circle'; r: number } | { kind: 'rect'; w: number; h: number }\nfunction area(s: Shape) {\n  switch (s.kind) {\n    case 'circle': return Math.PI * s.r ** 2\n    case 'rect':   return s.w * s.h\n  }\n}",
+      "scala2": "// String basics\nval name = \"Alice\"\nval greeting = s\"Hello, $name!\"\nval upper = name.toUpperCase\n\n// Pattern match on values\ncode match {\n  case 1 => println(\"one\")\n  case 2 => println(\"two\")\n  case _ => println(\"other\")\n}\n\n// Structural + guard\npoint match {\n  case (0, 0)      => \"origin\"\n  case (x, 0)      => s\"x-axis $x\"\n  case (x, y) if x == y => \"diagonal\"\n}",
+      "scala3": "// String basics\nval name = \"Alice\"\nval greeting = s\"Hello, $name!\"\nval upper = name.toUpperCase\n\n// Pattern match on values\ncode match\n  case 1 => println(\"one\")\n  case 2 => println(\"two\")\n  case _ => println(\"other\")\n\n// Structural + guard\npoint match\n  case (0, 0)       => \"origin\"\n  case (x, 0)       => s\"x-axis $x\"\n  case (x, y) if x == y => \"diagonal\""
+    }
+  },
+  "step_7_concurrency_model": {
+    "label": "Step 7: Concurrency Model",
+    "description": "Compare the core concurrency primitives: OS threads, goroutines, async/await, and Futures/Promises.",
+    "compareEntries": [],
+    "adapterInsight": "C++ uses OS threads with mutexes/condition variables and `std::async` for task-based work. Go's goroutines are lightweight M:N user-space threads coordinated via channels. Python has the GIL: use `asyncio` for I/O concurrency or `multiprocessing` for CPU work. TypeScript/Node is single-threaded with an event loop — `async/await` suspends without blocking. Scala Futures run on an ExecutionContext (thread pool).",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "// Thread + mutex\nstd::mutex mu;\nstd::vector<int> results;\nstd::thread t([&]() {\n    std::lock_guard<std::mutex> lk(mu);\n    results.push_back(42);\n});\nt.join();\n\n// Task-based (async / future)\nstd::future<int> f = std::async(std::launch::async, []() { return 7; });\nint v = f.get();",
+      "python": "# asyncio — cooperative, single-threaded I/O concurrency\nimport asyncio\nasync def fetch(url: str) -> str:\n    await asyncio.sleep(0)   # yield control\n    return url\n\nasync def main():\n    results = await asyncio.gather(fetch(\"a\"), fetch(\"b\"))\n\n# Thread for CPU / blocking work\nfrom threading import Thread\nt = Thread(target=lambda: print(\"from thread\"))\nt.start(); t.join()",
+      "go": "// Goroutine + channel (CSP model)\nch := make(chan int)\ngo func() { ch <- 42 }()\nv := <-ch\n\n// WaitGroup for fan-out\nvar wg sync.WaitGroup\nfor i := 0; i < 3; i++ {\n    wg.Add(1)\n    go func(id int) {\n        defer wg.Done()\n        fmt.Println(id)\n    }(i)\n}\nwg.Wait()",
+      "typescript": "// async/await — event-loop, non-blocking I/O\nasync function fetchData(url: string): Promise<string> {\n  const res = await fetch(url)\n  return res.text()\n}\n\n// Concurrent tasks\nconst [a, b] = await Promise.all([fetchData('x'), fetchData('y')])\n\n// Structured sequential chain\nconst result = await Promise.resolve(1)\n  .then(v => v + 1)\n  .then(v => v * 2)",
+      "scala2": "import scala.concurrent.{Future, Await}\nimport scala.concurrent.ExecutionContext.Implicits.global\nimport scala.concurrent.duration._\n\n// Future — runs on thread pool\nval f: Future[Int] = Future { 7 + 1 }\nval v = Await.result(f, 2.seconds)\n\n// Parallel composition\nval result = for {\n  a <- Future { 1 }\n  b <- Future { 2 }\n} yield a + b",
+      "scala3": "import scala.concurrent.{Future, Await}\nimport scala.concurrent.ExecutionContext.Implicits.global\nimport scala.concurrent.duration.*\n\n// Future — runs on thread pool\nval f: Future[Int] = Future { 7 + 1 }\nval v = Await.result(f, 2.seconds)\n\n// Parallel composition\nval result =\n  for\n    a <- Future { 1 }\n    b <- Future { 2 }\n  yield a + b"
+    }
+  },
+  "step_8_io_serialization": {
+    "label": "Step 8: I/O & Serialization",
+    "description": "Compare file I/O patterns, standard streams, and JSON serialization across languages.",
+    "compareEntries": [
+      "file_io",
+      "json_and_serialization"
+    ],
+    "adapterInsight": "C++ I/O is buffered stream-based (`fstream`) with manual error checking. Python's `open()` + context manager is idiomatic. Go uses `os.Open` + `bufio` and separates concerns clearly. TypeScript (Node) has `fs.readFileSync`/`fs/promises`. JSON serialization is built-in for Python/TS/Go; C++ requires a library (nlohmann/json, etc.).",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "// File read\n#include <fstream>\nstd::ifstream ifs(\"data.txt\");\nstd::string line;\nwhile (std::getline(ifs, line)) { /* process */ }\n\n// JSON (nlohmann/json)\n#include <nlohmann/json.hpp>\nauto j = nlohmann::json::parse(R\"({\"name\":\"Ada\"})\");\nstd::string name = j[\"name\"];",
+      "python": "# File read\nwith open(\"data.txt\") as f:\n    lines = f.readlines()\n\n# JSON\nimport json\nobj = json.loads('{\"name\": \"Ada\"}')\nname = obj[\"name\"]\nout = json.dumps(obj, indent=2)",
+      "go": "// File read\ndata, err := os.ReadFile(\"data.txt\")\nif err != nil { log.Fatal(err) }\nlines := strings.Split(string(data), \"\\n\")\n\n// JSON\ntype User struct { Name string `json:\"name\"` }\nvar u User\njson.Unmarshal([]byte(`{\"name\":\"Ada\"}`), &u)\nout, _ := json.Marshal(u)",
+      "typescript": "// File read (Node)\nimport { readFileSync } from 'fs'\nconst text = readFileSync('data.txt', 'utf-8')\nconst lines = text.split('\\n')\n\n// JSON\nconst obj = JSON.parse('{\"name\":\"Ada\"}') as { name: string }\nconst out = JSON.stringify(obj, null, 2)",
+      "scala2": "// File read\nimport scala.io.Source\nval lines = Source.fromFile(\"data.txt\").getLines().toList\n\n// JSON (play-json or circe)\nimport play.api.libs.json._\nval j: JsValue = Json.parse(\"{\\\"name\\\":\\\"Ada\\\"}\")",
+      "scala3": "// File read\nimport scala.io.Source\nval lines = Source.fromFile(\"data.txt\").getLines().toList\n\n// JSON (circe — Scala 3 idiomatic)\nimport io.circe.parser.*\nval result = parse(\"{\\\"name\\\":\\\"Ada\\\"}\")   // Either[ParsingFailure, Json]"
+    }
+  },
+  "step_9_sorting_pipelines": {
+    "label": "Step 9: Sorting & Data Pipelines",
+    "description": "Compare how each language chains collection transforms — sorting, filtering, mapping, and reducing — and uses heaps for priority selection.",
+    "compareEntries": [
+      "sorting_and_searching",
+      "heaps_and_priority_queues"
+    ],
+    "adapterInsight": "C++ uses STL algorithms (`std::sort`, `std::transform`, ranges in C++20). Python list/generator comprehensions and `sorted()` are concise. Go favors explicit loops with `sort.Slice`. TypeScript array methods (`.filter`, `.map`, `.reduce`) are chainable. Scala has the most expressive pipeline via `map`/`filter`/`foldLeft` on immutable collections and lazy `LazyList`.",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "std::vector<int> nums{5, 3, 1, 4, 2};\nstd::sort(nums.begin(), nums.end());\n\n// Transform + filter (C++20 ranges)\nnamespace rv = std::ranges::views;\nauto evens = nums | rv::filter([](int x){ return x % 2 == 0; });\nauto doubled = evens | rv::transform([](int x){ return x * 2; });\n\n// Priority queue (max-heap)\nstd::priority_queue<int> pq;\nfor (int v : nums) pq.push(v);\nint top = pq.top();",
+      "python": "nums = [5, 3, 1, 4, 2]\nsorted_nums = sorted(nums)\n\n# Pipeline via comprehension\ndoubled_evens = [x * 2 for x in nums if x % 2 == 0]\n\n# Reduce\nfrom functools import reduce\ntotal = reduce(lambda acc, x: acc + x, nums, 0)\n\n# Min-heap\nimport heapq\nheap = nums[:]\nheapq.heapify(heap)\ntop = heapq.heappop(heap)",
+      "go": "nums := []int{5, 3, 1, 4, 2}\nsort.Ints(nums)\n\n// Explicit pipeline via loop\ndoubledEvens := []int{}\nfor _, v := range nums {\n    if v%2 == 0 { doubledEvens = append(doubledEvens, v*2) }\n}\n\n// sort.Slice for custom key\npeople := []struct{ Name string; Age int }{{\"Bob\", 2}, {\"Ana\", 1}}\nsort.Slice(people, func(i, j int) bool { return people[i].Age < people[j].Age })",
+      "typescript": "const nums = [5, 3, 1, 4, 2]\nconst sorted = [...nums].sort((a, b) => a - b)\n\n// Chainable pipeline\nconst result = nums\n  .filter(x => x % 2 === 0)\n  .map(x => x * 2)\n  .reduce((acc, x) => acc + x, 0)\n\n// Min-heap via sorted array (no built-in)\nconst heap = [...nums].sort((a, b) => a - b)\nconst top = heap[0]",
+      "scala2": "val nums = List(5, 3, 1, 4, 2)\nval sorted = nums.sorted\n\n// Expressive pipeline\nval result = nums\n  .filter(_ % 2 == 0)\n  .map(_ * 2)\n  .foldLeft(0)(_ + _)\n\n// Priority queue\nimport scala.collection.mutable\nval pq = mutable.PriorityQueue[Int]()\nnums.foreach(pq.enqueue(_))\nval top = pq.dequeue()",
+      "scala3": "val nums = List(5, 3, 1, 4, 2)\nval sorted = nums.sorted\n\n// Expressive pipeline\nval result = nums\n  .filter(_ % 2 == 0)\n  .map(_ * 2)\n  .foldLeft(0)(_ + _)\n\n// Lazy evaluation\nval lazy = LazyList.from(1).filter(_ % 2 == 0).take(5).toList"
+    }
+  },
+  "step_10_testability_di": {
+    "label": "Step 10: Testability & Dependency Inversion",
+    "description": "Learn how to design swappable seams: constructor injection, interface mocking, and test doubles — the practical application of SOLID's DIP.",
+    "compareEntries": [
+      "interfaces_and_polymorphism"
+    ],
+    "adapterInsight": "The common thread: inject an abstraction, swap in a test double. C++ uses virtual interfaces or template policy injection. Go's small implicit interfaces make mocking trivial. Python replaces any callable at runtime. TypeScript uses structural interfaces — any matching shape works. Scala leverages traits and implicit/given for type class injection.",
+    "sourceLinks": [],
+    "codes": {
+      "cpp": "// Interface + constructor injection\nstruct EmailSender { virtual void send(const std::string& msg) = 0; virtual ~EmailSender() = default; };\nstruct Service {\n    explicit Service(std::shared_ptr<EmailSender> s) : sender_(s) {}\n    void notify() { sender_->send(\"hello\"); }\nprivate:\n    std::shared_ptr<EmailSender> sender_;\n};\n\n// Test double\nstruct FakeSender : EmailSender {\n    std::vector<std::string> sent;\n    void send(const std::string& msg) override { sent.push_back(msg); }\n};",
+      "python": "# Protocol-based injection\nfrom typing import Protocol\nclass EmailSender(Protocol):\n    def send(self, msg: str) -> None: ...\n\nclass Service:\n    def __init__(self, sender: EmailSender) -> None:\n        self._sender = sender\n    def notify(self) -> None:\n        self._sender.send(\"hello\")\n\n# Test double\nclass FakeSender:\n    sent: list[str] = []\n    def send(self, msg: str) -> None: self.sent.append(msg)",
+      "go": "// Small interface + injection\ntype EmailSender interface { Send(msg string) }\n\ntype Service struct { sender EmailSender }\nfunc (s Service) Notify() { s.sender.Send(\"hello\") }\n\n// Test double — satisfies interface implicitly\ntype fakeSender struct { sent []string }\nfunc (f *fakeSender) Send(msg string) { f.sent = append(f.sent, msg) }\n\n// Usage in test\nsvc := Service{sender: &fakeSender{}}",
+      "typescript": "// Interface + injection\ninterface EmailSender { send(msg: string): void }\n\nclass Service {\n  constructor(private sender: EmailSender) {}\n  notify() { this.sender.send('hello') }\n}\n\n// Test double — structural match\nconst fake: EmailSender = { send: jest.fn() }\nconst svc = new Service(fake)\nsvc.notify()\nexpect(fake.send).toHaveBeenCalledWith('hello')",
+      "scala2": "// Trait + constructor injection\ntrait EmailSender { def send(msg: String): Unit }\n\nclass Service(sender: EmailSender) {\n  def notify(): Unit = sender.send(\"hello\")\n}\n\n// Test double\nclass FakeSender extends EmailSender {\n  val sent = scala.collection.mutable.Buffer[String]()\n  def send(msg: String): Unit = sent += msg\n}",
+      "scala3": "// Trait + constructor injection\ntrait EmailSender:\n  def send(msg: String): Unit\n\nclass Service(sender: EmailSender):\n  def notify(): Unit = sender.send(\"hello\")\n\n// Test double\nclass FakeSender extends EmailSender:\n  val sent = scala.collection.mutable.Buffer[String]()\n  def send(msg: String): Unit = sent += msg"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "timings": {
+    "run_generators": 0.3276805999921635,
+    "ensure_offline_assets": 0.001196700002765283,
+    "load_shared_css": 0.02529980000690557,
+    "load_sheets": 0.08074860001215711,
+    "assemble_runtime_data": 0.20534700001007877,
+    "load_ui_templates": 0.002287000010255724,
+    "build_app_payload": 4.1000021155923605e-06,
+    "render_app_js": 0.023100199992768466,
+    "compose_html_document": 0.0003941000031773001,
+    "write_output": 0.0035573999921325594
+  },
+  "mem_samples": {
+    "after_run_generators": {
+      "current": 5967016,
+      "peak": 6096869
+    },
+    "after_ensure_offline_assets": {
+      "current": 5967019,
+      "peak": 6096869
+    },
+    "after_load_shared_css": {
+      "current": 5971236,
+      "peak": 6274243
+    },
+    "after_load_sheets": {
+      "current": 6141112,
+      "peak": 6326389
+    },
+    "after_assemble_runtime_data": {
+      "current": 7234262,
+      "peak": 7411216
+    },
+    "after_load_ui_templates": {
+      "current": 7414426,
+      "peak": 7652146
+    },
+    "after_build_app_payload": {
+      "current": 7415058,
+      "peak": 7652146
+    },
+    "after_render_app_js": {
+      "current": 8570864,
+      "peak": 9726563
+    },
+    "after_compose_html_document": {
+      "current": 9797005,
+      "peak": 9797845
+    },
+    "after_write_output": {
+      "current": 9797054,
+      "peak": 13621931
+    }
+  },
+  "overall_seconds": 0.6697520000161603
+}
